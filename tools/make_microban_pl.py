@@ -111,6 +111,10 @@ def main():
     ap.add_argument("--clevis", type=float, default=0.006,
                     help="half-height of the slimmed ankle bracket's collision box [m]")
     ap.add_argument("--scene", help="also write a viewer scene (floor + standing keyframe) to this path")
+    ap.add_argument("--dof", type=int, choices=[16, 12], default=16,
+                    help="16: passive ankle pitch + fixed head. 12: additionally no hip yaw and no "
+                         "shoulder roll (the ROBO-ONE Light target layout: legs 4x2, arms 2x2)")
+    ap.add_argument("--meshdir", help="override the compiler meshdir written into the output")
     a = ap.parse_args()
 
     head = header_comments(a.src)
@@ -131,7 +135,7 @@ def main():
                 if el.get(attr) in rename:
                     el.set(attr, rename[el.get(attr)])
 
-    model_name = "microban_pl" + ("_lme" if a.naming == "lme" else "")
+    model_name = ("microban_pl" if a.dof == 16 else "microban_pl12") + ("_lme" if a.naming == "lme" else "")
     root.set("model", model_name)
 
     dflt = root.find("default")
@@ -219,6 +223,40 @@ def main():
         ine.set("mass", f"{m1:.6f}")
         ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
 
+    if a.dof == 12:
+        # Hip yaw: the joint sits on the hip bracket, the servo in the bottom of the trunk
+        # (one XL330 each side at y = +-36 mm). The bracket bolts straight to the trunk.
+        # Shoulder roll: the joint sits on the humerus, which carries its servo at its top
+        # (the other XL330 in the humerus is the elbow's). The humerus bolts to the
+        # shoulder bracket with the arm hanging at the side.
+        for side in ("right", "left"):
+            for jn_up in (f"{side}_hip_yaw", f"{side}_shoulder_roll"):
+                for b in root.iter("body"):
+                    for j in list(b.findall("joint")):
+                        if j.get("name") == name(jn_up):
+                            b.remove(j); removed_joints.add(name(jn_up))
+        trunk = bodies["trunk"]
+        n_removed = 0
+        for g in list(trunk.findall("geom")):
+            pz = vec(g.get("pos", "0 0 0"))
+            if g.get("mesh", "").startswith("xl330") and abs(abs(pz[1]) - 0.036) < 1e-3 and abs(pz[2] - 0.0065) < 1e-3:
+                trunk.remove(g); n_removed += 1
+        assert n_removed == 2, f"expected the two hip-yaw servos in the trunk, found {n_removed}"
+        ine = trunk.find("inertial")
+        m0 = float(ine.get("mass")); m1 = m0 - 2 * XL330_MASS
+        ine.set("mass", f"{m1:.6f}")
+        ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
+        for hb in ("humerus__configuration_right", "humerus__configuration_left"):
+            hum = bodies[hb]; n_removed = 0
+            for g in list(hum.findall("geom")):
+                if g.get("mesh") == "xl330" and abs(vec(g.get("pos"))[2] + 0.0065) < 1e-3:
+                    hum.remove(g); n_removed += 1
+            assert n_removed == 1, f"{hb}: shoulder-roll servo not found"
+            ine = hum.find("inertial")
+            m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
+            ine.set("mass", f"{m1:.6f}")
+            ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
+
     # actuators: drop ankle pitch (and neck), motor -> position unless asked otherwise
     act = root.find("actuator")
     ankle_joints = removed_joints
@@ -234,11 +272,13 @@ def main():
         kept.append(el)
     act.extend(kept)
 
+    if a.meshdir:
+        root.find("compiler").set("meshdir", a.meshdir)
     ET.indent(root, space="  ")
     body = ET.tostring(root, encoding="unicode")
     note = (f"<!--\n{model_name}: Microban with parallel-link legs (passive ankle pitch).\n"
             f"Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py\n"
-            f"(naming={a.naming}, back={a.back}, tilt={a.tilt}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}).\n"
+            f"(dof={a.dof}, naming={a.naming}, back={a.back}, tilt={a.tilt}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}).\n"
             f"Hip range {np.degrees(HIP_RANGE[0]):.0f}..{np.degrees(HIP_RANGE[1]):.0f} deg, knee {np.degrees(KNEE_RANGE[0]):.0f}..{np.degrees(KNEE_RANGE[1]):.0f} deg (pelvis-relative). See NOTICE.md for attribution.\n-->\n")
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:
