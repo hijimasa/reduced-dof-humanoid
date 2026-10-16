@@ -111,6 +111,12 @@ Total mass: 0.833 kg (upstream model) → 0.765 kg (16-servo) → 0.673 kg (12-s
 | Standing with hip −60° / knee +60° | trunk tilt 0.33°, feet flat |
 | Deepest symmetric squat before self-collision | 132° relative knee flexion (117° with the original ankle block) |
 
+With LegacyMotionEditor's motion tools (keyframe walk re-solved through the
+4-joint leg IK, scuff turns, get-ups found by physics beam search) the 12-servo
+model passes, under servo-offset and tilt disturbances: walk forward/back and
+sidestep 8/8, scuff turns 8/8, jabs 8/8, get-up from prone 15/16 and from supine
+(roll over + the same rise) 16/16. Details in `docs/design_ja.md`.
+
 With the original Microban model, commanding the same two hip/knee values
 without adjusting the ankle tips the robot over; here the linkage keeps the
 soles flat automatically.
