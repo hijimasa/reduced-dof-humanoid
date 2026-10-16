@@ -4,13 +4,14 @@ Reduced-DOF humanoid for ROBO-ONE Light, derived from Rhoban's
 [Microban](https://github.com/Rhoban/microban) (unofficial, not affiliated with
 Rhoban or the author of Microban).
 
-**Status: experimental.** The current content is a MuJoCo model of Microban in
-which the ankle-pitch servos are replaced by passive parallel-link legs and the
-head is fixed to the trunk without a servo (19 → 16 actuators), plus the scripts that generate and verify it. The longer
-term goal is a 12-servo robot that still satisfies the ROBO-ONE Light rules.
+**Status: experimental.** The repository holds two MuJoCo models of Microban
+generated from the same script: a 16-servo step (passive parallel-link ankle
+pitch, fixed head) and the 12-servo target (additionally no hip yaw and no
+shoulder roll: legs 4 × 2, arms 2 × 2), plus the scripts that generate and
+verify them.
 
 <p align="center">
-  <img src="docs/images/preview.png" alt="Parallel-link Microban: side and 3/4 views, standing and crouched" width="640">
+  <img src="docs/images/preview12.png" alt="12-servo parallel-link Microban: side and 3/4 views, standing and crouched" width="640">
 </p>
 
 ## Why
@@ -28,16 +29,20 @@ practical. The study behind this repository is in
 | --- | --- | --- |
 | Ankle pitch | passive (done here) | Two parallelograms per leg keep the foot parallel to the pelvis, as on the `ashigaru` robot. |
 | Neck | remove (done here) | Rules only require a separate head, not an actuated one. A fixed head keeps the humanoid silhouette at zero servo cost. |
-| Waist | remove (planned) | Not needed for walking or getting up. |
-| Hip yaw | remove (planned) | Turning by asymmetric strides; ROBOTIS Mini already does without it. |
-| Shoulder roll | remove (planned) | Rules require one actuated axis per arm; shoulder pitch + elbow is enough for punching and getting up. |
+| Hip yaw | remove (done here, 12-servo model) | Turning by scuffing the soles in double support, as the ROBOTIS Mini does. |
+| Shoulder roll | remove (done here, 12-servo model) | Rules require one actuated axis per arm; shoulder pitch + elbow is enough for punching and getting up. |
 | Hip roll, hip pitch, knee, ankle roll | keep | Needed for lateral stepping, 10 mm foot lift and flat-footed weight transfer with position-controlled servos. |
 
-Target layout: legs 4 × 2, arms 2 × 2, fixed head → 12 servos.
+Target layout: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.673 kg in the
+model (Microban: 19 servos, 0.819 kg).
 
 ## What is in the repository
 
 ```
+model/microban_pl12/
+  microban_pl12.xml      12-servo model (target layout), upstream joint names, position actuators
+  microban_pl12_lme.xml  same with LegacyMotionEditor joint names
+  scene.xml              floor + "standing" keyframe (meshes from ../microban_pl/assets)
 model/microban_pl/
   microban_pl.xml        parallel-link Microban with fixed head, upstream joint names, position actuators
   microban_pl_lme.xml    same model with LegacyMotionEditor joint names (r_hipjoint_yp, ...)
@@ -88,7 +93,10 @@ has to produce (`--keep-ankle-servo` and `--neck-motor` restore the originals):
 | Rear links | Two per leg, 62 mm (thigh) and 61 mm (shank) between pivots, 2 mm radius capsules in the model. | Close the parallelogram loops. |
 | Knee block | New part between femur and tibia: carries the knee servo horn, the two rear-link pivots, and stays parallel to the pelvis. | 3 g placeholder mass. |
 
-Total mass goes from 0.833 kg to 0.765 kg.
+| Hip yaw (12-servo model) | The two XL330s in the bottom of the trunk are removed; each hip bracket bolts straight to the trunk. | −46 g. No turning on the spot. |
+| Shoulder roll (12-servo model) | The XL330 at the top of each humerus is removed; the humerus bolts to the shoulder bracket with the arm at the side. | −46 g. |
+
+Total mass: 0.833 kg (upstream model) → 0.765 kg (16-servo) → 0.673 kg (12-servo).
 
 ### Verification
 
@@ -113,12 +121,15 @@ Requirements: Python 3.10+, `mujoco` (≥ 3.1), `numpy`; `Pillow` for rendering.
 
 ```bash
 # view
-python -m mujoco.viewer --mjcf model/microban_pl/scene.xml
+python -m mujoco.viewer --mjcf model/microban_pl12/scene.xml      # 12-servo
+python -m mujoco.viewer --mjcf model/microban_pl/scene.xml        # 16-servo
 # regenerate from a Microban checkout
 python tools/make_microban_pl.py path/to/microban/src/model/mjcf/robot.xml \
     model/microban_pl/microban_pl.xml --scene model/microban_pl/scene.xml
 python tools/make_microban_pl.py path/to/microban/src/model/mjcf/robot.xml \
     model/microban_pl/microban_pl_lme.xml --naming lme
+python tools/make_microban_pl.py path/to/microban/src/model/mjcf/robot.xml \
+    model/microban_pl12/microban_pl12.xml --dof 12 --meshdir ../microban_pl/assets --scene model/microban_pl12/scene.xml
 # verify
 python tools/verify_parallel_leg.py model/microban_pl/microban_pl.xml
 # preview image
@@ -138,7 +149,8 @@ and hides the eight passive joints from the sliders.
 
 1. CAD for the rear links, the knee block and the ankle clevis described above,
    so the ankle-pitch servo can actually be removed from a printed Microban.
-2. Remove hip yaw and shoulder roll (16 → 12 servos) and re-check
+2. Verify walking, scuff-turning and getting up on the 12-servo model in
+   simulation with LegacyMotionEditor's motion tools (in progress), then re-check
    walking, side-stepping and getting up in simulation.
 3. Foot-sole and leg-length check against the ROBO-ONE Light tables
    (sole ≤ 55 % of leg length, width ≤ 35 %).

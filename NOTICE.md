@@ -45,6 +45,9 @@ All changes are applied programmatically by `tools/make_microban_pl.py`:
 - `<motor>` actuators are replaced by `<position>` actuators (kp = 50,
   critically damped, force limit ±0.52 N·m) for keyframe-style control. Use
   `--keep-motor` to keep the upstream torque actuators.
+- `--dof 12` additionally removes the hip-yaw joints (and the two XL330s that drive
+  them from the bottom of the trunk) and the shoulder-roll joints (and the XL330 at
+  the top of each humerus), with the corresponding mass.
 - A `--naming lme` option renames joints to the LegacyMotionEditor convention.
 
 The upstream copyright and license header of `robot.xml` is preserved at the
