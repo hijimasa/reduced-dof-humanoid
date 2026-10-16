@@ -1,0 +1,22 @@
+Microban mesh files (STL)
+Copyright (c) 2026 Marc Duclusaud
+
+The STL files in this directory are unmodified copies of
+src/model/mjcf/assets/ from the Microban repository
+(https://github.com/Rhoban/microban, commit d0a128d180ecfce69eaaf31b295a0fce31280bfd).
+They are exported from the Microban CAD, whose hardware design files are
+licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International License (CC BY-NC-SA 4.0).
+
+    SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
+Because these are binary files that cannot carry an embedded notice, this
+file serves as the license notice for the whole directory.
+
+You are free to share and adapt these files for non-commercial purposes,
+provided you give appropriate credit and distribute your contributions
+under the same license. Commercial use requires prior written permission
+from the author of Microban.
+
+The full text of the CC BY-NC-SA 4.0 license is available at
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
