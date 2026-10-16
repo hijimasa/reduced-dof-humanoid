@@ -77,7 +77,8 @@ def main(src):
         for side in FOOT:
             d.ctrl[act("hip", side)] = np.radians(hip); d.ctrl[act("knee", side)] = np.radians(knee)
         for _ in range(1500): mujoco.mj_step(m, d)
-        err = np.degrees(q("hip", "right") - np.radians(hip))
+        lo, hi = np.degrees(m.jnt_range[jid("hip", "right")])   # the test pose may exceed the joint range
+        err = np.degrees(q("hip", "right")) - min(max(hip, lo), hi)
         tR, tL = foot_tilt("right"), foot_tilt("left")
         flag = "" if (tR < 1 and tL < 1 and abs(err) < 2) else "   <-- check"
         ok &= flag == ""

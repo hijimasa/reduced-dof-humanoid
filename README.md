@@ -69,12 +69,26 @@ Consequences:
 - The knee servo now acts between the knee block and the tibia, so the knee
   command is the shank angle **relative to the pelvis**, not to the thigh.
   Existing Microban motions must be re-authored.
-- Hip-pitch is limited to −96°…+68° and knee to −68°…+96° (pelvis-relative) to
-  stay clear of the linkage singularities. The rear pivots sit 20 mm behind the
-  front pivots with a 5 mm tilt that pushes the singularities away from the
-  crouching direction.
+- The rear pivots sit 20 mm behind the front pivots with a 10 mm tilt (down on
+  the thigh, up on the shank), which moves the linkage singularities to 116.6°
+  of flexion and 63.4° of extension. The joint ranges are derived from that with
+  an 8° margin: hip −109°…+55°, knee −55°…+109° (pelvis-relative).
 - The rear links are drawn as thin capsules and do not collide; interference
   with the real parts is not modelled yet.
+
+### Parts that change on the printed robot
+
+The generator also edits the model to reflect the parts the physical redesign
+has to produce (`--keep-ankle-servo` and `--neck-motor` restore the originals):
+
+| Part | Change | Effect in the model |
+| --- | --- | --- |
+| Ankle block | The ankle-pitch XL330 and its idler horn are removed. The U-bracket that wrapped the servo becomes a short clevis around the passive hinge (±6 mm about the axis in the collision model). | 47 g → 25 g per ankle. The knee can fold to 132° before the ankle meets the hip bracket, instead of 117°. |
+| Neck | The neck XL330 in the top of the trunk is removed; the head bolts on. | −23 g in the trunk. |
+| Rear links | Two per leg, 62 mm (thigh) and 61 mm (shank) between pivots, 2 mm radius capsules in the model. | Close the parallelogram loops. |
+| Knee block | New part between femur and tibia: carries the knee servo horn, the two rear-link pivots, and stays parallel to the pelvis. | 3 g placeholder mass. |
+
+Total mass goes from 0.833 kg to 0.765 kg.
 
 ### Verification
 
@@ -83,10 +97,11 @@ Consequences:
 | Test | Result |
 | --- | --- |
 | Loop closure residual at the initial pose | 0.000 mm |
-| Foot tilt relative to the trunk over 8 hip/knee combinations (gravity off) | ≤ 0.4° |
+| Foot tilt relative to the trunk over 8 hip/knee combinations (gravity off) | ≤ 0.5° |
 | Standing on a floor for 3 s, straight legs | trunk tilt 0.08° |
 | Standing with hip −30° / knee +30° | trunk tilt 0.12°, feet flat |
 | Standing with hip −60° / knee +60° | trunk tilt 0.33°, feet flat |
+| Deepest symmetric squat before self-collision | 132° relative knee flexion (117° with the original ankle block) |
 
 With the original Microban model, commanding the same two hip/knee values
 without adjusting the ankle tips the robot over; here the linkage keeps the
@@ -110,8 +125,10 @@ python tools/verify_parallel_leg.py model/microban_pl/microban_pl.xml
 MUJOCO_GL=egl python tools/render_preview.py model/microban_pl/scene.xml docs/images/preview.png
 ```
 
-`make_microban_pl.py --back <m> --tilt <m>` changes the rear-pivot geometry;
-`--keep-motor` keeps Microban's torque actuators for RL use.
+`make_microban_pl.py --back <m> --tilt <m>` changes the rear-pivot geometry (the
+joint ranges follow); `--clevis <m>` sets the slimmed ankle bracket's half-height;
+`--keep-ankle-servo`, `--neck-motor` and `--keep-motor` restore the upstream servo
+geometry, the neck servo and Microban's torque actuators respectively.
 
 For [LegacyMotionEditor](https://github.com/hijimasa/LegacyMotionEditor) point
 `model_path` at `microban_pl_lme.xml`; the editor detects the four closed loops
@@ -119,8 +136,8 @@ and hides the eight passive joints from the sliders.
 
 ## Roadmap
 
-1. Mechanical design of the rear links and knee block so the ankle-pitch
-   servo can actually be removed from a printed Microban.
+1. CAD for the rear links, the knee block and the ankle clevis described above,
+   so the ankle-pitch servo can actually be removed from a printed Microban.
 2. Remove hip yaw and shoulder roll (16 → 12 servos) and re-check
    walking, side-stepping and getting up in simulation.
 3. Foot-sole and leg-length check against the ROBO-ONE Light tables

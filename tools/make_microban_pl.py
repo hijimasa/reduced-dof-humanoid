@@ -48,9 +48,15 @@ LEG = {  # local frames: right femur +x = world back, +y = world up; left femur 
     "left":  dict(hipblock="hip_block__configuration_left",  femur="femur__configuration_left",
                   tibia="tibia__configuration_left",  ankle="ankle_block__configuration_right", sx=-1),
 }
-HIP_RANGE  = (-1.68, 1.19)   # thigh vs pelvis: -96deg (flex) .. +68deg (ext)
-KNEE_RANGE = (-1.19, 1.68)   # shank vs pelvis: -68deg (ext) .. +96deg (flex)
+# Joint ranges follow from the linkage: a parallelogram degenerates when its link lies
+# along the line between its two pivots, i.e. at 90deg +- atan(tilt/back) from straight.
+# Thigh: rear pivot DOWN -> flexion singular at 90 + a, extension at 90 - a.
+# Shank: rear pivot UP   -> flexion singular at 90 + a, extension at 90 - a.
+# Both ranges keep RANGE_MARGIN degrees clear of the singularity.
+RANGE_MARGIN = 8.0
 XL330_TORQUE = 0.52          # N*m, XL330-M288-T stall torque at 5 V
+XL330_MASS = 0.023           # kg
+SLIM_ANKLE_MASS = 0.025      # kg: ankle block minus the XL330 that is no longer there
 
 def q2m(q):
     w, x, y, z = q
@@ -59,6 +65,29 @@ def q2m(q):
                      [2*(x*z-y*w), 2*(y*z+x*w), 1-2*(x*x+y*y)]])
 def vec(s): return np.array([float(t) for t in s.split()])
 def fmt(a): return " ".join(f"{float(t):.6g}" for t in np.atleast_1d(a))
+
+def slim_ankle(body, h):
+    """Take the ankle-pitch servo out of the ankle block.
+
+    Upstream, the block carries two XL330s: the ankle-pitch servo (its horn on the
+    tibia) and the ankle-roll servo. With the pitch joint passive, the first one and
+    the idler horn opposite it go, and the U-bracket that wrapped the servo becomes a
+    short clevis around the hinge. Its collision box keeps the bracket's plane and
+    thickness but is cut to +-h about the axis. Mass: 47 g -> SLIM_ANKLE_MASS.
+    """
+    for g in list(body.findall("geom")):
+        at = g.attrib
+        if at.get("mesh") in ("xl330", "dc15_a01_horn_idle2_dummy", "bts2_m2_6x8", "dc15_a01_idle_cap_dummy"):
+            body.remove(g)
+        elif at.get("class") == "collision":
+            sx, sy, sz = (float(v) for v in at["size"].split())
+            px, py, pz = (float(v) for v in at["pos"].split())
+            at["size"] = fmt((sx, h, sz)); at["pos"] = fmt((px, np.sign(py) * h, pz))
+    ine = body.find("inertial")
+    scale = SLIM_ANKLE_MASS / float(ine.get("mass"))
+    ine.set("mass", f"{SLIM_ANKLE_MASS}")
+    ine.set("fullinertia", " ".join(f"{float(v) * scale:.4e}" for v in ine.get("fullinertia").split()))
+
 
 def header_comments(path):
     """Top-level comments before <mujoco> (ElementTree drops them)."""
@@ -75,7 +104,12 @@ def main():
     ap.add_argument("--neck-motor", action="store_true",
                     help="keep the neck (head yaw) servo; by default the head is fixed to the trunk")
     ap.add_argument("--back", type=float, default=0.020, help="rear pivot offset behind the front pivot [m]")
-    ap.add_argument("--tilt", type=float, default=0.005, help="vertical tilt of the rear pivots [m]")
+    ap.add_argument("--tilt", type=float, default=0.010, help="vertical tilt of the rear pivots [m]")
+    ap.add_argument("--keep-ankle-servo", action="store_true",
+                    help="keep the ankle-pitch servo's geometry and mass in the ankle block (by default "
+                         "it is removed and the bracket shrunk to a clevis, which is what lets the knee fold deeper)")
+    ap.add_argument("--clevis", type=float, default=0.006,
+                    help="half-height of the slimmed ankle bracket's collision box [m]")
     ap.add_argument("--scene", help="also write a viewer scene (floor + standing keyframe) to this path")
     a = ap.parse_args()
 
@@ -114,8 +148,14 @@ def main():
         ET.SubElement(el, "geom", {"class": "visual", "type": "capsule", "size": "0.002",
                                    "fromto": "0 0 0 " + fmt(v), "rgba": "0.25 0.25 0.28 1"})
 
+    ang = np.degrees(np.arctan2(a.tilt, a.back))
+    flex, ext = np.radians(90 + ang - RANGE_MARGIN), np.radians(90 - ang - RANGE_MARGIN)
+    HIP_RANGE, KNEE_RANGE = (-flex, ext), (-ext, flex)   # hip: +ve = thigh back; knee: +ve = shank back
+
     for side, L in LEG.items():
         hipblock, femur, tibia, ankle = (bodies[L[k]] for k in ("hipblock", "femur", "tibia", "ankle"))
+        if not a.keep_ankle_servo:
+            slim_ankle(ankle, a.clevis)
         d1 = np.array([L["sx"] * a.back, -L["sx"] * a.tilt, 0.0])   # thigh rear pivot
         d2 = np.array([L["sx"] * a.back, +L["sx"] * a.tilt, 0.0])   # shank rear pivot
         v1 = vec(tibia.get("pos"))          # hip pitch axis -> knee axis (femur frame)
@@ -169,6 +209,15 @@ def main():
             for j in list(b.findall("joint")):
                 if j.get("name") == name("head"):
                     b.remove(j); removed_joints.add(name("head"))
+        # the neck servo itself sits in the trunk, just under the head: drop it and its mass
+        trunk = bodies["trunk"]
+        for g in list(trunk.findall("geom")):
+            if g.get("mesh", "").startswith("xl330") and abs(vec(g.get("pos"))[2] - 0.1195) < 1e-3:
+                trunk.remove(g)
+        ine = trunk.find("inertial")
+        m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
+        ine.set("mass", f"{m1:.6f}")
+        ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
 
     # actuators: drop ankle pitch (and neck), motor -> position unless asked otherwise
     act = root.find("actuator")
@@ -189,7 +238,8 @@ def main():
     body = ET.tostring(root, encoding="unicode")
     note = (f"<!--\n{model_name}: Microban with parallel-link legs (passive ankle pitch).\n"
             f"Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py\n"
-            f"(naming={a.naming}, back={a.back}, tilt={a.tilt}, fixed_head={not a.neck_motor}). See NOTICE.md for attribution.\n-->\n")
+            f"(naming={a.naming}, back={a.back}, tilt={a.tilt}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}).\n"
+            f"Hip range {np.degrees(HIP_RANGE[0]):.0f}..{np.degrees(HIP_RANGE[1]):.0f} deg, knee {np.degrees(KNEE_RANGE[0]):.0f}..{np.degrees(KNEE_RANGE[1]):.0f} deg (pelvis-relative). See NOTICE.md for attribution.\n-->\n")
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:
         f.write(head + note + body + "\n")

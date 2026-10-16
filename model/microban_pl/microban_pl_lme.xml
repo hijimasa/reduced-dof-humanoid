@@ -13,7 +13,8 @@ http://www.apache.org/licenses/LICENSE-2.0
 <!--
 microban_pl_lme: Microban with parallel-link legs (passive ankle pitch).
 Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py
-(naming=lme, back=0.02, tilt=0.005, fixed_head=True). See NOTICE.md for attribution.
+(naming=lme, back=0.02, tilt=0.01, fixed_head=True, slim_ankle=True).
+Hip range -109..55 deg, knee -55..109 deg (pelvis-relative). See NOTICE.md for attribution.
 -->
 <mujoco model="microban_pl_lme">
   <compiler angle="radian" meshdir="assets" autolimits="true" />
@@ -47,14 +48,13 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
   <worldbody>
     <body name="trunk" pos="0 0 0" quat="1 0 0 0" childclass="microban">
       <freejoint name="trunk_freejoint" />
-      <inertial pos="-0.00454781 -0.000104579 0.053896" mass="0.347283" fullinertia="0.000608722 0.000477224 0.000357224 -5.1387e-07 -1.16287e-05 1.9299e-06" />
+      <inertial pos="-0.00454781 -0.000104579 0.053896" mass="0.324283" fullinertia="5.68407e-04 4.45618e-04 3.33566e-04 -4.79837e-07 -1.08585e-05 1.80209e-06" />
       <geom type="mesh" class="visual" pos="0.00575 -0.036 -0.0484" quat="0.707107 0 0 0.707107" mesh="arm_bearing_support__configuration_right" material="arm_bearing_support__configuration_right_material" />
       <geom type="mesh" class="visual" pos="0 -0.044 0.081" quat="0.707107 0.707107 0 0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
       <geom class="collision" pos="0 0 0.05375" quat="0.707107 0 0 0.707107" type="box" size="0.054 0.008 0.05375" />
       <geom class="collision" pos="0 0 0.05775" quat="0.707107 0 0 0.707107" type="box" size="0.029 0.033 0.04275" />
       <geom type="mesh" class="visual" pos="0.00575 -0.036 -0.0484" quat="0.707107 0 0 0.707107" mesh="pelvis__configuration_right" material="pelvis__configuration_right_material" />
       <geom type="mesh" class="visual" pos="-0.00575 0.036 -0.0484" quat="0.707107 -0 0 -0.707107" mesh="arm_bearing_support__configuration_right" material="arm_bearing_support__configuration_right_material" />
-      <geom type="mesh" class="visual" pos="-0.00204165 -0 0.1195" quat="0.707107 0 0 0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
       <geom type="mesh" class="visual" pos="-0 0.036 0.0065" quat="0 0 -1 0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
       <geom type="mesh" class="visual" pos="-0 0.044 0.081" quat="0 0 -0.707107 -0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
       <geom type="mesh" class="visual" pos="0.00575 -0.036 -0.0484" quat="0.707107 0 0 0.707107" mesh="chest__configuration_right" material="chest__configuration_right_material" />
@@ -105,7 +105,7 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
           <geom type="mesh" class="visual" pos="0 -0 0.033" quat="0 -0 1 0" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
           <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 -0.707107 -0.707107" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
           <body name="femur__configuration_right" pos="-0.0145 -0 0.0385" quat="0 0.707107 0 -0.707107">
-            <joint axis="0 0 1" name="r_hipjoint_yp" type="hinge" range="-1.68 1.19" class="xl330" />
+            <joint axis="0 0 1" name="r_hipjoint_yp" type="hinge" range="-1.89482 0.967522" class="xl330" />
             <inertial pos="-0.0109472 -0.0366847 -0.0147025" mass="0.014726" fullinertia="1.12665e-05 4.38335e-06 8.95932e-06 -1.12592e-06 1.333e-09 -4.521e-09" />
             <geom class="collision" pos="-0.015 -0.0335001 0.00275" quat="0.5 -0.5 0.5 0.5" type="box" size="0.00125 0.009 0.022228" />
             <geom class="collision" pos="-0.008818 -0.00881806 0.00275" quat="0.653281 -0.270598 0.653281 0.270598" type="box" size="0.00125 0.009 0.0124705" />
@@ -114,9 +114,9 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
             <body name="right_knee_block" pos="-0.005 -0.062 -0">
               <joint name="r_knee_yp_1" type="hinge" axis="0 0 1" class="passive" />
               <inertial pos="0 0 0" mass="0.003" diaginertia="1e-07 1e-07 1e-07" />
-              <geom class="visual" type="box" size="0.004 0.004 0.004" pos="0.02 -0.005 0" rgba="0.25 0.25 0.28 1" />
+              <geom class="visual" type="box" size="0.004 0.004 0.004" pos="0.02 -0.01 0" rgba="0.25 0.25 0.28 1" />
               <body name="tibia__configuration_right" pos="0 0 0" quat="1 0 0 0">
-                <joint axis="0 0 1" name="r_knee_yp" type="hinge" range="-1.19 1.68" class="xl330" />
+                <joint axis="0 0 1" name="r_knee_yp" type="hinge" range="-0.967522 1.89482" class="xl330" />
                 <inertial pos="0.00276278 -0.0196679 -0.0144621" mass="0.0300463" fullinertia="1.53882e-05 5.3311e-06 1.38581e-05 2.25674e-06 7.6682e-08 -1.37001e-07" />
                 <geom type="mesh" class="visual" pos="0 -0 -0.0065" quat="1 -0 -0 0" mesh="xl330" material="xl330_material" />
                 <geom class="collision" pos="0.017 -0.0444631 0.00275" quat="0.5 -0.5 0.5 0.5" type="box" size="0.00125 0.009 0.0115" />
@@ -126,14 +126,10 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
                 <geom type="mesh" class="visual" pos="0.008 -0.0707131 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="tibia__configuration_right" material="tibia__configuration_right_material" />
                 <body name="ankle_block__configuration_left" pos="0.008 -0.0612131 -0" quat="0 -0 -0 1">
                   <joint axis="0 0 1" name="r_ankle_yp" type="hinge" class="passive" />
-                  <inertial pos="-0.0110676 -0.00979852 -0.0144015" mass="0.04722" fullinertia="7.83993e-06 1.29837e-05 1.60971e-05 -6.00742e-07 -4.9782e-08 -6.127e-09" />
-                  <geom type="mesh" class="visual" pos="0 0 -0.0065" quat="1 0 -0 0" mesh="xl330" material="xl330_material" />
-                  <geom type="mesh" class="visual" pos="-0.0055 0 -0.0145" quat="0 -0.707107 -0 0.707107" mesh="dc15_a01_horn_idle2_dummy" material="dc15_a01_horn_idle2_dummy_material" />
-                  <geom class="collision" pos="-0.01275 -0.02075 -0.0145" quat="0.5 0.5 0.5 -0.5" type="box" size="0.0135 0.02525 0.00625" />
+                  <inertial pos="-0.0110676 -0.00979852 -0.0144015" mass="0.025" fullinertia="4.1507e-06 6.8740e-06 8.5224e-06 -3.1805e-07 -2.6356e-08 -3.2439e-09" />
+                  <geom class="collision" pos="-0.01275 -0.006 -0.0145" quat="0.5 0.5 0.5 -0.5" type="box" size="0.0135 0.006 0.00625" />
                   <geom type="mesh" class="visual" pos="0 0.0095 -0.0145" quat="0.5 0.5 0.5 -0.5" mesh="ankle_dbl_block__configuration_right" material="ankle_dbl_block__configuration_right_material" />
                   <geom type="mesh" class="visual" pos="-0.032 0 -0.0145" quat="0.707107 0 -0.707107 -0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
-                  <geom type="mesh" class="visual" pos="-0.0055 0 -0.0145" quat="0 -0.707107 -0 0.707107" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
-                  <geom type="mesh" class="visual" pos="-0.0055 0 -0.0145" quat="0 -0.707107 -0 0.707107" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
                   <geom type="mesh" class="visual" pos="0 0.0095 -0.0145" quat="0.5 0.5 0.5 -0.5" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
                   <body name="foot" pos="-0.0385 0 -0.0145" quat="0 -0.707107 0 -0.707107">
                     <joint axis="0 0 1" name="r_ankle_xr" type="hinge" range="-0.610865238197748 0.6108652381982826" class="xl330" />
@@ -149,14 +145,14 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
                   </body>
                 </body>
               </body>
-              <body name="right_shank_rear" pos="0.02 0.005 0">
+              <body name="right_shank_rear" pos="0.02 0.01 0">
                 <joint name="r_knee_yp_2" type="hinge" axis="0 0 1" class="passive" />
                 <inertial pos="0.004 -0.0306065 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
                 <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 0.008 -0.0612131 -0" rgba="0.25 0.25 0.28 1" />
               </body>
             </body>
           </body>
-          <body name="right_thigh_rear" pos="-0.0145 0.00500001 0.0185" quat="0 0.707107 0 -0.707107">
+          <body name="right_thigh_rear" pos="-0.0145 0.01 0.0185" quat="0 0.707107 0 -0.707107">
             <joint name="r_hipjoint_yp_1" type="hinge" axis="0 0 1" class="passive" />
             <inertial pos="-0.0025 -0.031 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
             <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 -0.005 -0.062 -0" rgba="0.25 0.25 0.28 1" />
@@ -200,7 +196,7 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
           <geom type="mesh" class="visual" pos="-0 0 0.033" quat="0 -0 -1 -0" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
           <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 -0.707107 -0.707107" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
           <body name="femur__configuration_left" pos="-0.0145 -0 0.0385" quat="0.707107 -0 -0.707107 0">
-            <joint axis="0 0 1" name="l_hipjoint_yp" type="hinge" range="-1.68 1.19" class="xl330" />
+            <joint axis="0 0 1" name="l_hipjoint_yp" type="hinge" range="-1.89482 0.967522" class="xl330" />
             <inertial pos="0.0109472 0.0366847 -0.0142975" mass="0.014726" fullinertia="1.12665e-05 4.38335e-06 8.95932e-06 -1.12592e-06 1.333e-09 -4.521e-09" />
             <geom class="collision" pos="0.015 0.0335001 -0.03175" quat="0.5 0.5 0.5 -0.5" type="box" size="0.00125 0.009 0.022228" />
             <geom class="collision" pos="0.008818 0.00881806 -0.03175" quat="0.270598 0.653281 0.270598 -0.653281" type="box" size="0.00125 0.009 0.0124705" />
@@ -209,9 +205,9 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
             <body name="left_knee_block" pos="0.005 0.062 0">
               <joint name="l_knee_yp_1" type="hinge" axis="0 0 1" class="passive" />
               <inertial pos="0 0 0" mass="0.003" diaginertia="1e-07 1e-07 1e-07" />
-              <geom class="visual" type="box" size="0.004 0.004 0.004" pos="-0.02 0.005 0" rgba="0.25 0.25 0.28 1" />
+              <geom class="visual" type="box" size="0.004 0.004 0.004" pos="-0.02 0.01 0" rgba="0.25 0.25 0.28 1" />
               <body name="tibia__configuration_left" pos="0 0 0" quat="1 0 0 0">
-                <joint axis="0 0 1" name="l_knee_yp" type="hinge" range="-1.19 1.68" class="xl330" />
+                <joint axis="0 0 1" name="l_knee_yp" type="hinge" range="-0.967522 1.89482" class="xl330" />
                 <inertial pos="-0.00275805 0.0196679 -0.0145379" mass="0.0300463" fullinertia="1.53882e-05 5.33188e-06 1.38589e-05 2.25747e-06 7.7561e-08 -1.37001e-07" />
                 <geom type="mesh" class="visual" pos="-0 0 -0.0225" quat="0 1 0 0" mesh="xl330" material="xl330_material" />
                 <geom class="collision" pos="-0.017 0.0444631 -0.0317" quat="0.5 0.5 0.5 -0.5" type="box" size="0.00125 0.009 0.0115" />
@@ -221,14 +217,10 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
                 <geom type="mesh" class="visual" pos="-0.008 0.0707131 -0.0515" quat="0.5 0.5 0.5 -0.5" mesh="tibia__configuration_left" material="tibia__configuration_left_material" />
                 <body name="ankle_block__configuration_right" pos="-0.008 0.0612131 -0" quat="0 0 -0 1">
                   <joint axis="0 0 1" name="l_ankle_yp" type="hinge" class="passive" />
-                  <inertial pos="0.0110706 0.00979852 -0.0145955" mass="0.04722" fullinertia="7.83996e-06 1.29805e-05 1.6094e-05 -6.01409e-07 -5.1613e-08 -6.789e-09" />
-                  <geom type="mesh" class="visual" pos="0 0 -0.0225" quat="0 1 0 0" mesh="xl330" material="xl330_material" />
-                  <geom type="mesh" class="visual" pos="0.0055 0 -0.0145" quat="0.707107 -0 0.707107 0" mesh="dc15_a01_horn_idle2_dummy" material="dc15_a01_horn_idle2_dummy_material" />
-                  <geom class="collision" pos="0.01275 0.02075 -0.0145" quat="0.5 -0.5 0.5 0.5" type="box" size="0.0135 0.02525 0.00625" />
+                  <inertial pos="0.0110706 0.00979852 -0.0145955" mass="0.025" fullinertia="4.1508e-06 6.8724e-06 8.5208e-06 -3.1841e-07 -2.7326e-08 -3.5943e-09" />
+                  <geom class="collision" pos="0.01275 0.006 -0.0145" quat="0.5 -0.5 0.5 0.5" type="box" size="0.0135 0.006 0.00625" />
                   <geom type="mesh" class="visual" pos="-0 -0.0095 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="ankle_dbl_block__configuration_right" material="ankle_dbl_block__configuration_right_material" />
                   <geom type="mesh" class="visual" pos="0.032 0 -0.0145" quat="0 0.707107 0 0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
-                  <geom type="mesh" class="visual" pos="0.0055 0 -0.0145" quat="0.707107 -0 0.707107 0" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
-                  <geom type="mesh" class="visual" pos="0.0055 0 -0.0145" quat="0.707107 -0 0.707107 0" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
                   <geom type="mesh" class="visual" pos="-0 -0.0095 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
                   <body name="foot_2" pos="0.0385 0 -0.0145" quat="0.707107 -0 -0.707107 0">
                     <joint axis="0 0 1" name="l_ankle_xr" type="hinge" range="-0.6108652381980109 0.6108652381980197" class="xl330" />
@@ -244,14 +236,14 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
                   </body>
                 </body>
               </body>
-              <body name="left_shank_rear" pos="-0.02 -0.005 0">
+              <body name="left_shank_rear" pos="-0.02 -0.01 0">
                 <joint name="l_knee_yp_2" type="hinge" axis="0 0 1" class="passive" />
                 <inertial pos="-0.004 0.0306065 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
                 <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 -0.008 0.0612131 -0" rgba="0.25 0.25 0.28 1" />
               </body>
             </body>
           </body>
-          <body name="left_thigh_rear" pos="-0.0145 0.005 0.0185" quat="0.707107 -0 -0.707107 0">
+          <body name="left_thigh_rear" pos="-0.0145 0.01 0.0185" quat="0.707107 -0 -0.707107 0">
             <joint name="l_hipjoint_yp_1" type="hinge" axis="0 0 1" class="passive" />
             <inertial pos="0.0025 0.031 0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
             <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 0.005 0.062 0" rgba="0.25 0.25 0.28 1" />
@@ -331,9 +323,9 @@ Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.
     <position name="l_ankle_xr" joint="l_ankle_xr" kp="50" dampratio="1" forcerange="-0.52 0.52" />
   </actuator>
   <equality>
-    <connect name="right_thigh_loop" body1="right_knee_block" body2="right_thigh_rear" anchor="0.02 -0.005 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
-    <connect name="right_shank_loop" body1="ankle_block__configuration_left" body2="right_shank_rear" anchor="-0.02 -0.005 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
-    <connect name="left_thigh_loop" body1="left_knee_block" body2="left_thigh_rear" anchor="-0.02 0.005 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
-    <connect name="left_shank_loop" body1="ankle_block__configuration_right" body2="left_shank_rear" anchor="0.02 0.005 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="right_thigh_loop" body1="right_knee_block" body2="right_thigh_rear" anchor="0.02 -0.01 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="right_shank_loop" body1="ankle_block__configuration_left" body2="right_shank_rear" anchor="-0.02 -0.01 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="left_thigh_loop" body1="left_knee_block" body2="left_thigh_rear" anchor="-0.02 0.01 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="left_shank_loop" body1="ankle_block__configuration_right" body2="left_shank_rear" anchor="0.02 0.01 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
   </equality>
 </mujoco>

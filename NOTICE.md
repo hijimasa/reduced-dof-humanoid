@@ -35,8 +35,13 @@ All changes are applied programmatically by `tools/make_microban_pl.py`:
   trunk (`--neck-motor` keeps it). Actuator count goes from 19 to 16.
 - The knee actuator now acts between the pelvis-parallel knee block and the
   tibia, so its angle is measured against the pelvis rather than the thigh.
-- Hip-pitch and knee ranges are limited to stay clear of the linkage
-  singularities (hip: -96° to +68°, knee: -68° to +96°, pelvis-relative).
+- Hip-pitch and knee ranges are derived from the linkage geometry to stay 8°
+  clear of its singularities (with the default 20 mm / 10 mm pivots: hip -109° to
+  +55°, knee -55° to +109°, pelvis-relative).
+- The ankle-pitch servo's geometry is removed from the ankle block, the block's
+  collision box is cut down to a clevis around the hinge and its mass reduced
+  (`--keep-ankle-servo` restores it). The neck servo's geometry and mass are
+  removed from the trunk together with the neck joint.
 - `<motor>` actuators are replaced by `<position>` actuators (kp = 50,
   critically damped, force limit ±0.52 N·m) for keyframe-style control. Use
   `--keep-motor` to keep the upstream torque actuators.
