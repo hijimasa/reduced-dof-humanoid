@@ -13,7 +13,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 <!--
 microban_pl_lme: Microban with parallel-link legs (passive ankle pitch).
 Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py
-(dof=16, elbow=free, naming=lme, thigh back/tilt=-0.022/-0.01, shank back/tilt=0.025/0.025, link_x=0.0225, fixed_head=True, slim_ankle=True, forearm_ext=0.0, arm_abduct=n/a).
+(dof=16, elbow=free, naming=lme, thigh back/tilt=-0.022/-0.01, shank back/tilt=0.025/0.025, link_x=0.0225, fixed_head=True, slim_ankle=True, integrated_parts=True, forearm_ext=0.0, arm_abduct=n/a).
 Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for attribution.
 -->
 <mujoco model="microban_pl_lme">
@@ -48,7 +48,7 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
   <worldbody>
     <body name="trunk" pos="0 0 0" quat="1 0 0 0" childclass="microban">
       <freejoint name="trunk_freejoint" />
-      <inertial pos="-0.00454781 -0.000104579 0.053896" mass="0.332283" fullinertia="5.69315e-04 4.46330e-04 3.34098e-04 -4.80604e-07 -1.08759e-05 1.80496e-06" />
+      <inertial pos="-0.00454781 -0.000104579 0.053896" mass="0.329983" fullinertia="5.69058e-04 4.46129e-04 3.33948e-04 -4.80387e-07 -1.08710e-05 1.80415e-06" />
       <geom type="mesh" class="visual" pos="0.00575 -0.036 -0.0484" quat="0.707107 0 0 0.707107" mesh="arm_bearing_support__configuration_right" material="arm_bearing_support__configuration_right_material" />
       <geom type="mesh" class="visual" pos="0 -0.044 0.081" quat="0.707107 0.707107 0 0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
       <geom class="collision" pos="0 0 0.05375" quat="0.707107 0 0 0.707107" type="box" size="0.054 0.008 0.05375" />
@@ -130,9 +130,8 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
                 <geom type="mesh" class="visual" pos="0.008 -0.0707131 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="tibia__configuration_right" material="tibia__configuration_right_material" />
                 <body name="ankle_block__configuration_left" pos="0.008 -0.0612131 -0" quat="0 -0 -0 1">
                   <joint axis="0 0 1" name="r_anklepassive_yp" type="hinge" class="passive" />
-                  <inertial pos="-0.0110676 -0.00979852 -0.0144015" mass="0.033" fullinertia="3.5494e-06 5.8782e-06 7.2877e-06 -2.7198e-07 -2.2538e-08 -2.7739e-09" />
+                  <inertial pos="-0.0110676 -0.00979852 -0.0144015" mass="0.031700" fullinertia="4.1507e-06 6.8740e-06 8.5224e-06 -3.1805e-07 -2.6356e-08 -3.2439e-09" />
                   <geom class="collision" pos="-0.01275 -0.006 -0.0145" quat="0.5 0.5 0.5 -0.5" type="box" size="0.0135 0.006 0.00625" />
-                  <geom type="mesh" class="visual" pos="0 0.0095 -0.0145" quat="0.5 0.5 0.5 -0.5" mesh="ankle_dbl_block__configuration_right" material="ankle_dbl_block__configuration_right_material" />
                   <geom type="mesh" class="visual" pos="-0.032 0 -0.0145" quat="0.707107 0 -0.707107 -0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
                   <geom type="mesh" class="visual" pos="0 0.0095 -0.0145" quat="0.5 0.5 0.5 -0.5" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
                   <body name="foot" pos="-0.0385 0 -0.0145" quat="0 -0.707107 0 -0.707107">
@@ -147,7 +146,7 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
                     <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 0.707107 0.707107" mesh="foot__configuration_right" material="foot__configuration_right_material" />
                     <site group="3" name="right_foot" pos="-0 -0.023 0.042" quat="0.5 -0.5 -0.5 -0.5" />
                   </body>
-                  <geom class="visual" type="mesh" mesh="part_xl330_dummy_ankle_hinge" pos="0 0 -0.0065" quat="1 0 -0 0" rgba="0.9 0.65 0.2 1" />
+                  <geom class="visual" type="mesh" mesh="part_ankle_block_integrated_right" pos="0 0.0095 -0.0145" quat="0.5 0.5 0.5 -0.5" rgba="0.15 0.75 0.3 1" />
                 </body>
               </body>
               <body name="right_shank_rear" pos="0.025 0.025 0">
@@ -228,9 +227,8 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
                 <geom type="mesh" class="visual" pos="-0.008 0.0707131 -0.0515" quat="0.5 0.5 0.5 -0.5" mesh="tibia__configuration_left" material="tibia__configuration_left_material" />
                 <body name="ankle_block__configuration_right" pos="-0.008 0.0612131 -0" quat="0 0 -0 1">
                   <joint axis="0 0 1" name="l_anklepassive_yp" type="hinge" class="passive" />
-                  <inertial pos="0.0110706 0.00979852 -0.0145955" mass="0.033" fullinertia="3.5494e-06 5.8767e-06 7.2863e-06 -2.7228e-07 -2.3367e-08 -3.0736e-09" />
+                  <inertial pos="0.0110706 0.00979852 -0.0145955" mass="0.031700" fullinertia="4.1508e-06 6.8724e-06 8.5208e-06 -3.1841e-07 -2.7326e-08 -3.5943e-09" />
                   <geom class="collision" pos="0.01275 0.006 -0.0145" quat="0.5 -0.5 0.5 0.5" type="box" size="0.0135 0.006 0.00625" />
-                  <geom type="mesh" class="visual" pos="-0 -0.0095 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="ankle_dbl_block__configuration_right" material="ankle_dbl_block__configuration_right_material" />
                   <geom type="mesh" class="visual" pos="0.032 0 -0.0145" quat="0 0.707107 0 0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
                   <geom type="mesh" class="visual" pos="-0 -0.0095 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
                   <body name="foot_2" pos="0.0385 0 -0.0145" quat="0.707107 -0 -0.707107 0">
@@ -245,7 +243,7 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
                     <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 0.707107 0.707107" mesh="foot__configuration_right" material="foot__configuration_right_material" />
                     <site group="3" name="left_foot" pos="-0 -0.023 0.042" quat="0.5 -0.5 -0.5 -0.5" />
                   </body>
-                  <geom class="visual" type="mesh" mesh="part_xl330_dummy_ankle_hinge" pos="0 0 -0.0225" quat="0 1 0 0" rgba="0.9 0.65 0.2 1" />
+                  <geom class="visual" type="mesh" mesh="part_ankle_block_integrated_left" pos="-0 -0.0095 -0.0145" quat="0.5 -0.5 0.5 0.5" rgba="0.15 0.75 0.3 1" />
                 </body>
               </body>
               <body name="left_shank_rear" pos="-0.025 -0.025 0">
@@ -264,7 +262,7 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
           </body>
         </body>
       </body>
-      <geom class="visual" type="mesh" mesh="part_xl330_dummy_neck" pos="-0.00204165 -0 0.1195" quat="0.707107 0 0 0.707107" rgba="0.9 0.65 0.2 1" />
+      <geom class="visual" type="mesh" mesh="part_neck_post" pos="-0.00204165 -0 0.1195" quat="0.707107 0 0 0.707107" rgba="0.15 0.75 0.3 1" />
     </body>
   </worldbody>
   <asset>
@@ -323,11 +321,16 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
     <mesh name="part_knee_yoke_right" file="../../parts/knee_yoke_right.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_knee_yoke_left" file="../../parts/knee_yoke_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_knee_axle_cap" file="../../parts/knee_axle_cap.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_neck_post" file="../../parts/neck_post.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_shoulder_roll_right" file="../../parts/xl330_dummy_shoulder_roll_right.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_shoulder_roll_left" file="../../parts/xl330_dummy_shoulder_roll_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_neck" file="../../parts/xl330_dummy_neck.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_hip_yaw" file="../../parts/xl330_dummy_hip_yaw.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_ankle_hinge" file="../../parts/xl330_dummy_ankle_hinge.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_ankle_block_integrated_right" file="../../parts_derived/ankle_block_integrated_right.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_ankle_block_integrated_left" file="../../parts_derived/ankle_block_integrated_left.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_upper_arm_integrated_right" file="../../parts_derived/upper_arm_integrated_right.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_upper_arm_integrated_left" file="../../parts_derived/upper_arm_integrated_left.stl" scale="0.001 0.001 0.001" />
   </asset>
   <actuator>
     <position name="r_shoulder_yp" joint="r_shoulder_yp" kp="50" dampratio="1" forcerange="-0.52 0.52" />

@@ -70,7 +70,13 @@ def q2m(q):
 def vec(s): return np.array([float(t) for t in s.split()])
 def fmt(a): return " ".join(f"{float(t):.6g}" for t in np.atleast_1d(a))
 
-DUMMY_MASS = 0.008   # kg, a printed XL330-sized block (20 x 34 x 26 mm shell)
+DUMMY_MASS = 0.008   # kg, a printed XL330-sized block (20 x 34 x 26 mm, 2 mm shell: 7.7 cm3)
+# Integrated printed parts (tools/make_parts.py with Microban's cad/step): volumes from CadQuery at an
+# effective 1.0 g/cm3 (PLA, 3 walls, ~40 % infill). The originals they absorb are taken out at the same density.
+PLA_G_PER_CM3 = 1.0
+ANKLE_CAP_CM3, ANKLE_INTEGRATED_CM3 = 9.2, 15.9        # ankle_dbl_block -> ankle_block_integrated_{side}
+HUMERUS_CM3, UPPER_ARM_CM3 = 4.3, 10.7                 # humerus plate -> upper_arm_integrated_{side}
+NECK_POST_CM3 = 5.7                                    # xl330_dummy_neck -> neck_post
 
 
 PART_HOOK = {"fn": None}   # set in main() when --parts is given: (body, name, pos, quat) -> adds a mesh geom
@@ -90,7 +96,7 @@ def dummy_block(body, pos, quat, part_name=None):
     ine.set("mass", f"{m1:.6f}")
 
 
-def slim_ankle(body, h):
+def slim_ankle(body, h, integrated=None):
     """Take the ankle-pitch servo out of the ankle block.
 
     Upstream, the block carries two XL330s: the ankle-pitch servo (its horn on the
@@ -102,7 +108,12 @@ def slim_ankle(body, h):
     for g in list(body.findall("geom")):
         at = g.attrib
         if at.get("mesh") == "xl330":
-            body.remove(g); dummy_block(body, at.get("pos"), at.get("quat", "1 0 0 0"), "xl330_dummy_ankle_hinge")
+            body.remove(g)
+            if integrated is None or not PART_HOOK["fn"]:
+                dummy_block(body, at.get("pos"), at.get("quat", "1 0 0 0"), "xl330_dummy_ankle_hinge")
+        elif at.get("mesh", "").startswith("ankle_dbl_block") and integrated and PART_HOOK["fn"]:
+            # the cap and the hinge body become one printed part (parts_derived/ankle_block_integrated_*)
+            body.remove(g); PART_HOOK["fn"](body, f"ankle_block_integrated_{integrated}", vec(at["pos"]), vec(at.get("quat", "1 0 0 0")))
         elif at.get("mesh") in ("dc15_a01_horn_idle2_dummy", "bts2_m2_6x8", "dc15_a01_idle_cap_dummy"):
             body.remove(g)
         elif at.get("class") == "collision":
@@ -111,7 +122,11 @@ def slim_ankle(body, h):
             at["size"] = fmt((sx, h, sz)); at["pos"] = fmt((px, np.sign(py) * h, pz))
     ine = body.find("inertial")
     scale = SLIM_ANKLE_MASS / float(ine.get("mass"))   # dummy_block already added its 8 g above
-    ine.set("mass", f"{SLIM_ANKLE_MASS + DUMMY_MASS}")
+    if integrated and PART_HOOK["fn"]:
+        m1 = SLIM_ANKLE_MASS + (ANKLE_INTEGRATED_CM3 - ANKLE_CAP_CM3) * PLA_G_PER_CM3 / 1000
+    else:
+        m1 = SLIM_ANKLE_MASS + DUMMY_MASS
+    ine.set("mass", f"{m1:.6f}")
     ine.set("fullinertia", " ".join(f"{float(v) * scale:.4e}" for v in ine.get("fullinertia").split()))
 
 
@@ -151,6 +166,13 @@ def main():
                          "replaces the shoulder-roll servo. With the arm straight down the hanging forearm sits right "
                          "over the knee yoke / link bars (22..32 mm from the leg centre); 30 deg moves the elbow 26 mm "
                          "outboard so the forearm can be bent forward like a walking human. 0 = arm at the side")
+    ap.add_argument("--dummies", action="store_true",
+                    help="use the XL330-shaped spacer blocks at the ankle hinge, shoulder roll and neck instead of the "
+                         "integrated parts (ankle_block_integrated, upper_arm_integrated, neck_post). The hip-yaw "
+                         "position always keeps the servo-shaped block so the 14-servo upgrade stays a drop-in")
+    ap.add_argument("--derived", default=None,
+                    help="directory of the parts derived from Microban's CAD, relative to meshdir (default: the "
+                         "--parts directory with 'parts' replaced by 'parts_derived')")
     ap.add_argument("--hip-flex-limit", type=float, default=HIP_FLEX_LIMIT,
                     help="cap on hip flexion [deg] from the thigh bar / knee axle stub clearance (85 with the Ø8 "
                          "printed stub; an M3 bolt axle would allow ~96)")
@@ -204,11 +226,16 @@ def main():
     root.set("model", model_name)
 
     asset = root.find("asset")
-    PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap",
+    PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap", "neck_post",
                    "xl330_dummy_shoulder_roll_right", "xl330_dummy_shoulder_roll_left", "xl330_dummy_neck", "xl330_dummy_hip_yaw", "xl330_dummy_ankle_hinge")
+    DERIVED_MESHES = ("ankle_block_integrated_right", "ankle_block_integrated_left", "upper_arm_integrated_right", "upper_arm_integrated_left")
+    NO_COLLISION = ("neck_post",) + DERIVED_MESHES     # big parts fused with originals: a convex hull would be meaningless
     if a.parts:
         for nm in PART_MESHES:
             ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{a.parts}/{nm}.stl", "scale": "0.001 0.001 0.001"})
+        derived = a.derived or a.parts.replace("parts", "parts_derived")
+        for nm in DERIVED_MESHES:
+            ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{derived}/{nm}.stl", "scale": "0.001 0.001 0.001"})
 
     PART_GREEN, DUMMY_AMBER = "0.15 0.75 0.3 1", "0.9 0.65 0.2 1"
 
@@ -223,7 +250,7 @@ def main():
             for r, h, zc in ((0.009, 0.001, 0.001), (0.004, 0.006, 0.008)):
                 ET.SubElement(body, "geom", {"class": "collision", "type": "cylinder", "size": fmt((r, h)),
                                              "pos": fmt(np.asarray(pos) + Rq @ np.array([0, 0, zc])), "quat": fmt(quat)})
-        elif "dummy" not in nm:   # the mechanism parts also collide (convex hull), so interference is simulated
+        elif "dummy" not in nm and nm not in NO_COLLISION:   # the mechanism parts also collide (convex hull), so interference is simulated
             ET.SubElement(body, "geom", {"class": "collision", "type": "mesh", "mesh": f"part_{nm}", "pos": fmt(pos),
                                          "quat": fmt(quat)})
     PART_HOOK["fn"] = part if a.parts else None
@@ -268,7 +295,7 @@ def main():
     for side, L in LEG.items():
         hipblock, femur, tibia, ankle = (bodies[L[k]] for k in ("hipblock", "femur", "tibia", "ankle"))
         if not a.keep_ankle_servo:
-            slim_ankle(ankle, a.clevis)
+            slim_ankle(ankle, a.clevis, None if a.dummies else side)
         d1 = np.array([L["sx"] * a.back, -L["sx"] * a.tilt, 0.0])               # thigh rear pivot (back, down)
         d2 = np.array([L["sx"] * a.shank_back, +L["sx"] * a.shank_tilt, 0.0])   # shank rear pivot (back, up)
         v1 = vec(tibia.get("pos"))          # hip pitch axis -> knee axis (femur frame)
@@ -362,7 +389,12 @@ def main():
         trunk = bodies["trunk"]
         for g in list(trunk.findall("geom")):
             if g.get("mesh", "").startswith("xl330") and abs(vec(g.get("pos"))[2] - 0.1195) < 1e-3:
-                trunk.remove(g); dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_neck")
+                trunk.remove(g)
+                if a.dummies or not a.parts:
+                    dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_neck")
+                else:
+                    part(trunk, "neck_post", vec(g.get("pos")), vec(g.get("quat", "1 0 0 0")))
+                    ine = trunk.find("inertial"); ine.set("mass", f"{float(ine.get('mass')) + NECK_POST_CM3 * PLA_G_PER_CM3 / 1000:.6f}")
         ine = trunk.find("inertial")
         m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
         ine.set("mass", f"{m1:.6f}")
@@ -415,10 +447,17 @@ def main():
             for g in list(hum.findall("geom")):
                 if g.get("mesh") == "xl330" and abs(vec(g.get("pos"))[2] + 0.0065) < 1e-3:
                     hum.remove(g); n_removed += 1
-                    dummy_block(hum, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_shoulder_roll_" + hb.rsplit("_", 1)[1])
+                    if a.dummies or not a.parts:
+                        dummy_block(hum, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_shoulder_roll_" + hb.rsplit("_", 1)[1])
             assert n_removed == 1, f"{hb}: shoulder-roll servo not found"
             ine = hum.find("inertial")
             m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
+            if not (a.dummies or not a.parts):
+                # the humerus plate and the servo-shaped column become one printed part (parts_derived/upper_arm_integrated_*)
+                for g in list(hum.findall("geom")):
+                    if g.get("mesh") == "humerus":
+                        hum.remove(g); part(hum, "upper_arm_integrated_" + hb.rsplit("_", 1)[1], vec(g.get("pos")), vec(g.get("quat", "1 0 0 0")))
+                m1 += (UPPER_ARM_CM3 - HUMERUS_CM3) * PLA_G_PER_CM3 / 1000
             ine.set("mass", f"{m1:.6f}")
             ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
 
@@ -491,7 +530,7 @@ def main():
     body = ET.tostring(root, encoding="unicode")
     note = (f"<!--\n{model_name}: Microban with parallel-link legs (passive ankle pitch).\n"
             f"Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py\n"
-            f"(dof={a.dof}, elbow={"flexion-only" if a.elbow_flexion_only else "free"}, naming={a.naming}, thigh back/tilt={a.back}/{a.tilt}, shank back/tilt={a.shank_back}/{a.shank_tilt}, link_x={a.link_x}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}, arm_abduct={a.arm_abduct if a.dof <= 14 else "n/a"}).\n"
+            f"(dof={a.dof}, elbow={"flexion-only" if a.elbow_flexion_only else "free"}, naming={a.naming}, thigh back/tilt={a.back}/{a.tilt}, shank back/tilt={a.shank_back}/{a.shank_tilt}, link_x={a.link_x}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, integrated_parts={not a.dummies and bool(a.parts)}, forearm_ext={a.forearm_ext}, arm_abduct={a.arm_abduct if a.dof <= 14 else "n/a"}).\n"
             f"Hip range {np.degrees(HIP_RANGE[0]):.0f}..{np.degrees(HIP_RANGE[1]):.0f} deg, knee {np.degrees(KNEE_RANGE[0]):.0f}..{np.degrees(KNEE_RANGE[1]):.0f} deg (pelvis-relative). See NOTICE.md for attribution.\n-->\n")
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:
