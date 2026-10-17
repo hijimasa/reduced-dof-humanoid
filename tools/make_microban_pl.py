@@ -40,10 +40,10 @@ for side, s in (("right", "r"), ("left", "l")):
 LME2UP = {v: k for k, v in UP2LME.items()}
 
 # ---------------------------------------------------------------- geometry
-# Rear pivots sit BACK (toward -x of the robot) and slightly tilted so that the
-# parallelogram singularity is pushed away from the postures that matter:
-#   thigh linkage: rear pivot 5 mm DOWN  -> singular at hip ext +76deg, hip flex -104deg
-#   shank linkage: rear pivot 5 mm UP    -> singular at knee flex +104deg, knee ext -76deg
+# Both link bars sit BEHIND the leg (toward -x of the robot), the pivots tilted so that the
+# parallelogram singularity is pushed away from the postures that matter (defaults):
+#   thigh linkage: pivots 22 mm back, 8 mm DOWN  -> singular at hip ext +69.4deg, hip flex -110.6deg
+#   shank linkage: pivots 30 mm back, 30 mm UP   -> singular at knee flex +135deg, knee ext -45deg
 # (positive hip/knee pitch = link swings backward, as in the original model)
 LEG = {  # local frames: right femur +x = world back, +y = world up; left femur mirrored
     "right": dict(hipblock="hip_block__configuration_right", femur="femur__configuration_right",
@@ -204,8 +204,8 @@ def main():
     ap.add_argument("--forearm-ext", type=float, default=0.04,
                     help="lengthen each forearm by this much [m] (default 40 mm: KXR / Robovie-nano proportions; "
                          "ROBO-ONE Light allows 26 cm from the shoulder and wants the hands 50 mm up while walking, "
-                         "the hands then hang 72 mm up with straight arms in the walking crouch). With --parts the "
-                         "forearm mesh becomes parts_derived/radius_long (a Ø10 rod with a rounded end), 10 g per 40 mm; "
+                         "the hands then hang 86 mm up with straight arms in the walking crouch). With --parts the "
+                         "forearm mesh becomes parts_derived/radius_long (a Ø10 rod with a rounded end), 4 g per 40 mm; "
                          "0 keeps Microban's forearm")
     a = ap.parse_args()
 
@@ -512,7 +512,7 @@ def main():
                 ET.SubElement(rad, "geom", {"class": "visual", "type": "capsule", "size": "0.005", "rgba": "0.3 0.3 0.32 1",
                                             "fromto": fmt((0, y0, zc)) + " " + fmt((0, y1, zc))})
             ine = rad.find("inertial")
-            m0 = float(ine.get("mass")); madd = 0.010 * a.forearm_ext / 0.040
+            m0 = float(ine.get("mass")); madd = 0.004 * a.forearm_ext / 0.040     # Ø10 PLA rod: ~3 cm3 per 40 mm, 4 g with the fillet
             c0 = vec(ine.get("pos")); c1 = np.array([0, (y0 + y1) / 2, zc])
             ine.set("pos", fmt((c0 * m0 + c1 * madd) / (m0 + madd))); ine.set("mass", f"{m0 + madd:.6f}")
             fi = [float(v) for v in ine.get("fullinertia").split()]
