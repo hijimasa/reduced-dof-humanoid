@@ -46,7 +46,8 @@ F_SETTLE_ROLL = 100
 # 2026-10-17: rise re-searched on the FINAL geometry (rear thigh link, hip lug, long forearms,
 # abducted arms): motion/getup_supine.py --pitch 90 --seed 72 --robust 3 --steps 20 on microban_12,
 # nine poses (6/8 at the search cadence); timed by motion/tune_getup.py (pop 90, gens 25,
-# trials 8): 6.9 s -> 6.7 s, 100% of its screens.
+# trials 8): 6.9 s -> 6.7 s, 100% of its screens. Re-timed again on THIS model: 6.5 s -> 5.2 s
+# (prone 8/8, supine 7/8 in sim_check).
 _PRONE_POSES = [
     # (leg: hip yaw, hip roll, hip pitch, knee, ankle roll), (shoulder pitch, [unused], elbow)
     ((0.0, 13.434479, 62.016952, -4.767457, -22.618828), (-7.597739, 89.824309, 120.718426)),
@@ -62,9 +63,9 @@ _PRONE_POSES = [
 GETUP_PRONE = [p for p in _PRONE_POSES for _ in (0, 1)]
 # Re-timed on THIS model by tools/tune_getup.py (pop 90, gens 25, trials 8): 4.7 s -> 3.8 s, 100% of
 # its screens (the 12-servo schedule gave 1/8 here).
-F_RISE_D = [45, 17, 52, 16, 38, 25, 55, 16, 22, 13, 53, 23, 53, 21, 52, 14, 34, 17]
-PRONE_PREP = [('lie_flat', (0, 90, 0), 27)]
-F_HOME_D = 76
+F_RISE_D = [30, 13, 49, 11, 47, 22, 56, 17, 23, 11, 53, 22, 10, 14, 42, 10, 34, 12]
+PRONE_PREP = [('lie_flat', (0, 90, 0), 14)]
+F_HOME_D = 28
 
 # ---- walk, re-tuned under the ROBO-ONE Light rules (80 mm sole, knee > 90 deg) -------------
 # tools/tune_gait.py walk with Z0 bounded to <= -0.141: 25.0 of the tuner's speed score at

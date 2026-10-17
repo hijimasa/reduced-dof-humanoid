@@ -3812,7 +3812,7 @@
 (Not Available Now)</Formula>
       </MotionFormulas>
       <Nodes>
-        <Node id="pose_0" type="pose" name="0_lie_flat" pos_x="50.0" pos_y="100.0" duration="1.0" frames="27" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_0" type="pose" name="0_lie_flat" pos_x="50.0" pos_y="100.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="0" />
             <Angle joint="l_elbow_yp" value="0" />
@@ -3849,7 +3849,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_1" type="pose" name="1_rise_0" pos_x="50.0" pos_y="190.0" duration="1.0" frames="45" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_1" type="pose" name="1_rise_0" pos_x="50.0" pos_y="190.0" duration="1.0" frames="30" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-7.598" />
             <Angle joint="l_elbow_yp" value="120.718" />
@@ -3886,7 +3886,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_2" type="pose" name="2_rise_1" pos_x="50.0" pos_y="280.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_2" type="pose" name="2_rise_1" pos_x="50.0" pos_y="280.0" duration="1.0" frames="13" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-7.598" />
             <Angle joint="l_elbow_yp" value="120.718" />
@@ -3923,7 +3923,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_3" type="pose" name="3_rise_2" pos_x="50.0" pos_y="370.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_3" type="pose" name="3_rise_2" pos_x="50.0" pos_y="370.0" duration="1.0" frames="49" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-124.437" />
             <Angle joint="l_elbow_yp" value="72.714" />
@@ -3960,7 +3960,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_4" type="pose" name="4_rise_3" pos_x="50.0" pos_y="460.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_4" type="pose" name="4_rise_3" pos_x="50.0" pos_y="460.0" duration="1.0" frames="11" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-124.437" />
             <Angle joint="l_elbow_yp" value="72.714" />
@@ -3997,7 +3997,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_5" type="pose" name="5_rise_4" pos_x="50.0" pos_y="550.0" duration="1.0" frames="38" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_5" type="pose" name="5_rise_4" pos_x="50.0" pos_y="550.0" duration="1.0" frames="47" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-19.409" />
             <Angle joint="l_elbow_yp" value="21.806" />
@@ -4034,7 +4034,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_6" type="pose" name="6_rise_5" pos_x="50.0" pos_y="640.0" duration="1.0" frames="25" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_6" type="pose" name="6_rise_5" pos_x="50.0" pos_y="640.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-19.409" />
             <Angle joint="l_elbow_yp" value="21.806" />
@@ -4071,7 +4071,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_7" type="pose" name="7_rise_6" pos_x="50.0" pos_y="730.0" duration="1.0" frames="55" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_7" type="pose" name="7_rise_6" pos_x="50.0" pos_y="730.0" duration="1.0" frames="56" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-26.879" />
             <Angle joint="l_elbow_yp" value="15.975" />
@@ -4108,7 +4108,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_8" type="pose" name="8_rise_7" pos_x="50.0" pos_y="820.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_8" type="pose" name="8_rise_7" pos_x="50.0" pos_y="820.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-26.879" />
             <Angle joint="l_elbow_yp" value="15.975" />
@@ -4145,7 +4145,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_9" type="pose" name="9_rise_8" pos_x="50.0" pos_y="910.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_9" type="pose" name="9_rise_8" pos_x="50.0" pos_y="910.0" duration="1.0" frames="23" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-18.288" />
             <Angle joint="l_elbow_yp" value="-16.538" />
@@ -4182,7 +4182,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_10" type="pose" name="10_rise_9" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="13" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_10" type="pose" name="10_rise_9" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="11" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-18.288" />
             <Angle joint="l_elbow_yp" value="-16.538" />
@@ -4256,7 +4256,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_12" type="pose" name="12_rise_11" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="23" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_12" type="pose" name="12_rise_11" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="36.759" />
             <Angle joint="l_elbow_yp" value="-78.686" />
@@ -4293,7 +4293,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_13" type="pose" name="13_rise_12" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="53" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_13" type="pose" name="13_rise_12" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="10" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="54.516" />
             <Angle joint="l_elbow_yp" value="-55.272" />
@@ -4330,7 +4330,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_14" type="pose" name="14_rise_13" pos_x="50.0" pos_y="1360.0" duration="1.0" frames="21" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_14" type="pose" name="14_rise_13" pos_x="50.0" pos_y="1360.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="54.516" />
             <Angle joint="l_elbow_yp" value="-55.272" />
@@ -4367,7 +4367,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_15" type="pose" name="15_rise_14" pos_x="50.0" pos_y="1450.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_15" type="pose" name="15_rise_14" pos_x="50.0" pos_y="1450.0" duration="1.0" frames="42" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="76.734" />
             <Angle joint="l_elbow_yp" value="-30.086" />
@@ -4404,7 +4404,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_16" type="pose" name="16_rise_15" pos_x="50.0" pos_y="1540.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_16" type="pose" name="16_rise_15" pos_x="50.0" pos_y="1540.0" duration="1.0" frames="10" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="76.734" />
             <Angle joint="l_elbow_yp" value="-30.086" />
@@ -4478,7 +4478,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_18" type="pose" name="18_rise_17" pos_x="50.0" pos_y="1720.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_18" type="pose" name="18_rise_17" pos_x="50.0" pos_y="1720.0" duration="1.0" frames="12" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="60.546" />
             <Angle joint="l_elbow_yp" value="8.319" />
@@ -4515,7 +4515,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_19" type="pose" name="19_home" pos_x="50.0" pos_y="1810.0" duration="1.0" frames="76" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_19" type="pose" name="19_home" pos_x="50.0" pos_y="1810.0" duration="1.0" frames="28" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
@@ -4708,7 +4708,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_3" type="pose" name="3_lie_flat" pos_x="50.0" pos_y="370.0" duration="1.0" frames="127" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_3" type="pose" name="3_lie_flat" pos_x="50.0" pos_y="370.0" duration="1.0" frames="114" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="0" />
             <Angle joint="l_elbow_yp" value="0" />
@@ -4745,7 +4745,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_4" type="pose" name="4_rise_0" pos_x="50.0" pos_y="460.0" duration="1.0" frames="45" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_4" type="pose" name="4_rise_0" pos_x="50.0" pos_y="460.0" duration="1.0" frames="30" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-7.598" />
             <Angle joint="l_elbow_yp" value="120.718" />
@@ -4782,7 +4782,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_5" type="pose" name="5_rise_1" pos_x="50.0" pos_y="550.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_5" type="pose" name="5_rise_1" pos_x="50.0" pos_y="550.0" duration="1.0" frames="13" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-7.598" />
             <Angle joint="l_elbow_yp" value="120.718" />
@@ -4819,7 +4819,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_6" type="pose" name="6_rise_2" pos_x="50.0" pos_y="640.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_6" type="pose" name="6_rise_2" pos_x="50.0" pos_y="640.0" duration="1.0" frames="49" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-124.437" />
             <Angle joint="l_elbow_yp" value="72.714" />
@@ -4856,7 +4856,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_7" type="pose" name="7_rise_3" pos_x="50.0" pos_y="730.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_7" type="pose" name="7_rise_3" pos_x="50.0" pos_y="730.0" duration="1.0" frames="11" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-124.437" />
             <Angle joint="l_elbow_yp" value="72.714" />
@@ -4893,7 +4893,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_8" type="pose" name="8_rise_4" pos_x="50.0" pos_y="820.0" duration="1.0" frames="38" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_8" type="pose" name="8_rise_4" pos_x="50.0" pos_y="820.0" duration="1.0" frames="47" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-19.409" />
             <Angle joint="l_elbow_yp" value="21.806" />
@@ -4930,7 +4930,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_9" type="pose" name="9_rise_5" pos_x="50.0" pos_y="910.0" duration="1.0" frames="25" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_9" type="pose" name="9_rise_5" pos_x="50.0" pos_y="910.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-19.409" />
             <Angle joint="l_elbow_yp" value="21.806" />
@@ -4967,7 +4967,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_10" type="pose" name="10_rise_6" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="55" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_10" type="pose" name="10_rise_6" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="56" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-26.879" />
             <Angle joint="l_elbow_yp" value="15.975" />
@@ -5004,7 +5004,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_11" type="pose" name="11_rise_7" pos_x="50.0" pos_y="1090.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_11" type="pose" name="11_rise_7" pos_x="50.0" pos_y="1090.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-26.879" />
             <Angle joint="l_elbow_yp" value="15.975" />
@@ -5041,7 +5041,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_12" type="pose" name="12_rise_8" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_12" type="pose" name="12_rise_8" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="23" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-18.288" />
             <Angle joint="l_elbow_yp" value="-16.538" />
@@ -5078,7 +5078,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_13" type="pose" name="13_rise_9" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="13" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_13" type="pose" name="13_rise_9" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="11" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="-18.288" />
             <Angle joint="l_elbow_yp" value="-16.538" />
@@ -5152,7 +5152,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_15" type="pose" name="15_rise_11" pos_x="50.0" pos_y="1450.0" duration="1.0" frames="23" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_15" type="pose" name="15_rise_11" pos_x="50.0" pos_y="1450.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="36.759" />
             <Angle joint="l_elbow_yp" value="-78.686" />
@@ -5189,7 +5189,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_16" type="pose" name="16_rise_12" pos_x="50.0" pos_y="1540.0" duration="1.0" frames="53" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_16" type="pose" name="16_rise_12" pos_x="50.0" pos_y="1540.0" duration="1.0" frames="10" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="54.516" />
             <Angle joint="l_elbow_yp" value="-55.272" />
@@ -5226,7 +5226,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_17" type="pose" name="17_rise_13" pos_x="50.0" pos_y="1630.0" duration="1.0" frames="21" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_17" type="pose" name="17_rise_13" pos_x="50.0" pos_y="1630.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="54.516" />
             <Angle joint="l_elbow_yp" value="-55.272" />
@@ -5263,7 +5263,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_18" type="pose" name="18_rise_14" pos_x="50.0" pos_y="1720.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_18" type="pose" name="18_rise_14" pos_x="50.0" pos_y="1720.0" duration="1.0" frames="42" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="76.734" />
             <Angle joint="l_elbow_yp" value="-30.086" />
@@ -5300,7 +5300,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_19" type="pose" name="19_rise_15" pos_x="50.0" pos_y="1810.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_19" type="pose" name="19_rise_15" pos_x="50.0" pos_y="1810.0" duration="1.0" frames="10" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="76.734" />
             <Angle joint="l_elbow_yp" value="-30.086" />
@@ -5374,7 +5374,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_21" type="pose" name="21_rise_17" pos_x="50.0" pos_y="1990.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_21" type="pose" name="21_rise_17" pos_x="50.0" pos_y="1990.0" duration="1.0" frames="12" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="60.546" />
             <Angle joint="l_elbow_yp" value="8.319" />

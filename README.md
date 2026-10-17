@@ -216,8 +216,8 @@ servo zero-offset and initial-tilt disturbances, 8 trials each:
 | Walk forward / back, sidestep | 8/8 (about 32 mm/s) | 8/8 |
 | Turn | 8/8 (scuffing, about 33° per cycle) | 8/8 (hip yaw, 72° / 141°) |
 | Jab left / right | 8/8 | 8/8 |
-| Get up from prone | 8/8 (6.7 s, nine poses) | 7/8 (same poses, 12-servo timing) |
-| Get up from supine (roll over + the same rise) | 7/8 | 8/8 |
+| Get up from prone | 8/8 (6.7 s, nine poses) | 8/8 (same poses, re-timed: 5.2 s) |
+| Get up from supine (roll over + the same rise) | 7/8 | 7/8 |
 
 The rise was searched on the final geometry (`motion/getup_supine.py
 --pitch 90`, eight seeds): with the 40 mm longer forearms the search stopped
