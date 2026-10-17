@@ -43,26 +43,28 @@ F_SETTLE_ROLL = 100
 # off into hip-yaw twists that only worked nominally; the yaw-free rise carried over at
 # 10/16 prone, 13/16 supine (roll + rise) before re-timing, 46 g heavier than where it
 # was found. Each pose is listed twice: move, then hold.
-# 2026-10-17: rise re-searched for the arms abducted 30 deg (--arm-abduct) with the printed parts
-# colliding: tools/getup_supine.py --pitch 90 --seed 32 --robust 3 (found on a model with the hip
-# flexion cap at 100, but the rise uses hip -20..+58 only, so it is the same on the standard model).
-# Six poses: rolls over and stands facing the other way. Timed by tune_getup.py (pop 90, gens 25,
-# trials 8): 4.9 s -> 4.6 s, 98% of its screens.
+# 2026-10-17: rise re-searched on the FINAL geometry (rear thigh link, hip lug, long forearms,
+# abducted arms): motion/getup_supine.py --pitch 90 --seed 72 --robust 3 --steps 20 on microban_12,
+# nine poses (6/8 at the search cadence); timed by motion/tune_getup.py (pop 90, gens 25,
+# trials 8): 6.9 s -> 6.7 s, 100% of its screens.
 _PRONE_POSES = [
     # (leg: hip yaw, hip roll, hip pitch, knee, ankle roll), (shoulder pitch, [unused], elbow)
-    ((0.0, -18.950396, 57.555902, 3.311391, -19.612827), (-43.052088, 162.767617, 72.520268)),
-    ((0.0, -24.719447, 57.555902, 76.663522, 7.718129), (-57.193811, 202.870646, -13.893520)),
-    ((0.0, -12.254259, 56.829073, 107.773167, -27.673930), (-17.608691, 198.257037, -34.532642)),
-    ((0.0, 17.276841, 0.048001, 107.963070, -29.581076), (9.014764, 229.612424, 38.541114)),
-    ((0.0, 35.000000, -19.786351, 89.267794, -35.000000), (15.428489, 290.357207, 7.388185)),
-    ((0.0, 31.868273, 5.401025, 10.549636, 8.239007), (-48.799855, 226.869233, -7.866885)),
+    ((0.0, 13.434479, 62.016952, -4.767457, -22.618828), (-7.597739, 89.824309, 120.718426)),
+    ((0.0, 28.939760, 62.016952, 22.000046, -11.640316), (-124.436640, 67.187588, 72.714403)),
+    ((0.0, 35.000000, 62.016952, 127.000106, -35.000000), (-19.409325, 25.990932, 21.805967)),
+    ((0.0, 35.000000, 62.016952, 105.354450, 3.279516), (-26.879386, 40.272662, 15.975284)),
+    ((0.0, -35.000000, 62.016952, 68.121740, 1.759976), (-18.287690, -38.225134, -16.538399)),
+    ((0.0, -35.000000, 34.243016, 66.955918, -8.581963), (36.759169, -38.921473, -78.686083)),
+    ((0.0, -35.000000, -15.882427, 46.400884, -18.002783), (54.516067, -67.019046, -55.271585)),
+    ((0.0, 35.000000, 46.610811, -20.041844, 35.000000), (76.734172, -33.818359, -30.086216)),
+    ((0.0, 35.000000, 15.738871, 3.021146, -2.630319), (60.546171, -59.333977, 8.319482)),
 ]
 GETUP_PRONE = [p for p in _PRONE_POSES for _ in (0, 1)]
 # Re-timed on THIS model by tools/tune_getup.py (pop 90, gens 25, trials 8): 4.7 s -> 3.8 s, 100% of
 # its screens (the 12-servo schedule gave 1/8 here).
-F_RISE_D = [26, 9, 20, 9, 65, 12, 40, 20, 55, 25, 33, 11]
-PRONE_PREP = [('lie_flat', (0, 90, 0), 36)]
-F_HOME_D = 36
+F_RISE_D = [45, 17, 52, 16, 38, 25, 55, 16, 22, 13, 53, 23, 53, 21, 52, 14, 34, 17]
+PRONE_PREP = [('lie_flat', (0, 90, 0), 27)]
+F_HOME_D = 76
 
 # ---- walk, re-tuned under the ROBO-ONE Light rules (80 mm sole, knee > 90 deg) -------------
 # tools/tune_gait.py walk with Z0 bounded to <= -0.141: 25.0 of the tuner's speed score at

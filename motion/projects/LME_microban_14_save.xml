@@ -3812,7 +3812,7 @@
 (Not Available Now)</Formula>
       </MotionFormulas>
       <Nodes>
-        <Node id="pose_0" type="pose" name="0_lie_flat" pos_x="50.0" pos_y="100.0" duration="1.0" frames="36" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_0" type="pose" name="0_lie_flat" pos_x="50.0" pos_y="100.0" duration="1.0" frames="27" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="0" />
             <Angle joint="l_elbow_yp" value="0" />
@@ -3849,22 +3849,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_1" type="pose" name="1_rise_0" pos_x="50.0" pos_y="190.0" duration="1.0" frames="26" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_1" type="pose" name="1_rise_0" pos_x="50.0" pos_y="190.0" duration="1.0" frames="45" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-43.052" />
-            <Angle joint="l_elbow_yp" value="72.52" />
+            <Angle joint="l_shoulder_yp" value="-7.598" />
+            <Angle joint="l_elbow_yp" value="120.718" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="18.95" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="3.311" />
-            <Angle joint="l_ankle_xr" value="19.613" />
-            <Angle joint="r_shoulder_yp" value="-43.052" />
-            <Angle joint="r_elbow_yp" value="72.52" />
+            <Angle joint="l_hipjoint_xr" value="-13.434" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="-4.767" />
+            <Angle joint="l_ankle_xr" value="22.619" />
+            <Angle joint="r_shoulder_yp" value="-7.598" />
+            <Angle joint="r_elbow_yp" value="120.718" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-18.95" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="3.311" />
-            <Angle joint="r_ankle_xr" value="-19.613" />
+            <Angle joint="r_hipjoint_xr" value="13.434" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="-4.767" />
+            <Angle joint="r_ankle_xr" value="-22.619" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -3886,22 +3886,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_2" type="pose" name="2_rise_1" pos_x="50.0" pos_y="280.0" duration="1.0" frames="9" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_2" type="pose" name="2_rise_1" pos_x="50.0" pos_y="280.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-43.052" />
-            <Angle joint="l_elbow_yp" value="72.52" />
+            <Angle joint="l_shoulder_yp" value="-7.598" />
+            <Angle joint="l_elbow_yp" value="120.718" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="18.95" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="3.311" />
-            <Angle joint="l_ankle_xr" value="19.613" />
-            <Angle joint="r_shoulder_yp" value="-43.052" />
-            <Angle joint="r_elbow_yp" value="72.52" />
+            <Angle joint="l_hipjoint_xr" value="-13.434" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="-4.767" />
+            <Angle joint="l_ankle_xr" value="22.619" />
+            <Angle joint="r_shoulder_yp" value="-7.598" />
+            <Angle joint="r_elbow_yp" value="120.718" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-18.95" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="3.311" />
-            <Angle joint="r_ankle_xr" value="-19.613" />
+            <Angle joint="r_hipjoint_xr" value="13.434" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="-4.767" />
+            <Angle joint="r_ankle_xr" value="-22.619" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -3923,22 +3923,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_3" type="pose" name="3_rise_2" pos_x="50.0" pos_y="370.0" duration="1.0" frames="20" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_3" type="pose" name="3_rise_2" pos_x="50.0" pos_y="370.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-57.194" />
-            <Angle joint="l_elbow_yp" value="-13.894" />
+            <Angle joint="l_shoulder_yp" value="-124.437" />
+            <Angle joint="l_elbow_yp" value="72.714" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="24.719" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="76.664" />
-            <Angle joint="l_ankle_xr" value="-7.718" />
-            <Angle joint="r_shoulder_yp" value="-57.194" />
-            <Angle joint="r_elbow_yp" value="-13.894" />
+            <Angle joint="l_hipjoint_xr" value="-28.94" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="22.0" />
+            <Angle joint="l_ankle_xr" value="11.64" />
+            <Angle joint="r_shoulder_yp" value="-124.437" />
+            <Angle joint="r_elbow_yp" value="72.714" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-24.719" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="76.664" />
-            <Angle joint="r_ankle_xr" value="7.718" />
+            <Angle joint="r_hipjoint_xr" value="28.94" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="22.0" />
+            <Angle joint="r_ankle_xr" value="-11.64" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -3960,22 +3960,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_4" type="pose" name="4_rise_3" pos_x="50.0" pos_y="460.0" duration="1.0" frames="9" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_4" type="pose" name="4_rise_3" pos_x="50.0" pos_y="460.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-57.194" />
-            <Angle joint="l_elbow_yp" value="-13.894" />
+            <Angle joint="l_shoulder_yp" value="-124.437" />
+            <Angle joint="l_elbow_yp" value="72.714" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="24.719" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="76.664" />
-            <Angle joint="l_ankle_xr" value="-7.718" />
-            <Angle joint="r_shoulder_yp" value="-57.194" />
-            <Angle joint="r_elbow_yp" value="-13.894" />
+            <Angle joint="l_hipjoint_xr" value="-28.94" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="22.0" />
+            <Angle joint="l_ankle_xr" value="11.64" />
+            <Angle joint="r_shoulder_yp" value="-124.437" />
+            <Angle joint="r_elbow_yp" value="72.714" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-24.719" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="76.664" />
-            <Angle joint="r_ankle_xr" value="7.718" />
+            <Angle joint="r_hipjoint_xr" value="28.94" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="22.0" />
+            <Angle joint="r_ankle_xr" value="-11.64" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -3997,169 +3997,21 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_5" type="pose" name="5_rise_4" pos_x="50.0" pos_y="550.0" duration="1.0" frames="65" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_5" type="pose" name="5_rise_4" pos_x="50.0" pos_y="550.0" duration="1.0" frames="38" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-17.609" />
-            <Angle joint="l_elbow_yp" value="-34.533" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="12.254" />
-            <Angle joint="l_hipjoint_yp" value="56.829" />
-            <Angle joint="l_knee_yp" value="107.773" />
-            <Angle joint="l_ankle_xr" value="27.674" />
-            <Angle joint="r_shoulder_yp" value="-17.609" />
-            <Angle joint="r_elbow_yp" value="-34.533" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-12.254" />
-            <Angle joint="r_hipjoint_yp" value="56.829" />
-            <Angle joint="r_knee_yp" value="107.773" />
-            <Angle joint="r_ankle_xr" value="-27.674" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_6" type="pose" name="6_rise_5" pos_x="50.0" pos_y="640.0" duration="1.0" frames="12" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="-17.609" />
-            <Angle joint="l_elbow_yp" value="-34.533" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="12.254" />
-            <Angle joint="l_hipjoint_yp" value="56.829" />
-            <Angle joint="l_knee_yp" value="107.773" />
-            <Angle joint="l_ankle_xr" value="27.674" />
-            <Angle joint="r_shoulder_yp" value="-17.609" />
-            <Angle joint="r_elbow_yp" value="-34.533" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-12.254" />
-            <Angle joint="r_hipjoint_yp" value="56.829" />
-            <Angle joint="r_knee_yp" value="107.773" />
-            <Angle joint="r_ankle_xr" value="-27.674" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_7" type="pose" name="7_rise_6" pos_x="50.0" pos_y="730.0" duration="1.0" frames="40" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="9.015" />
-            <Angle joint="l_elbow_yp" value="38.541" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-17.277" />
-            <Angle joint="l_hipjoint_yp" value="0.048" />
-            <Angle joint="l_knee_yp" value="107.963" />
-            <Angle joint="l_ankle_xr" value="29.581" />
-            <Angle joint="r_shoulder_yp" value="9.015" />
-            <Angle joint="r_elbow_yp" value="38.541" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="17.277" />
-            <Angle joint="r_hipjoint_yp" value="0.048" />
-            <Angle joint="r_knee_yp" value="107.963" />
-            <Angle joint="r_ankle_xr" value="-29.581" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_8" type="pose" name="8_rise_7" pos_x="50.0" pos_y="820.0" duration="1.0" frames="20" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="9.015" />
-            <Angle joint="l_elbow_yp" value="38.541" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-17.277" />
-            <Angle joint="l_hipjoint_yp" value="0.048" />
-            <Angle joint="l_knee_yp" value="107.963" />
-            <Angle joint="l_ankle_xr" value="29.581" />
-            <Angle joint="r_shoulder_yp" value="9.015" />
-            <Angle joint="r_elbow_yp" value="38.541" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="17.277" />
-            <Angle joint="r_hipjoint_yp" value="0.048" />
-            <Angle joint="r_knee_yp" value="107.963" />
-            <Angle joint="r_ankle_xr" value="-29.581" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_9" type="pose" name="9_rise_8" pos_x="50.0" pos_y="910.0" duration="1.0" frames="55" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="15.428" />
-            <Angle joint="l_elbow_yp" value="7.388" />
+            <Angle joint="l_shoulder_yp" value="-19.409" />
+            <Angle joint="l_elbow_yp" value="21.806" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
             <Angle joint="l_hipjoint_xr" value="-35.0" />
-            <Angle joint="l_hipjoint_yp" value="-19.786" />
-            <Angle joint="l_knee_yp" value="89.268" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="127.0" />
             <Angle joint="l_ankle_xr" value="35.0" />
-            <Angle joint="r_shoulder_yp" value="15.428" />
-            <Angle joint="r_elbow_yp" value="7.388" />
+            <Angle joint="r_shoulder_yp" value="-19.409" />
+            <Angle joint="r_elbow_yp" value="21.806" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
             <Angle joint="r_hipjoint_xr" value="35.0" />
-            <Angle joint="r_hipjoint_yp" value="-19.786" />
-            <Angle joint="r_knee_yp" value="89.268" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="127.0" />
             <Angle joint="r_ankle_xr" value="-35.0" />
           </Angles>
           <Easings>
@@ -4182,21 +4034,21 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_10" type="pose" name="10_rise_9" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="25" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_6" type="pose" name="6_rise_5" pos_x="50.0" pos_y="640.0" duration="1.0" frames="25" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="15.428" />
-            <Angle joint="l_elbow_yp" value="7.388" />
+            <Angle joint="l_shoulder_yp" value="-19.409" />
+            <Angle joint="l_elbow_yp" value="21.806" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
             <Angle joint="l_hipjoint_xr" value="-35.0" />
-            <Angle joint="l_hipjoint_yp" value="-19.786" />
-            <Angle joint="l_knee_yp" value="89.268" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="127.0" />
             <Angle joint="l_ankle_xr" value="35.0" />
-            <Angle joint="r_shoulder_yp" value="15.428" />
-            <Angle joint="r_elbow_yp" value="7.388" />
+            <Angle joint="r_shoulder_yp" value="-19.409" />
+            <Angle joint="r_elbow_yp" value="21.806" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
             <Angle joint="r_hipjoint_xr" value="35.0" />
-            <Angle joint="r_hipjoint_yp" value="-19.786" />
-            <Angle joint="r_knee_yp" value="89.268" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="127.0" />
             <Angle joint="r_ankle_xr" value="-35.0" />
           </Angles>
           <Easings>
@@ -4219,22 +4071,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_11" type="pose" name="11_rise_10" pos_x="50.0" pos_y="1090.0" duration="1.0" frames="33" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_7" type="pose" name="7_rise_6" pos_x="50.0" pos_y="730.0" duration="1.0" frames="55" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-48.8" />
-            <Angle joint="l_elbow_yp" value="-7.867" />
+            <Angle joint="l_shoulder_yp" value="-26.879" />
+            <Angle joint="l_elbow_yp" value="15.975" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-31.868" />
-            <Angle joint="l_hipjoint_yp" value="5.401" />
-            <Angle joint="l_knee_yp" value="10.55" />
-            <Angle joint="l_ankle_xr" value="-8.239" />
-            <Angle joint="r_shoulder_yp" value="-48.8" />
-            <Angle joint="r_elbow_yp" value="-7.867" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="105.354" />
+            <Angle joint="l_ankle_xr" value="-3.28" />
+            <Angle joint="r_shoulder_yp" value="-26.879" />
+            <Angle joint="r_elbow_yp" value="15.975" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="31.868" />
-            <Angle joint="r_hipjoint_yp" value="5.401" />
-            <Angle joint="r_knee_yp" value="10.55" />
-            <Angle joint="r_ankle_xr" value="8.239" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="105.354" />
+            <Angle joint="r_ankle_xr" value="3.28" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4256,22 +4108,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_12" type="pose" name="12_rise_11" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="11" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_8" type="pose" name="8_rise_7" pos_x="50.0" pos_y="820.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-48.8" />
-            <Angle joint="l_elbow_yp" value="-7.867" />
+            <Angle joint="l_shoulder_yp" value="-26.879" />
+            <Angle joint="l_elbow_yp" value="15.975" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-31.868" />
-            <Angle joint="l_hipjoint_yp" value="5.401" />
-            <Angle joint="l_knee_yp" value="10.55" />
-            <Angle joint="l_ankle_xr" value="-8.239" />
-            <Angle joint="r_shoulder_yp" value="-48.8" />
-            <Angle joint="r_elbow_yp" value="-7.867" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="105.354" />
+            <Angle joint="l_ankle_xr" value="-3.28" />
+            <Angle joint="r_shoulder_yp" value="-26.879" />
+            <Angle joint="r_elbow_yp" value="15.975" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="31.868" />
-            <Angle joint="r_hipjoint_yp" value="5.401" />
-            <Angle joint="r_knee_yp" value="10.55" />
-            <Angle joint="r_ankle_xr" value="8.239" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="105.354" />
+            <Angle joint="r_ankle_xr" value="3.28" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4293,7 +4145,377 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_13" type="pose" name="13_home" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="36" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_9" type="pose" name="9_rise_8" pos_x="50.0" pos_y="910.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="-18.288" />
+            <Angle joint="l_elbow_yp" value="-16.538" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="68.122" />
+            <Angle joint="l_ankle_xr" value="-1.76" />
+            <Angle joint="r_shoulder_yp" value="-18.288" />
+            <Angle joint="r_elbow_yp" value="-16.538" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="68.122" />
+            <Angle joint="r_ankle_xr" value="1.76" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_10" type="pose" name="10_rise_9" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="13" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="-18.288" />
+            <Angle joint="l_elbow_yp" value="-16.538" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="68.122" />
+            <Angle joint="l_ankle_xr" value="-1.76" />
+            <Angle joint="r_shoulder_yp" value="-18.288" />
+            <Angle joint="r_elbow_yp" value="-16.538" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="68.122" />
+            <Angle joint="r_ankle_xr" value="1.76" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_11" type="pose" name="11_rise_10" pos_x="50.0" pos_y="1090.0" duration="1.0" frames="53" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="36.759" />
+            <Angle joint="l_elbow_yp" value="-78.686" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="34.243" />
+            <Angle joint="l_knee_yp" value="66.956" />
+            <Angle joint="l_ankle_xr" value="8.582" />
+            <Angle joint="r_shoulder_yp" value="36.759" />
+            <Angle joint="r_elbow_yp" value="-78.686" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="34.243" />
+            <Angle joint="r_knee_yp" value="66.956" />
+            <Angle joint="r_ankle_xr" value="-8.582" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_12" type="pose" name="12_rise_11" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="23" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="36.759" />
+            <Angle joint="l_elbow_yp" value="-78.686" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="34.243" />
+            <Angle joint="l_knee_yp" value="66.956" />
+            <Angle joint="l_ankle_xr" value="8.582" />
+            <Angle joint="r_shoulder_yp" value="36.759" />
+            <Angle joint="r_elbow_yp" value="-78.686" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="34.243" />
+            <Angle joint="r_knee_yp" value="66.956" />
+            <Angle joint="r_ankle_xr" value="-8.582" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_13" type="pose" name="13_rise_12" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="53" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="54.516" />
+            <Angle joint="l_elbow_yp" value="-55.272" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="-15.882" />
+            <Angle joint="l_knee_yp" value="46.401" />
+            <Angle joint="l_ankle_xr" value="18.003" />
+            <Angle joint="r_shoulder_yp" value="54.516" />
+            <Angle joint="r_elbow_yp" value="-55.272" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="-15.882" />
+            <Angle joint="r_knee_yp" value="46.401" />
+            <Angle joint="r_ankle_xr" value="-18.003" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_14" type="pose" name="14_rise_13" pos_x="50.0" pos_y="1360.0" duration="1.0" frames="21" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="54.516" />
+            <Angle joint="l_elbow_yp" value="-55.272" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="-15.882" />
+            <Angle joint="l_knee_yp" value="46.401" />
+            <Angle joint="l_ankle_xr" value="18.003" />
+            <Angle joint="r_shoulder_yp" value="54.516" />
+            <Angle joint="r_elbow_yp" value="-55.272" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="-15.882" />
+            <Angle joint="r_knee_yp" value="46.401" />
+            <Angle joint="r_ankle_xr" value="-18.003" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_15" type="pose" name="15_rise_14" pos_x="50.0" pos_y="1450.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="76.734" />
+            <Angle joint="l_elbow_yp" value="-30.086" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="46.611" />
+            <Angle joint="l_knee_yp" value="-20.042" />
+            <Angle joint="l_ankle_xr" value="-35.0" />
+            <Angle joint="r_shoulder_yp" value="76.734" />
+            <Angle joint="r_elbow_yp" value="-30.086" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="46.611" />
+            <Angle joint="r_knee_yp" value="-20.042" />
+            <Angle joint="r_ankle_xr" value="35.0" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_16" type="pose" name="16_rise_15" pos_x="50.0" pos_y="1540.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="76.734" />
+            <Angle joint="l_elbow_yp" value="-30.086" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="46.611" />
+            <Angle joint="l_knee_yp" value="-20.042" />
+            <Angle joint="l_ankle_xr" value="-35.0" />
+            <Angle joint="r_shoulder_yp" value="76.734" />
+            <Angle joint="r_elbow_yp" value="-30.086" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="46.611" />
+            <Angle joint="r_knee_yp" value="-20.042" />
+            <Angle joint="r_ankle_xr" value="35.0" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_17" type="pose" name="17_rise_16" pos_x="50.0" pos_y="1630.0" duration="1.0" frames="34" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="60.546" />
+            <Angle joint="l_elbow_yp" value="8.319" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="15.739" />
+            <Angle joint="l_knee_yp" value="3.021" />
+            <Angle joint="l_ankle_xr" value="2.63" />
+            <Angle joint="r_shoulder_yp" value="60.546" />
+            <Angle joint="r_elbow_yp" value="8.319" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="15.739" />
+            <Angle joint="r_knee_yp" value="3.021" />
+            <Angle joint="r_ankle_xr" value="-2.63" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_18" type="pose" name="18_rise_17" pos_x="50.0" pos_y="1720.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="60.546" />
+            <Angle joint="l_elbow_yp" value="8.319" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="15.739" />
+            <Angle joint="l_knee_yp" value="3.021" />
+            <Angle joint="l_ankle_xr" value="2.63" />
+            <Angle joint="r_shoulder_yp" value="60.546" />
+            <Angle joint="r_elbow_yp" value="8.319" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="15.739" />
+            <Angle joint="r_knee_yp" value="3.021" />
+            <Angle joint="r_ankle_xr" value="-2.63" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_19" type="pose" name="19_home" pos_x="50.0" pos_y="1810.0" duration="1.0" frames="76" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
@@ -4330,7 +4552,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="jump_0" type="jump" name="-&gt; Base" pos_x="320.0" pos_y="1360.0" jump_target_action_index="1" jump_type="action" jump_target_function="">
+        <Node id="jump_0" type="jump" name="-&gt; Base" pos_x="320.0" pos_y="1900.0" jump_target_action_index="1" jump_type="action" jump_target_function="">
           <OutputPorts>
             <Port label="default" priority="0" />
           </OutputPorts>
@@ -4350,7 +4572,13 @@
         <Edge from="pose_10" to="pose_11" from_port="0" label="default" priority="0" />
         <Edge from="pose_11" to="pose_12" from_port="0" label="default" priority="0" />
         <Edge from="pose_12" to="pose_13" from_port="0" label="default" priority="0" />
-        <Edge from="pose_13" to="jump_0" from_port="0" label="default" priority="0" />
+        <Edge from="pose_13" to="pose_14" from_port="0" label="default" priority="0" />
+        <Edge from="pose_14" to="pose_15" from_port="0" label="default" priority="0" />
+        <Edge from="pose_15" to="pose_16" from_port="0" label="default" priority="0" />
+        <Edge from="pose_16" to="pose_17" from_port="0" label="default" priority="0" />
+        <Edge from="pose_17" to="pose_18" from_port="0" label="default" priority="0" />
+        <Edge from="pose_18" to="pose_19" from_port="0" label="default" priority="0" />
+        <Edge from="pose_19" to="jump_0" from_port="0" label="default" priority="0" />
         <Edge from="start" to="pose_0" from_port="0" label="" priority="0" />
       </Edges>
       <Playback start_node_id="pose_0" interpolation="0: linear" fps="100" branch_mode="default-first" />
@@ -4480,7 +4708,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_3" type="pose" name="3_lie_flat" pos_x="50.0" pos_y="370.0" duration="1.0" frames="136" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_3" type="pose" name="3_lie_flat" pos_x="50.0" pos_y="370.0" duration="1.0" frames="127" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="0" />
             <Angle joint="l_elbow_yp" value="0" />
@@ -4517,22 +4745,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_4" type="pose" name="4_rise_0" pos_x="50.0" pos_y="460.0" duration="1.0" frames="26" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_4" type="pose" name="4_rise_0" pos_x="50.0" pos_y="460.0" duration="1.0" frames="45" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-43.052" />
-            <Angle joint="l_elbow_yp" value="72.52" />
+            <Angle joint="l_shoulder_yp" value="-7.598" />
+            <Angle joint="l_elbow_yp" value="120.718" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="18.95" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="3.311" />
-            <Angle joint="l_ankle_xr" value="19.613" />
-            <Angle joint="r_shoulder_yp" value="-43.052" />
-            <Angle joint="r_elbow_yp" value="72.52" />
+            <Angle joint="l_hipjoint_xr" value="-13.434" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="-4.767" />
+            <Angle joint="l_ankle_xr" value="22.619" />
+            <Angle joint="r_shoulder_yp" value="-7.598" />
+            <Angle joint="r_elbow_yp" value="120.718" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-18.95" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="3.311" />
-            <Angle joint="r_ankle_xr" value="-19.613" />
+            <Angle joint="r_hipjoint_xr" value="13.434" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="-4.767" />
+            <Angle joint="r_ankle_xr" value="-22.619" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4554,22 +4782,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_5" type="pose" name="5_rise_1" pos_x="50.0" pos_y="550.0" duration="1.0" frames="9" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_5" type="pose" name="5_rise_1" pos_x="50.0" pos_y="550.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-43.052" />
-            <Angle joint="l_elbow_yp" value="72.52" />
+            <Angle joint="l_shoulder_yp" value="-7.598" />
+            <Angle joint="l_elbow_yp" value="120.718" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="18.95" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="3.311" />
-            <Angle joint="l_ankle_xr" value="19.613" />
-            <Angle joint="r_shoulder_yp" value="-43.052" />
-            <Angle joint="r_elbow_yp" value="72.52" />
+            <Angle joint="l_hipjoint_xr" value="-13.434" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="-4.767" />
+            <Angle joint="l_ankle_xr" value="22.619" />
+            <Angle joint="r_shoulder_yp" value="-7.598" />
+            <Angle joint="r_elbow_yp" value="120.718" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-18.95" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="3.311" />
-            <Angle joint="r_ankle_xr" value="-19.613" />
+            <Angle joint="r_hipjoint_xr" value="13.434" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="-4.767" />
+            <Angle joint="r_ankle_xr" value="-22.619" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4591,22 +4819,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_6" type="pose" name="6_rise_2" pos_x="50.0" pos_y="640.0" duration="1.0" frames="20" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_6" type="pose" name="6_rise_2" pos_x="50.0" pos_y="640.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-57.194" />
-            <Angle joint="l_elbow_yp" value="-13.894" />
+            <Angle joint="l_shoulder_yp" value="-124.437" />
+            <Angle joint="l_elbow_yp" value="72.714" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="24.719" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="76.664" />
-            <Angle joint="l_ankle_xr" value="-7.718" />
-            <Angle joint="r_shoulder_yp" value="-57.194" />
-            <Angle joint="r_elbow_yp" value="-13.894" />
+            <Angle joint="l_hipjoint_xr" value="-28.94" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="22.0" />
+            <Angle joint="l_ankle_xr" value="11.64" />
+            <Angle joint="r_shoulder_yp" value="-124.437" />
+            <Angle joint="r_elbow_yp" value="72.714" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-24.719" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="76.664" />
-            <Angle joint="r_ankle_xr" value="7.718" />
+            <Angle joint="r_hipjoint_xr" value="28.94" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="22.0" />
+            <Angle joint="r_ankle_xr" value="-11.64" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4628,22 +4856,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_7" type="pose" name="7_rise_3" pos_x="50.0" pos_y="730.0" duration="1.0" frames="9" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_7" type="pose" name="7_rise_3" pos_x="50.0" pos_y="730.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-57.194" />
-            <Angle joint="l_elbow_yp" value="-13.894" />
+            <Angle joint="l_shoulder_yp" value="-124.437" />
+            <Angle joint="l_elbow_yp" value="72.714" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="24.719" />
-            <Angle joint="l_hipjoint_yp" value="57.556" />
-            <Angle joint="l_knee_yp" value="76.664" />
-            <Angle joint="l_ankle_xr" value="-7.718" />
-            <Angle joint="r_shoulder_yp" value="-57.194" />
-            <Angle joint="r_elbow_yp" value="-13.894" />
+            <Angle joint="l_hipjoint_xr" value="-28.94" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="22.0" />
+            <Angle joint="l_ankle_xr" value="11.64" />
+            <Angle joint="r_shoulder_yp" value="-124.437" />
+            <Angle joint="r_elbow_yp" value="72.714" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-24.719" />
-            <Angle joint="r_hipjoint_yp" value="57.556" />
-            <Angle joint="r_knee_yp" value="76.664" />
-            <Angle joint="r_ankle_xr" value="7.718" />
+            <Angle joint="r_hipjoint_xr" value="28.94" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="22.0" />
+            <Angle joint="r_ankle_xr" value="-11.64" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4665,169 +4893,21 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_8" type="pose" name="8_rise_4" pos_x="50.0" pos_y="820.0" duration="1.0" frames="65" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_8" type="pose" name="8_rise_4" pos_x="50.0" pos_y="820.0" duration="1.0" frames="38" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-17.609" />
-            <Angle joint="l_elbow_yp" value="-34.533" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="12.254" />
-            <Angle joint="l_hipjoint_yp" value="56.829" />
-            <Angle joint="l_knee_yp" value="107.773" />
-            <Angle joint="l_ankle_xr" value="27.674" />
-            <Angle joint="r_shoulder_yp" value="-17.609" />
-            <Angle joint="r_elbow_yp" value="-34.533" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-12.254" />
-            <Angle joint="r_hipjoint_yp" value="56.829" />
-            <Angle joint="r_knee_yp" value="107.773" />
-            <Angle joint="r_ankle_xr" value="-27.674" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_9" type="pose" name="9_rise_5" pos_x="50.0" pos_y="910.0" duration="1.0" frames="12" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="-17.609" />
-            <Angle joint="l_elbow_yp" value="-34.533" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="12.254" />
-            <Angle joint="l_hipjoint_yp" value="56.829" />
-            <Angle joint="l_knee_yp" value="107.773" />
-            <Angle joint="l_ankle_xr" value="27.674" />
-            <Angle joint="r_shoulder_yp" value="-17.609" />
-            <Angle joint="r_elbow_yp" value="-34.533" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="-12.254" />
-            <Angle joint="r_hipjoint_yp" value="56.829" />
-            <Angle joint="r_knee_yp" value="107.773" />
-            <Angle joint="r_ankle_xr" value="-27.674" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_10" type="pose" name="10_rise_6" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="40" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="9.015" />
-            <Angle joint="l_elbow_yp" value="38.541" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-17.277" />
-            <Angle joint="l_hipjoint_yp" value="0.048" />
-            <Angle joint="l_knee_yp" value="107.963" />
-            <Angle joint="l_ankle_xr" value="29.581" />
-            <Angle joint="r_shoulder_yp" value="9.015" />
-            <Angle joint="r_elbow_yp" value="38.541" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="17.277" />
-            <Angle joint="r_hipjoint_yp" value="0.048" />
-            <Angle joint="r_knee_yp" value="107.963" />
-            <Angle joint="r_ankle_xr" value="-29.581" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_11" type="pose" name="11_rise_7" pos_x="50.0" pos_y="1090.0" duration="1.0" frames="20" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="9.015" />
-            <Angle joint="l_elbow_yp" value="38.541" />
-            <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-17.277" />
-            <Angle joint="l_hipjoint_yp" value="0.048" />
-            <Angle joint="l_knee_yp" value="107.963" />
-            <Angle joint="l_ankle_xr" value="29.581" />
-            <Angle joint="r_shoulder_yp" value="9.015" />
-            <Angle joint="r_elbow_yp" value="38.541" />
-            <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="17.277" />
-            <Angle joint="r_hipjoint_yp" value="0.048" />
-            <Angle joint="r_knee_yp" value="107.963" />
-            <Angle joint="r_ankle_xr" value="-29.581" />
-          </Angles>
-          <Easings>
-            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
-            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
-            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
-            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
-            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
-            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
-          </Easings>
-          <OutputPorts>
-            <Port label="default" priority="0" />
-          </OutputPorts>
-        </Node>
-        <Node id="pose_12" type="pose" name="12_rise_8" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="55" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
-          <Angles>
-            <Angle joint="l_shoulder_yp" value="15.428" />
-            <Angle joint="l_elbow_yp" value="7.388" />
+            <Angle joint="l_shoulder_yp" value="-19.409" />
+            <Angle joint="l_elbow_yp" value="21.806" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
             <Angle joint="l_hipjoint_xr" value="-35.0" />
-            <Angle joint="l_hipjoint_yp" value="-19.786" />
-            <Angle joint="l_knee_yp" value="89.268" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="127.0" />
             <Angle joint="l_ankle_xr" value="35.0" />
-            <Angle joint="r_shoulder_yp" value="15.428" />
-            <Angle joint="r_elbow_yp" value="7.388" />
+            <Angle joint="r_shoulder_yp" value="-19.409" />
+            <Angle joint="r_elbow_yp" value="21.806" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
             <Angle joint="r_hipjoint_xr" value="35.0" />
-            <Angle joint="r_hipjoint_yp" value="-19.786" />
-            <Angle joint="r_knee_yp" value="89.268" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="127.0" />
             <Angle joint="r_ankle_xr" value="-35.0" />
           </Angles>
           <Easings>
@@ -4850,21 +4930,21 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_13" type="pose" name="13_rise_9" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="25" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_9" type="pose" name="9_rise_5" pos_x="50.0" pos_y="910.0" duration="1.0" frames="25" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="15.428" />
-            <Angle joint="l_elbow_yp" value="7.388" />
+            <Angle joint="l_shoulder_yp" value="-19.409" />
+            <Angle joint="l_elbow_yp" value="21.806" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
             <Angle joint="l_hipjoint_xr" value="-35.0" />
-            <Angle joint="l_hipjoint_yp" value="-19.786" />
-            <Angle joint="l_knee_yp" value="89.268" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="127.0" />
             <Angle joint="l_ankle_xr" value="35.0" />
-            <Angle joint="r_shoulder_yp" value="15.428" />
-            <Angle joint="r_elbow_yp" value="7.388" />
+            <Angle joint="r_shoulder_yp" value="-19.409" />
+            <Angle joint="r_elbow_yp" value="21.806" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
             <Angle joint="r_hipjoint_xr" value="35.0" />
-            <Angle joint="r_hipjoint_yp" value="-19.786" />
-            <Angle joint="r_knee_yp" value="89.268" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="127.0" />
             <Angle joint="r_ankle_xr" value="-35.0" />
           </Angles>
           <Easings>
@@ -4887,22 +4967,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_14" type="pose" name="14_rise_10" pos_x="50.0" pos_y="1360.0" duration="1.0" frames="33" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_10" type="pose" name="10_rise_6" pos_x="50.0" pos_y="1000.0" duration="1.0" frames="55" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-48.8" />
-            <Angle joint="l_elbow_yp" value="-7.867" />
+            <Angle joint="l_shoulder_yp" value="-26.879" />
+            <Angle joint="l_elbow_yp" value="15.975" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-31.868" />
-            <Angle joint="l_hipjoint_yp" value="5.401" />
-            <Angle joint="l_knee_yp" value="10.55" />
-            <Angle joint="l_ankle_xr" value="-8.239" />
-            <Angle joint="r_shoulder_yp" value="-48.8" />
-            <Angle joint="r_elbow_yp" value="-7.867" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="105.354" />
+            <Angle joint="l_ankle_xr" value="-3.28" />
+            <Angle joint="r_shoulder_yp" value="-26.879" />
+            <Angle joint="r_elbow_yp" value="15.975" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="31.868" />
-            <Angle joint="r_hipjoint_yp" value="5.401" />
-            <Angle joint="r_knee_yp" value="10.55" />
-            <Angle joint="r_ankle_xr" value="8.239" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="105.354" />
+            <Angle joint="r_ankle_xr" value="3.28" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4924,22 +5004,22 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_15" type="pose" name="15_rise_11" pos_x="50.0" pos_y="1450.0" duration="1.0" frames="11" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_11" type="pose" name="11_rise_7" pos_x="50.0" pos_y="1090.0" duration="1.0" frames="16" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
-            <Angle joint="l_shoulder_yp" value="-48.8" />
-            <Angle joint="l_elbow_yp" value="-7.867" />
+            <Angle joint="l_shoulder_yp" value="-26.879" />
+            <Angle joint="l_elbow_yp" value="15.975" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="-31.868" />
-            <Angle joint="l_hipjoint_yp" value="5.401" />
-            <Angle joint="l_knee_yp" value="10.55" />
-            <Angle joint="l_ankle_xr" value="-8.239" />
-            <Angle joint="r_shoulder_yp" value="-48.8" />
-            <Angle joint="r_elbow_yp" value="-7.867" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="105.354" />
+            <Angle joint="l_ankle_xr" value="-3.28" />
+            <Angle joint="r_shoulder_yp" value="-26.879" />
+            <Angle joint="r_elbow_yp" value="15.975" />
             <Angle joint="r_hipjoint_zy" value="0.0" />
-            <Angle joint="r_hipjoint_xr" value="31.868" />
-            <Angle joint="r_hipjoint_yp" value="5.401" />
-            <Angle joint="r_knee_yp" value="10.55" />
-            <Angle joint="r_ankle_xr" value="8.239" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="105.354" />
+            <Angle joint="r_ankle_xr" value="3.28" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -4961,7 +5041,377 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="pose_16" type="pose" name="16_home" pos_x="50.0" pos_y="1540.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+        <Node id="pose_12" type="pose" name="12_rise_8" pos_x="50.0" pos_y="1180.0" duration="1.0" frames="22" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="-18.288" />
+            <Angle joint="l_elbow_yp" value="-16.538" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="68.122" />
+            <Angle joint="l_ankle_xr" value="-1.76" />
+            <Angle joint="r_shoulder_yp" value="-18.288" />
+            <Angle joint="r_elbow_yp" value="-16.538" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="68.122" />
+            <Angle joint="r_ankle_xr" value="1.76" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_13" type="pose" name="13_rise_9" pos_x="50.0" pos_y="1270.0" duration="1.0" frames="13" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="-18.288" />
+            <Angle joint="l_elbow_yp" value="-16.538" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="62.017" />
+            <Angle joint="l_knee_yp" value="68.122" />
+            <Angle joint="l_ankle_xr" value="-1.76" />
+            <Angle joint="r_shoulder_yp" value="-18.288" />
+            <Angle joint="r_elbow_yp" value="-16.538" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="62.017" />
+            <Angle joint="r_knee_yp" value="68.122" />
+            <Angle joint="r_ankle_xr" value="1.76" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_14" type="pose" name="14_rise_10" pos_x="50.0" pos_y="1360.0" duration="1.0" frames="53" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="36.759" />
+            <Angle joint="l_elbow_yp" value="-78.686" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="34.243" />
+            <Angle joint="l_knee_yp" value="66.956" />
+            <Angle joint="l_ankle_xr" value="8.582" />
+            <Angle joint="r_shoulder_yp" value="36.759" />
+            <Angle joint="r_elbow_yp" value="-78.686" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="34.243" />
+            <Angle joint="r_knee_yp" value="66.956" />
+            <Angle joint="r_ankle_xr" value="-8.582" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_15" type="pose" name="15_rise_11" pos_x="50.0" pos_y="1450.0" duration="1.0" frames="23" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="36.759" />
+            <Angle joint="l_elbow_yp" value="-78.686" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="34.243" />
+            <Angle joint="l_knee_yp" value="66.956" />
+            <Angle joint="l_ankle_xr" value="8.582" />
+            <Angle joint="r_shoulder_yp" value="36.759" />
+            <Angle joint="r_elbow_yp" value="-78.686" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="34.243" />
+            <Angle joint="r_knee_yp" value="66.956" />
+            <Angle joint="r_ankle_xr" value="-8.582" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_16" type="pose" name="16_rise_12" pos_x="50.0" pos_y="1540.0" duration="1.0" frames="53" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="54.516" />
+            <Angle joint="l_elbow_yp" value="-55.272" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="-15.882" />
+            <Angle joint="l_knee_yp" value="46.401" />
+            <Angle joint="l_ankle_xr" value="18.003" />
+            <Angle joint="r_shoulder_yp" value="54.516" />
+            <Angle joint="r_elbow_yp" value="-55.272" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="-15.882" />
+            <Angle joint="r_knee_yp" value="46.401" />
+            <Angle joint="r_ankle_xr" value="-18.003" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_17" type="pose" name="17_rise_13" pos_x="50.0" pos_y="1630.0" duration="1.0" frames="21" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="54.516" />
+            <Angle joint="l_elbow_yp" value="-55.272" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="35.0" />
+            <Angle joint="l_hipjoint_yp" value="-15.882" />
+            <Angle joint="l_knee_yp" value="46.401" />
+            <Angle joint="l_ankle_xr" value="18.003" />
+            <Angle joint="r_shoulder_yp" value="54.516" />
+            <Angle joint="r_elbow_yp" value="-55.272" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-35.0" />
+            <Angle joint="r_hipjoint_yp" value="-15.882" />
+            <Angle joint="r_knee_yp" value="46.401" />
+            <Angle joint="r_ankle_xr" value="-18.003" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_18" type="pose" name="18_rise_14" pos_x="50.0" pos_y="1720.0" duration="1.0" frames="52" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="76.734" />
+            <Angle joint="l_elbow_yp" value="-30.086" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="46.611" />
+            <Angle joint="l_knee_yp" value="-20.042" />
+            <Angle joint="l_ankle_xr" value="-35.0" />
+            <Angle joint="r_shoulder_yp" value="76.734" />
+            <Angle joint="r_elbow_yp" value="-30.086" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="46.611" />
+            <Angle joint="r_knee_yp" value="-20.042" />
+            <Angle joint="r_ankle_xr" value="35.0" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_19" type="pose" name="19_rise_15" pos_x="50.0" pos_y="1810.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="76.734" />
+            <Angle joint="l_elbow_yp" value="-30.086" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="46.611" />
+            <Angle joint="l_knee_yp" value="-20.042" />
+            <Angle joint="l_ankle_xr" value="-35.0" />
+            <Angle joint="r_shoulder_yp" value="76.734" />
+            <Angle joint="r_elbow_yp" value="-30.086" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="46.611" />
+            <Angle joint="r_knee_yp" value="-20.042" />
+            <Angle joint="r_ankle_xr" value="35.0" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_20" type="pose" name="20_rise_16" pos_x="50.0" pos_y="1900.0" duration="1.0" frames="34" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="60.546" />
+            <Angle joint="l_elbow_yp" value="8.319" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="15.739" />
+            <Angle joint="l_knee_yp" value="3.021" />
+            <Angle joint="l_ankle_xr" value="2.63" />
+            <Angle joint="r_shoulder_yp" value="60.546" />
+            <Angle joint="r_elbow_yp" value="8.319" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="15.739" />
+            <Angle joint="r_knee_yp" value="3.021" />
+            <Angle joint="r_ankle_xr" value="-2.63" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_21" type="pose" name="21_rise_17" pos_x="50.0" pos_y="1990.0" duration="1.0" frames="17" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
+          <Angles>
+            <Angle joint="l_shoulder_yp" value="60.546" />
+            <Angle joint="l_elbow_yp" value="8.319" />
+            <Angle joint="l_hipjoint_zy" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="-35.0" />
+            <Angle joint="l_hipjoint_yp" value="15.739" />
+            <Angle joint="l_knee_yp" value="3.021" />
+            <Angle joint="l_ankle_xr" value="2.63" />
+            <Angle joint="r_shoulder_yp" value="60.546" />
+            <Angle joint="r_elbow_yp" value="8.319" />
+            <Angle joint="r_hipjoint_zy" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="35.0" />
+            <Angle joint="r_hipjoint_yp" value="15.739" />
+            <Angle joint="r_knee_yp" value="3.021" />
+            <Angle joint="r_ankle_xr" value="-2.63" />
+          </Angles>
+          <Easings>
+            <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="l_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="l_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="l_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="l_ankle_xr" value="3: easeInOutSine" />
+            <Easing joint="r_shoulder_yp" value="3: easeInOutSine" />
+            <Easing joint="r_elbow_yp" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_zy" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_xr" value="3: easeInOutSine" />
+            <Easing joint="r_hipjoint_yp" value="3: easeInOutSine" />
+            <Easing joint="r_knee_yp" value="3: easeInOutSine" />
+            <Easing joint="r_ankle_xr" value="3: easeInOutSine" />
+          </Easings>
+          <OutputPorts>
+            <Port label="default" priority="0" />
+          </OutputPorts>
+        </Node>
+        <Node id="pose_22" type="pose" name="22_home" pos_x="50.0" pos_y="2080.0" duration="1.0" frames="14" branching_enabled="False" branch_outputs_swapped="False" branch_if_left="UserVal_0" branch_if_op="==" branch_if_right="UserVal_1" branch_if_uv_enabled="True" branch_if_formula_enabled="False" branch_if_formula="Form1:foo" branch_if_pad_enabled="False" branch_if_pad_button="L1" branch_if_pad_analog_enabled="False" branch_if_pad_analog_axis="Lx" branch_if_pad_analog_op="&gt;=" branch_if_pad_analog_threshold="0">
           <Angles>
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
@@ -4998,7 +5448,7 @@
             <Port label="default" priority="0" />
           </OutputPorts>
         </Node>
-        <Node id="jump_0" type="jump" name="-&gt; Base" pos_x="320.0" pos_y="1630.0" jump_target_action_index="1" jump_type="action" jump_target_function="">
+        <Node id="jump_0" type="jump" name="-&gt; Base" pos_x="320.0" pos_y="2170.0" jump_target_action_index="1" jump_type="action" jump_target_function="">
           <OutputPorts>
             <Port label="default" priority="0" />
           </OutputPorts>
@@ -5021,7 +5471,13 @@
         <Edge from="pose_13" to="pose_14" from_port="0" label="default" priority="0" />
         <Edge from="pose_14" to="pose_15" from_port="0" label="default" priority="0" />
         <Edge from="pose_15" to="pose_16" from_port="0" label="default" priority="0" />
-        <Edge from="pose_16" to="jump_0" from_port="0" label="default" priority="0" />
+        <Edge from="pose_16" to="pose_17" from_port="0" label="default" priority="0" />
+        <Edge from="pose_17" to="pose_18" from_port="0" label="default" priority="0" />
+        <Edge from="pose_18" to="pose_19" from_port="0" label="default" priority="0" />
+        <Edge from="pose_19" to="pose_20" from_port="0" label="default" priority="0" />
+        <Edge from="pose_20" to="pose_21" from_port="0" label="default" priority="0" />
+        <Edge from="pose_21" to="pose_22" from_port="0" label="default" priority="0" />
+        <Edge from="pose_22" to="jump_0" from_port="0" label="default" priority="0" />
         <Edge from="start" to="pose_0" from_port="0" label="" priority="0" />
       </Edges>
       <Playback start_node_id="pose_0" interpolation="0: linear" fps="100" branch_mode="default-first" />

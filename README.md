@@ -216,16 +216,20 @@ servo zero-offset and initial-tilt disturbances, 8 trials each:
 | Walk forward / back, sidestep | 8/8 (about 32 mm/s) | 8/8 |
 | Turn | 8/8 (scuffing, about 33° per cycle) | 8/8 (hip yaw, 72° / 141°) |
 | Jab left / right | 8/8 | 8/8 |
-| Get up from prone | 0/8 (open) | 0/8 (open) |
-| Get up from supine (roll over + the same rise) | 0/8 (open) | 0/8 (open) |
+| Get up from prone | 8/8 (6.7 s, nine poses) | 7/8 (same poses, 12-servo timing) |
+| Get up from supine (roll over + the same rise) | 7/8 | 8/8 |
 
-The get-ups are open. A six-pose rise (roll over, sit up facing the other
-way, kneel, squat, stand) held 7/8 and 8/8 on an earlier geometry, but every
-later change to what touches the floor when the robot lies prone (link bars,
-yokes, brackets) broke it, and no search on the final geometry has held yet;
-fifteen of sixteen seeds end in a kneeling local optimum, so expect several
-seeds and a re-timing pass. The gaits walk with the elbows bent 60° forward
-and the arms abducted 30° by the printed shoulder parts. The motion tools
+The rise was searched on the final geometry (`motion/getup_supine.py
+--pitch 90`, eight seeds): with the 40 mm longer forearms the search stopped
+falling into the kneeling local optimum that had caught fifteen of sixteen
+seeds on the earlier geometry, and two seeds stood with 5/8 and 6/8 before
+re-timing; the nine-pose rise from seed 72, re-timed by `motion/tune_getup.py`,
+is the one in the profiles. It rolls the robot over and stands it up facing
+the other way. The supine get-up is a one-pose roll onto the front followed by
+the same rise. A direct supine rise (sit up on the hands, hip flexed to the new
+−100° limit) was also found and is kept in `motion/log` as an alternative. The
+gaits walk with the elbows bent 60° forward and the arms abducted 30° by the
+printed shoulder parts. The motion tools
 (keyframe IK, perturbed simulation checks, gait and get-up tuners, the beam
 search) and the robot profiles are in `motion/`, copied from LegacyMotionEditor
 so that the tables can be reproduced from this repository alone:
@@ -303,10 +307,10 @@ straight, as the rules define it):
 
 ## Roadmap
 
-1. Find a get-up for the final geometry (several search seeds, then
-   re-timing) and verify it on both builds.
-2. Fit-check the drafted parts against the original parts in Onshape and print
+1. Fit-check the drafted parts against the original parts in Onshape and print
    them; the open points are listed in `docs/parts_ja.md`.
+2. Play the projects in LegacyMotionEditor / MuJoCo Studio and on the robot;
+   the motions are tuned against MuJoCo only.
 3. For a dynamic gait, retarget Microban's training pipeline
    (`mjlab_microban`) to this model.
 
