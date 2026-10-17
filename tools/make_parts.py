@@ -276,8 +276,10 @@ def shoulder_arm_simple(side, abduct=30.0):
       5 mm plate whose underside has a 1.5 mm pocket (26.4 x 20.4) that locates the servo's end;
       the servo's end face stays at z -2.5 as upstream.
     The arm (elbow plate + 16 x 16 post) is turned by the abduction angle about the former roll
-    axis (x -32.7, z 24.5; right -abduct, left +abduct as in the model); a 24 x 18 x 21 body joins
-    the horn plate to the post. Walls 3 mm, outer edges chamfered, no overhangs when printed on
+    axis (x -32.7, z 24.5; -abduct for the right arm); a 24 x 18 x 21 body joins the horn plate
+    to the post. The left part is the right part mirrored about the roll-axis plane x = -32.7,
+    which is how Microban's left arm relates to its right (pitch horn at x -13.2 instead of
+    -52.2, elbow horn at the other end), and which turns the abduction into +abduct. Walls 3 mm, outer edges chamfered, no overhangs when printed on
     the elbow plate."""
     cx, zc = -32.7, 24.5
     # elbow servo mount, as on Microban's humerus plate: the XL330 has no holes in its end face; it is
@@ -291,7 +293,7 @@ def shoulder_arm_simple(side, abduct=30.0):
     for y in (-8.0, 8.0):
         elbow = elbow.cut(_cyl(1.1, (-48.0, y, -4.5), (-43.0, y, -4.5))).cut(_cyl(1.1, (-22.0, y, -4.5), (-17.0, y, -4.5)))
     post = _box(cx - 8.0, cx + 8.0, -8.0, 8.0, 0.0, 32.0).cut(_box(cx - 5.0, cx + 5.0, -5.0, 5.0, 3.0, 29.0))
-    arm = elbow.union(post).rotate((cx, 0, zc), (cx, 1, zc), -abduct if side == "right" else abduct)
+    arm = elbow.union(post).rotate((cx, 0, zc), (cx, 1, zc), -abduct)       # right arm; the left is mirrored below
     plate = _box(-52.2, -48.2, -11.0, 11.0, 12.0, 37.0).edges("|X").chamfer(1.5)
     body = _box(-48.2, -24.0, -9.0, 9.0, 14.0, 35.0).cut(_box(-45.0, -27.0, -5.0, 5.0, 18.0, 31.0))
     part = plate.union(body).union(arm)
@@ -304,6 +306,13 @@ def shoulder_arm_simple(side, abduct=30.0):
             part = part.edges("not %CIRCLE").fillet(r); break
         except Exception:
             continue
+    if side == "left":
+        # Microban's left arm is the right arm mirrored about the plane of the roll axis (x = cx in
+        # the humerus frame: the shoulder-pitch horn is at x -52.2 on the right and -13.2 on the
+        # left, the elbow servo's horn flips to the other end). So the left part is the right part
+        # mirrored about that plane; the mirror also turns the -30 deg abduction into +30.
+        part = part.mirror("YZ", basePointVector=(cx, 0, 0))
+    assert len(part.solids().vals()) == 1, f"shoulder_arm_simple_{side}: bad boolean result"
     cq.exporters.export(part, f"{OUT}/shoulder_arm_simple_{side}.stl")
     cq.exporters.export(part, f"{OUT}/shoulder_arm_simple_{side}.step")
     return part
