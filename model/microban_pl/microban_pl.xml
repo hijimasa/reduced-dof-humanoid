@@ -13,7 +13,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 <!--
 microban_pl: Microban with parallel-link legs (passive ankle pitch).
 Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py
-(dof=16, elbow=free, naming=upstream, thigh back/tilt=-0.022/-0.01, shank back/tilt=0.025/0.025, link_x=0.0225, fixed_head=True, slim_ankle=True, forearm_ext=0.0).
+(dof=16, elbow=free, naming=upstream, thigh back/tilt=-0.022/-0.01, shank back/tilt=0.025/0.025, link_x=0.0225, fixed_head=True, slim_ankle=True, forearm_ext=0.0, arm_abduct=n/a).
 Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for attribution.
 -->
 <mujoco model="microban_pl">
@@ -323,7 +323,8 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
     <mesh name="part_knee_yoke_right" file="../../parts/knee_yoke_right.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_knee_yoke_left" file="../../parts/knee_yoke_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_knee_axle_cap" file="../../parts/knee_axle_cap.stl" scale="0.001 0.001 0.001" />
-    <mesh name="part_xl330_dummy_shoulder_roll" file="../../parts/xl330_dummy_shoulder_roll.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_xl330_dummy_shoulder_roll_right" file="../../parts/xl330_dummy_shoulder_roll_right.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_xl330_dummy_shoulder_roll_left" file="../../parts/xl330_dummy_shoulder_roll_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_neck" file="../../parts/xl330_dummy_neck.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_hip_yaw" file="../../parts/xl330_dummy_hip_yaw.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_ankle_hinge" file="../../parts/xl330_dummy_ankle_hinge.stl" scale="0.001 0.001 0.001" />

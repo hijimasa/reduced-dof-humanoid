@@ -102,13 +102,13 @@ Consequences:
 ### Parts that change on the printed robot
 
 The generator edits the model to match the parts the physical conversion needs
-(`--keep-ankle-servo`, `--neck-motor` and `--elbow-flexion-only` are the knobs):
+(`--keep-ankle-servo`, `--neck-motor`, `--elbow-flexion-only` and `--arm-abduct` are the knobs):
 
 | Part | Change | Effect in the model |
 | --- | --- | --- |
 | Ankle block | The ankle-pitch XL330 and its idler horn come out; a printed block of the same envelope with Ø5.9 stub axles into the tibia's existing plate holes goes in (passive hinge). | 47 g → 33 g per ankle. The knee folds to 132° before the ankle meets the hip bracket, instead of 117°. |
 | Neck | The XL330 in the top of the trunk comes out; a spacer goes in and the head bolts on. | −15 g. |
-| Shoulder roll | The XL330 at the top of each humerus comes out; a spacer goes in, arm at the side. | −30 g. |
+| Shoulder roll | The XL330 at the top of each humerus comes out; a printed block goes in whose fixed horn is indexed 30° about the roll axis, so the arm hangs abducted 30°. A hanging arm sits right over the knee's link stack; abducted, the forearm can be bent forward (60° in the gaits) like a walking human without touching it. `--arm-abduct` sets the angle. | −30 g. |
 | Hip yaw (12-servo) | The two XL330s in the bottom of the trunk come out; spacers go in. The 14-servo upgrade puts the servos back. | −30 g. No turning on the spot. |
 | Link bars | Per leg one thigh bar in front (62.2 mm between pins) and one shank bar behind (61.7 mm), 3 × 8 mm, M2 pins, both outboard of the leg in separate planes. | Close the parallelogram loops. |
 | Knee yoke | A triangular plate outboard of the knee carrying both bar pivots, riding on a printed axle cap bolted to the knee servo horn; a small ear on the hip bracket carries the thigh bar's upper pivot. | 6 g. |
@@ -186,15 +186,18 @@ servo zero-offset and initial-tilt disturbances, 8 trials each:
 | Walk forward / back, sidestep | 8/8 (about 36 mm/s) | 8/8 |
 | Turn | 8/8 (scuffing, about 33° per cycle) | 8/8 (hip yaw, 72° / 141°) |
 | Jab left / right | 8/8 | 8/8 |
-| Get up from prone | 8/8 (3.3 s) | 6/8 |
-| Get up from supine (roll over + the same rise) | 8/8 | 4/8 |
+| Get up from prone | 7/8 (4.6 s) | 8/8 (3.8 s) |
+| Get up from supine (roll over + the same rise) | 7/8 | 7/8 |
 
-The rise was searched again after the printed parts were given collision
-geometry: lying prone, the robot now rests on the front thigh bars and the knee
-yokes, which stopped the earlier seven-pose rise. The new five-pose rise rolls
-the robot over and stands it facing the other way. The 14-servo build carries
-the same poses with its own timing; its 30 g of extra hip-yaw servos leave it
-less robust to the servo-offset and tilt perturbations.
+The gaits walk with the elbows bent 60° forward and the arms abducted 30° by
+the printed shoulder blocks. The rise was searched again after the printed
+parts were given collision geometry and the arms were abducted: lying prone,
+the robot rests on the front thigh bars and the knee yokes, and the push-up
+geometry changed with the arms, which stopped the earlier rises. The present
+six-pose rise rolls the robot over and stands it facing the other way; the
+14-servo build carries the same poses with its own timing. Fifteen of sixteen
+search seeds ended in a kneeling local optimum, so expect to run several seeds
+when re-searching it.
 
 The walk is a statically stable keyframe gait; Microban's own learned walk
 (commands up to 0.7 m/s) is a dynamic one and out of scope here.

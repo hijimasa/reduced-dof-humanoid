@@ -146,6 +146,14 @@ def main():
                          "(--shank-link-x) so the two can cross at deep hip flexion.")
     ap.add_argument("--shank-link-x", type=float, default=0.026,
                     help="lateral centre of the SHANK bar [m] (26 mm = 24.5..27.5); the knee yoke plate is outside it")
+    ap.add_argument("--arm-abduct", type=float, default=30.0,
+                    help="12/14-servo models: fixed outward angle [deg] of the arm, built into the printed block that "
+                         "replaces the shoulder-roll servo. With the arm straight down the hanging forearm sits right "
+                         "over the knee yoke / link bars (22..32 mm from the leg centre); 30 deg moves the elbow 26 mm "
+                         "outboard so the forearm can be bent forward like a walking human. 0 = arm at the side")
+    ap.add_argument("--hip-flex-limit", type=float, default=HIP_FLEX_LIMIT,
+                    help="cap on hip flexion [deg] from the thigh bar / knee axle stub clearance (85 with the Ø8 "
+                         "printed stub; an M3 bolt axle would allow ~96)")
     ap.add_argument("--keep-ankle-servo", action="store_true",
                     help="keep the ankle-pitch servo's geometry and mass in the ankle block (by default "
                          "it is removed and the bracket shrunk to a clevis, which is what lets the knee fold deeper)")
@@ -197,7 +205,7 @@ def main():
 
     asset = root.find("asset")
     PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap",
-                   "xl330_dummy_shoulder_roll", "xl330_dummy_neck", "xl330_dummy_hip_yaw", "xl330_dummy_ankle_hinge")
+                   "xl330_dummy_shoulder_roll_right", "xl330_dummy_shoulder_roll_left", "xl330_dummy_neck", "xl330_dummy_hip_yaw", "xl330_dummy_ankle_hinge")
     if a.parts:
         for nm in PART_MESHES:
             ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{a.parts}/{nm}.stl", "scale": "0.001 0.001 0.001"})
@@ -254,7 +262,7 @@ def main():
     f1, b1 = singularities(a.back, a.tilt); f2, b2 = singularities(a.shank_back, -a.shank_tilt)   # shank tilt is UP
     # hip flexion is also capped at HIP_FLEX_LIMIT: beyond ~90 deg the front thigh bar sweeps across the
     # knee axis and would touch the Ø8 knee axle stub (the get-ups use at most 37 deg of hip flexion)
-    HIP_RANGE = (-np.radians(min(f1 - RANGE_MARGIN, HIP_FLEX_LIMIT)), np.radians(b1 - RANGE_MARGIN))    # hip: +ve = thigh back
+    HIP_RANGE = (-np.radians(min(f1 - RANGE_MARGIN, a.hip_flex_limit)), np.radians(b1 - RANGE_MARGIN))    # hip: +ve = thigh back
     KNEE_RANGE = (-np.radians(f2 - RANGE_MARGIN), np.radians(b2 - RANGE_MARGIN))   # knee: +ve = shank back
 
     for side, L in LEG.items():
@@ -371,6 +379,20 @@ def main():
                 for j in list(b.findall("joint")):
                     if j.get("name") == name(f"{side}_{base}"):
                         b.remove(j); removed_joints.add(name(f"{side}_{base}"))
+                        if base == "shoulder_roll" and a.arm_abduct:
+                            # The printed block that replaces the shoulder-roll servo holds the arm
+                            # abducted by a fixed angle, so a forward-bent forearm swings clear of
+                            # the link stack outboard of the knee. Bake the angle into the humerus
+                            # frame (the joint sat at the body origin, axis in body coordinates).
+                            # Microban's roll range is -180..0 on the right and 0..180 on the left:
+                            # abduction is the direction the range allows.
+                            sgn = -1.0 if side == "right" else 1.0
+                            ax = vec(j.get("axis", "0 0 1")); ax = ax / np.linalg.norm(ax)
+                            h = np.radians(a.arm_abduct) / 2 * sgn
+                            qr = np.array([np.cos(h), *(np.sin(h) * ax)])
+                            w1, x1, y1, z1 = vec(b.get("quat", "1 0 0 0")); w2, x2, y2, z2 = qr
+                            b.set("quat", fmt((w1*w2 - x1*x2 - y1*y2 - z1*z2, w1*x2 + x1*w2 + y1*z2 - z1*y2,
+                                               w1*y2 - x1*z2 + y1*w2 + z1*x2, w1*z2 + x1*y2 - y1*x2 + z1*w2)))
     if a.dof == 12:
         # Hip yaw servos: one XL330 each side at y = +-36 mm in the bottom of the trunk.
         # Without them each hip bracket bolts straight to the trunk.
@@ -392,7 +414,8 @@ def main():
             hum = bodies[hb]; n_removed = 0
             for g in list(hum.findall("geom")):
                 if g.get("mesh") == "xl330" and abs(vec(g.get("pos"))[2] + 0.0065) < 1e-3:
-                    hum.remove(g); n_removed += 1; dummy_block(hum, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_shoulder_roll")
+                    hum.remove(g); n_removed += 1
+                    dummy_block(hum, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_shoulder_roll_" + hb.rsplit("_", 1)[1])
             assert n_removed == 1, f"{hb}: shoulder-roll servo not found"
             ine = hum.find("inertial")
             m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
@@ -468,7 +491,7 @@ def main():
     body = ET.tostring(root, encoding="unicode")
     note = (f"<!--\n{model_name}: Microban with parallel-link legs (passive ankle pitch).\n"
             f"Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py\n"
-            f"(dof={a.dof}, elbow={"flexion-only" if a.elbow_flexion_only else "free"}, naming={a.naming}, thigh back/tilt={a.back}/{a.tilt}, shank back/tilt={a.shank_back}/{a.shank_tilt}, link_x={a.link_x}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}).\n"
+            f"(dof={a.dof}, elbow={"flexion-only" if a.elbow_flexion_only else "free"}, naming={a.naming}, thigh back/tilt={a.back}/{a.tilt}, shank back/tilt={a.shank_back}/{a.shank_tilt}, link_x={a.link_x}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}, arm_abduct={a.arm_abduct if a.dof <= 14 else "n/a"}).\n"
             f"Hip range {np.degrees(HIP_RANGE[0]):.0f}..{np.degrees(HIP_RANGE[1]):.0f} deg, knee {np.degrees(KNEE_RANGE[0]):.0f}..{np.degrees(KNEE_RANGE[1]):.0f} deg (pelvis-relative). See NOTICE.md for attribution.\n-->\n")
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:

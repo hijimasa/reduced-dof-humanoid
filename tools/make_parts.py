@@ -104,16 +104,20 @@ def standoff(length, name):
     s = cq.Workplane("XY").circle(3.0).extrude(length).faces(">Z").workplane().hole(PIN_D)
     cq.exporters.export(s, f"{OUT}/{name}.stl"); return s
 
-def xl330_dummy(name, horn=True):
+def xl330_dummy(name, horn=True, horn_rot=0.0):
     """Placeholder block with the XL330's envelope (20 x 34 x 26, horn axis at the origin,
     horn face at z = -19.5) for a servo position that is no longer driven: shoulder roll,
     neck. Back-face holes 4 x Ø2.2 on a 16 x 25.5 mm rectangle as read from the
-    brackets' STEP files; verify against the real servo before printing."""
+    brackets' STEP files; verify against the real servo before printing.
+    horn_rot turns the fixed horn's hole pattern about the axis [deg]: the shoulder-roll
+    blocks use +-30 so the arm hangs abducted 30 deg (see make_microban_pl.py --arm-abduct)."""
     body = cq.Workplane("XY").box(20, 34, 26, centered=(True, False, False)).translate((0, -24.5, -19.5))
     body = body.faces("<Y").workplane().pushPoints([(-8, -8.0), (8, -8.0), (-8, 17.5), (8, 17.5)]).hole(2.2, 8)
     if horn:   # fixed horn disc: PCD 12 M2 holes and the Ø7.2 centre boss, as on the idle horn
+        c, s_ = math.cos(math.radians(horn_rot)), math.sin(math.radians(horn_rot))
+        pts = [(6 * c, 6 * s_), (-6 * c, -6 * s_), (-6 * s_, 6 * c), (6 * s_, -6 * c)]
         disc = cq.Workplane("XY").circle(8.0).extrude(-3.0).translate((0, 0, -19.5))
-        disc = disc.faces("<Z").workplane().pushPoints([(6, 0), (-6, 0), (0, 6), (0, -6)]).hole(1.6)
+        disc = disc.faces("<Z").workplane().pushPoints(pts).hole(1.6)
         body = body.union(disc).union(cq.Workplane("XY").circle(3.6).extrude(-1.5).translate((0, 0, -22.5)))
     cq.exporters.export(body, f"{OUT}/{name}.stl"); return body
 
@@ -162,7 +166,11 @@ if __name__ == "__main__":
     knee_axle_cap()                # x2
     standoff(SHANK_BAR_X[0] - 13.5, "standoff_shank_ankle")  # 9 mm: ankle bracket wall (13.5) -> shank bar
     hip_front_ear()
-    xl330_dummy("xl330_dummy_shoulder_roll")   # x2
+    # shoulder roll: the horn pattern is indexed +30 deg (right) / -30 deg (left) about the roll
+    # axis, which is the block's +z in both arms, so the arm hangs 30 deg abducted. (The humerus
+    # is turned -30 / +30 in the model; the horn stays with the shoulder bracket.)
+    xl330_dummy("xl330_dummy_shoulder_roll_right", horn_rot=30.0)
+    xl330_dummy("xl330_dummy_shoulder_roll_left", horn_rot=-30.0)
     xl330_dummy("xl330_dummy_neck")            # x1
     xl330_dummy("xl330_dummy_hip_yaw")         # x2, the 12-servo kit's standard; swap for real XL330s to get 14
     ankle_hinge_dummy()                        # x2
