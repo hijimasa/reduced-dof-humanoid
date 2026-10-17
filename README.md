@@ -132,7 +132,11 @@ distributors price the XL330 somewhat higher.
 
 `tools/make_parts.py` (needs `cadquery`) writes STL drafts of everything the
 conversion adds, laid out in the Onshape frame of Microban's leg parts so they
-can be dropped into the original assembly for a fit check. The placement was
+can be dropped into the original assembly for a fit check. With `--parts` the
+model generator draws these STLs in place of its box placeholders, so the
+mechanism shows up in any viewer that renders meshes (LegacyMotionEditor's
+preview included); their lateral positions are measured from the leg's centre
+plane, not from the body origins, which sit on the inboard clevis plate. The placement was
 checked against the model (below, originals transparent): link bars 3 × 8 mm
 with M2 pins, both thigh bars inside the arm's swing at ±14.5…17.5 mm, one
 shank bar outboard, a knee yoke behind the knee with one outboard arm on an
