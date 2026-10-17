@@ -147,6 +147,10 @@ def main():
                     help="16: passive ankle pitch + fixed head. 14: additionally no shoulder roll "
                          "(legs 5x2 with hip yaw, arms 2x2 -- the chosen layout). 12: no hip yaw either")
     ap.add_argument("--meshdir", help="override the compiler meshdir written into the output")
+    ap.add_argument("--elbow-flexion-only", action="store_true",
+                    help="limit the elbow to forward flexion (-125..+10 deg, negative = flexion). The default "
+                         "keeps Microban's own symmetric +-125 deg: the forearm clears the upper arm either "
+                         "way, and the prone get-up that was found robust pushes with the elbow bent backward")
     ap.add_argument("--parts", default="",
                     help="directory of the printed-part STLs (tools/make_parts.py), as a path RELATIVE TO MESHDIR; "
                          "when given, the links, knee yoke, axle caps and spacer blocks are drawn with those meshes "
@@ -184,7 +188,10 @@ def main():
         for nm in PART_MESHES:
             ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{a.parts}/{nm}.stl", "scale": "0.001 0.001 0.001"})
 
-    def part(body, nm, pos, quat, rgba="0.85 0.6 0.25 1"):
+    PART_GREEN, DUMMY_AMBER = "0.15 0.75 0.3 1", "0.9 0.65 0.2 1"
+
+    def part(body, nm, pos, quat, rgba=None):
+        rgba = rgba or (DUMMY_AMBER if "dummy" in nm else PART_GREEN)
         ET.SubElement(body, "geom", {"class": "visual", "type": "mesh", "mesh": f"part_{nm}", "pos": fmt(pos),
                                      "quat": fmt(quat), "rgba": rgba})
     PART_HOOK["fn"] = part if a.parts else None
@@ -206,13 +213,13 @@ def main():
         offsets = (-a.link_x, a.link_x) if lateral is None else lateral
         if a.parts:
             for zx in offsets:   # STL: centred at the origin along x, 3 mm thick in +z
-                part(el, bar, v / 2 + np.array([0, 0, zx - 0.0015]), q, "0.25 0.25 0.28 1")
+                part(el, bar, v / 2 + np.array([0, 0, zx - 0.0015]), q)
             return
         for zx in offsets:
             ET.SubElement(el, "geom", {"class": "visual", "type": "box",
                                        "size": fmt((np.linalg.norm(v) / 2 + 0.004, 0.004, 0.0015)),
                                        "pos": fmt(v / 2 + np.array([0, 0, zx])), "quat": fmt(q),
-                                       "rgba": "0.25 0.25 0.28 1"})
+                                       "rgba": "0.15 0.75 0.3 1"})
 
     ang1 = np.degrees(np.arctan2(a.tilt, a.back)); ang2 = np.degrees(np.arctan2(a.shank_tilt, a.shank_back))
     HIP_RANGE = (-np.radians(90 + ang1 - RANGE_MARGIN), np.radians(90 - ang1 - RANGE_MARGIN))   # +ve = thigh back
@@ -253,24 +260,24 @@ def main():
         if a.parts:
             # the parts are modelled in the Onshape leg frame with the leg centre at x = 0; that
             # frame is the femur mesh geom's frame shifted to the actual centre x_c
-            part(kb, f"knee_yoke_{side}", fgp + R_fg @ np.array([x_c, 0, 0]) - v1, fgq, "0.25 0.25 0.28 1")
+            part(kb, f"knee_yoke_{side}", fgp + R_fg @ np.array([x_c, 0, 0]) - v1, fgq)
             # axle cap: flange on the outer plate face (centre +- 18.5 mm), stub pointing outboard
             cap_pos = fgp + R_fg @ np.array([x_c + out_sign * 0.0185, knee_mesh[1], knee_mesh[2]])
             r2 = np.sqrt(0.5); q_rot = np.array([r2, 0, out_sign * r2, 0])        # cap +z -> mesh +-x
             w1, x1, y1, z1 = fgq; w2, x2, y2, z2 = q_rot
             cap_q = (w1*w2 - x1*x2 - y1*y2 - z1*z2, w1*x2 + x1*w2 + y1*z2 - z1*y2,
                      w1*y2 - x1*z2 + y1*w2 + z1*x2, w1*z2 + x1*y2 - y1*x2 + z1*w2)
-            part(femur, "knee_axle_cap", cap_pos, cap_q, "0.6 0.2 0.2 1")
+            part(femur, "knee_axle_cap", cap_pos, cap_q)
         # box placeholders (shown when no --parts): a bar behind the knee carrying both
         # rear-link pivots and spanning the two link planes, plus an outboard arm
         mid = (d1 + d2) / 2
         if not a.parts:
             ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
                                        "size": fmt((0.004, abs(d2[1] - d1[1]) / 2 + 0.006, a.link_x + 0.0015)),
-                                       "pos": fmt(mid + np.array([0, 0, c_z])), "rgba": "0.25 0.25 0.28 1"})
+                                       "pos": fmt(mid + np.array([0, 0, c_z])), "rgba": "0.15 0.75 0.3 1"})
             ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
                                        "size": fmt((abs(mid[0]) / 2 + 0.006, 0.005, 0.0015)),
-                                       "pos": fmt((mid[0] / 2, mid[1] / 2, c_z + out_z * 0.022)), "rgba": "0.25 0.25 0.28 1"})
+                                       "pos": fmt((mid[0] / 2, mid[1] / 2, c_z + out_z * 0.022)), "rgba": "0.15 0.75 0.3 1"})
         tibia.set("pos", "0 0 0"); tibia.set("quat", "1 0 0 0")
         kb.append(tibia)
         sr = ET.SubElement(kb, "body", {"name": f"{side}_shank_rear", "pos": fmt(d2)})
@@ -379,6 +386,11 @@ def main():
             fi[0] += I; fi[2] += I          # rod inertia about the two axes across it
             ine.set("fullinertia", " ".join(f"{v:.5e}" for v in fi))
 
+    if a.elbow_flexion_only:
+        for j in root.iter("joint"):
+            if j.get("name") in (name("right_elbow"), name("left_elbow")):
+                j.set("range", fmt((-2.18166, 0.17453)))   # flexion only, +10 deg of hyperextension
+
     # actuators: drop ankle pitch (and neck), motor -> position unless asked otherwise
     act = root.find("actuator")
     ankle_joints = removed_joints
@@ -400,7 +412,7 @@ def main():
     body = ET.tostring(root, encoding="unicode")
     note = (f"<!--\n{model_name}: Microban with parallel-link legs (passive ankle pitch).\n"
             f"Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py\n"
-            f"(dof={a.dof}, naming={a.naming}, thigh back/tilt={a.back}/{a.tilt}, shank back/tilt={a.shank_back}/{a.shank_tilt}, link_x={a.link_x}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}).\n"
+            f"(dof={a.dof}, elbow={"flexion-only" if a.elbow_flexion_only else "free"}, naming={a.naming}, thigh back/tilt={a.back}/{a.tilt}, shank back/tilt={a.shank_back}/{a.shank_tilt}, link_x={a.link_x}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}).\n"
             f"Hip range {np.degrees(HIP_RANGE[0]):.0f}..{np.degrees(HIP_RANGE[1]):.0f} deg, knee {np.degrees(KNEE_RANGE[0]):.0f}..{np.degrees(KNEE_RANGE[1]):.0f} deg (pelvis-relative). See NOTICE.md for attribution.\n-->\n")
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:

@@ -1,5 +1,7 @@
 # reduced-dof-humanoid
 
+[日本語版 README はこちら](README_ja.md)
+
 Reduced-DOF humanoid for ROBO-ONE Light, derived from Rhoban's
 [Microban](https://github.com/Rhoban/microban) (unofficial, not affiliated with
 Rhoban or the author of Microban).
@@ -91,8 +93,9 @@ Consequences:
   and 25 mm above, which lifts the ankle pivot clear of the ankle-roll servo and
   the foot (singular at 135° / 45°). Joint ranges follow with an 8° margin:
   hip −109°…+55°, knee −37°…+127° (pelvis-relative).
-- The rear links are drawn as thin capsules and do not collide; interference
-  with the real parts is not modelled yet.
+- The added parts are drawn in green (mechanism) and amber (printed servo-shaped
+  spacers); they do not collide, so interference with the real parts is not
+  modelled yet.
 
 ### Parts that change on the printed robot
 
@@ -109,7 +112,7 @@ has to produce (`--keep-ankle-servo` and `--neck-motor` restore the originals):
 | Hip yaw (12-servo study only) | The two XL330s in the bottom of the trunk are removed; each hip bracket bolts straight to the trunk. | −46 g. No turning on the spot. |
 | Shoulder roll (14- and 12-servo models) | The XL330 at the top of each humerus is removed; the humerus bolts to the shoulder bracket with the arm at the side. | −46 g. |
 
-Total mass with the printed spacers (8 g each): 0.833 kg (upstream model) → 0.735 kg (12-servo) → 0.765 kg (14-servo).
+Total mass with the printed spacers (8 g each): 0.833 kg (upstream model) → 0.795 kg (16-servo) → 0.765 kg (14-servo) → 0.735 kg (12-servo).
 
 ### Cost
 
@@ -173,6 +176,11 @@ get-ups from prone and from supine (roll over + the same rise). Details in
 With the original Microban model, commanding the same two hip/knee values
 without adjusting the ankle tips the robot over; here the linkage keeps the
 soles flat automatically.
+
+The elbow keeps Microban's own symmetric ±125° range: the forearm clears the
+upper arm either way, and the robust prone get-up pushes with the elbow bent
+backward. Limiting it to forward flexion (`--elbow-flexion-only`) dropped the
+get-up's success rate from 15/16 to at best 5/16 in the searches tried.
 
 ## Usage
 
