@@ -95,7 +95,7 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
         <geom type="mesh" class="visual" pos="0.00575 -0 -0.0484" quat="0.707107 0 0 0.707107" mesh="hip__configuration_right" material="hip__configuration_right_material" />
         <body name="hip_block__configuration_right" pos="-0.02 0 -0.0214" quat="0.5 -0.5 0.5 -0.5">
           <joint axis="0 0 1" name="r_hipjoint_xr" type="hinge" range="-0.610865238197994 0.6108652381980366" class="xl330" />
-          <inertial pos="-5.75932e-05 0.00982795 0.0271518" mass="0.048630" fullinertia="1.64064e-05 1.33088e-05 7.85889e-06 -9.153e-09 7.8745e-08 6.63067e-07" />
+          <inertial pos="-5.75932e-05 0.00982795 0.0271518" mass="0.051230" fullinertia="1.64064e-05 1.33088e-05 7.85889e-06 -9.153e-09 7.8745e-08 6.63067e-07" />
           <geom type="mesh" class="visual" pos="-0.008 -0 0.0385" quat="0 0.707107 0 -0.707107" mesh="xl330" material="xl330_material" />
           <geom type="mesh" class="visual" pos="0 -0 0.033" quat="0 -0 1 0" mesh="dc15_a01_horn_idle2_dummy" material="dc15_a01_horn_idle2_dummy_material" />
           <geom class="collision" pos="-0 0.02075 0.02575" quat="0 -0 0.707107 -0.707107" type="box" size="0.0135 0.02525 0.00625" />
@@ -192,7 +192,7 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
         <geom type="mesh" class="visual" pos="-0.00575 -0 -0.0484" quat="0.707107 -0 -0 -0.707107" mesh="hip__configuration_right" material="hip__configuration_right_material" />
         <body name="hip_block__configuration_left" pos="0.02 0 -0.0214" quat="0.5 -0.5 -0.5 0.5">
           <joint axis="0 0 1" name="l_hipjoint_xr" type="hinge" range="-0.6108652381980162 0.6108652381980144" class="xl330" />
-          <inertial pos="6.0554e-05 0.00982795 0.0271548" mass="0.048630" fullinertia="1.64096e-05 1.3312e-05 7.85888e-06 8.495e-09 -7.6959e-08 6.62404e-07" />
+          <inertial pos="6.0554e-05 0.00982795 0.0271548" mass="0.051230" fullinertia="1.64096e-05 1.3312e-05 7.85888e-06 8.495e-09 -7.6959e-08 6.62404e-07" />
           <geom type="mesh" class="visual" pos="0.008 -0 0.0385" quat="0 0.707107 0 0.707107" mesh="xl330" material="xl330_material" />
           <geom type="mesh" class="visual" pos="-0 0 0.033" quat="0 -0 -1 -0" mesh="dc15_a01_horn_idle2_dummy" material="dc15_a01_horn_idle2_dummy_material" />
           <geom class="collision" pos="-0 0.02075 0.02575" quat="0 -0 0.707107 -0.707107" type="box" size="0.0135 0.02525 0.00625" />

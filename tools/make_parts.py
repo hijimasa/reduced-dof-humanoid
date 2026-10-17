@@ -89,18 +89,35 @@ def hip_block_integrated(step_dir, out_dir, side):
     P1H = (-29, 120.7) sits right beside the bracket's rear skirt (x 11.5..13.5, y -30..-6,
     z 117..125), in the quadrant behind and below the hip axis that the femur's clevis plates
     only brush at full extension and that the pelvis-side bracket (x +-9 there) does not reach.
-    So the support is a short lug: a block from the skirt out to the bar plane with the pin hole,
-    8 mm of cantilever. The __main__ report checks it in CAD against the femur over the hip range
+    So the support is a short lug: a flange on the skirt and a tapered, filleted lug out to the
+    bar plane with the pin hole; the root is not a right angle. The __main__ report checks it in CAD against the femur over the hip range
     and against the pelvis-side bracket over the roll range."""
     t = {"right": (0.0, -9.75, -105.71), "left": (27.0, -9.75, -105.71)}[side]
     sx = 1.0 if side == "right" else -1.0
     X = lambda x0, x1: (min(sx * x0, sx * x1), max(sx * x0, sx * x1))
-    lug = _box(*X(11.0, THIGH_BAR_X[0] - 0.5), P1H[0] - 5.0, P1H[0] + 5.0, P1H[1] - 5.0, P1H[1] + 5.0)
+    # Root: a flange on the skirt spreads the load into the thin wall; the lug tapers from a 20 x 22
+    # section at the wall to 10 x 10 at the pin, and the junction is filleted (no right-angled
+    # root). Built for the right leg (+x outboard) and mirrored for the left.
+    x_tip = THIGH_BAR_X[0] - 0.5
+    flange = _box(11.0, 14.0, P1H[0] - 11.0, P1H[0] + 11.0, P1H[1] - 12.0, P1H[1] + 12.0).edges("|X").fillet(3.0)
+    # the taper narrows to 12 x 12 within 2 mm so that, beyond the femur plates' inner face (14.5),
+    # nothing of the lug reaches the corner the plates sweep at full extension
+    neck = (cq.Workplane("YZ").workplane(offset=13.0).center(P1H[0], P1H[1]).rect(20.0, 22.0)
+            .workplane(offset=2.0).rect(12.0, 12.0).loft(combine=True))
+    lug = (cq.Workplane("YZ").workplane(offset=15.0).center(P1H[0], P1H[1]).rect(12.0, 12.0)
+           .workplane(offset=x_tip - 15.0).rect(10.0, 10.0).loft(combine=True))
+    sup = flange.union(neck).union(lug)
     try:
-        lug = lug.edges("|X").fillet(2.0)
+        sup = sup.edges(cq.selectors.BoxSelector((13.5, P1H[0] - 12, P1H[1] - 13), (14.5, P1H[0] + 12, P1H[1] + 13))).fillet(2.5)
     except Exception:
         pass
-    sup = lug.cut(_cyl(PIN_D / 2, (sx * 8, P1H[0], P1H[1]), (sx * 30, P1H[0], P1H[1])))
+    try:
+        sup = sup.edges(cq.selectors.BoxSelector((x_tip - 1, P1H[0] - 6, P1H[1] - 6), (x_tip + 1, P1H[0] + 6, P1H[1] + 6))).fillet(1.5)
+    except Exception:
+        pass
+    sup = sup.cut(_cyl(PIN_D / 2, (8, P1H[0], P1H[1]), (40, P1H[0], P1H[1])))
+    if side == "left":
+        sup = sup.mirror("YZ")
     sup = sup.rotate((0, 0, 0), (0, 0, 1), 180).translate(t)           # leg -> bracket STEP frame
     blk = cq.importers.importStep(os.path.join(step_dir, f"hip_dbl_block_{side}.step"))
     part = blk.union(sup)
