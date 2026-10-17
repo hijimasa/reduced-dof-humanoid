@@ -13,8 +13,8 @@ http://www.apache.org/licenses/LICENSE-2.0
 <!--
 microban_pl12: Microban with parallel-link legs (passive ankle pitch).
 Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py
-(dof=12, naming=upstream, back=0.02, tilt=0.01, fixed_head=True, slim_ankle=True).
-Hip range -109..55 deg, knee -55..109 deg (pelvis-relative). See NOTICE.md for attribution.
+(dof=12, naming=upstream, thigh back/tilt=0.02/0.01, shank back/tilt=0.025/0.025, link_x=0.015, fixed_head=True, slim_ankle=True, forearm_ext=0.0).
+Hip range -109..55 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for attribution.
 -->
 <mujoco model="microban_pl12">
   <compiler angle="radian" meshdir="../microban_pl/assets" autolimits="true" />
@@ -108,10 +108,11 @@ Hip range -109..55 deg, knee -55..109 deg (pelvis-relative). See NOTICE.md for a
             <geom type="mesh" class="visual" pos="0.003 -0.132713 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="femur__configuration_right" material="femur__configuration_right_material" />
             <body name="right_knee_block" pos="-0.005 -0.062 -0">
               <joint name="right_knee_block" type="hinge" axis="0 0 1" class="passive" />
-              <inertial pos="0 0 0" mass="0.003" diaginertia="1e-07 1e-07 1e-07" />
-              <geom class="visual" type="box" size="0.004 0.004 0.004" pos="0.02 -0.01 0" rgba="0.25 0.25 0.28 1" />
+              <inertial pos="0 0 0" mass="0.006" diaginertia="2e-07 2e-07 2e-07" />
+              <geom class="visual" type="box" size="0.004 0.0235 0.0165" pos="0.0225 0.0075 0" rgba="0.25 0.25 0.28 1" />
+              <geom class="visual" type="box" size="0.01725 0.005 0.0015" pos="0.01125 0.00375 -0.02" rgba="0.25 0.25 0.28 1" />
               <body name="tibia__configuration_right" pos="0 0 0" quat="1 0 0 0">
-                <joint axis="0 0 1" name="right_knee" type="hinge" range="-0.967522 1.89482" class="xl330" />
+                <joint axis="0 0 1" name="right_knee" type="hinge" range="-0.645772 2.21657" class="xl330" />
                 <inertial pos="0.00276278 -0.0196679 -0.0144621" mass="0.0300463" fullinertia="1.53882e-05 5.3311e-06 1.38581e-05 2.25674e-06 7.6682e-08 -1.37001e-07" />
                 <geom type="mesh" class="visual" pos="0 -0 -0.0065" quat="1 -0 -0 0" mesh="xl330" material="xl330_material" />
                 <geom class="collision" pos="0.017 -0.0444631 0.00275" quat="0.5 -0.5 0.5 0.5" type="box" size="0.00125 0.009 0.0115" />
@@ -140,17 +141,19 @@ Hip range -109..55 deg, knee -55..109 deg (pelvis-relative). See NOTICE.md for a
                   </body>
                 </body>
               </body>
-              <body name="right_shank_rear" pos="0.02 0.01 0">
+              <body name="right_shank_rear" pos="0.025 0.025 0">
                 <joint name="right_shank_rear" type="hinge" axis="0 0 1" class="passive" />
                 <inertial pos="0.004 -0.0306065 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-                <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 0.008 -0.0612131 -0" rgba="0.25 0.25 0.28 1" />
+                <geom class="visual" type="box" size="0.0348668 0.004 0.0015" pos="0.004 -0.0306065 -0.015" quat="0.751528 0 0 -0.659701" rgba="0.25 0.25 0.28 1" />
+                <geom class="visual" type="box" size="0.0348668 0.004 0.0015" pos="0.004 -0.0306065 0.015" quat="0.751528 0 0 -0.659701" rgba="0.25 0.25 0.28 1" />
               </body>
             </body>
           </body>
           <body name="right_thigh_rear" pos="-0.0145 0.01 0.0185" quat="0 0.707107 0 -0.707107">
             <joint name="right_thigh_rear" type="hinge" axis="0 0 1" class="passive" />
             <inertial pos="-0.0025 -0.031 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-            <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 -0.005 -0.062 -0" rgba="0.25 0.25 0.28 1" />
+            <geom class="visual" type="box" size="0.0351006 0.004 0.0015" pos="-0.0025 -0.031 -0.015" quat="0.678091 0 0 -0.734978" rgba="0.25 0.25 0.28 1" />
+            <geom class="visual" type="box" size="0.0351006 0.004 0.0015" pos="-0.0025 -0.031 0.015" quat="0.678091 0 0 -0.734978" rgba="0.25 0.25 0.28 1" />
           </body>
         </body>
       </body>
@@ -196,10 +199,11 @@ Hip range -109..55 deg, knee -55..109 deg (pelvis-relative). See NOTICE.md for a
             <geom type="mesh" class="visual" pos="-0.003 0.132713 -0.0515" quat="0.5 0.5 0.5 -0.5" mesh="femur__configuration_left" material="femur__configuration_left_material" />
             <body name="left_knee_block" pos="0.005 0.062 0">
               <joint name="left_knee_block" type="hinge" axis="0 0 1" class="passive" />
-              <inertial pos="0 0 0" mass="0.003" diaginertia="1e-07 1e-07 1e-07" />
-              <geom class="visual" type="box" size="0.004 0.004 0.004" pos="-0.02 0.01 0" rgba="0.25 0.25 0.28 1" />
+              <inertial pos="0 0 0" mass="0.006" diaginertia="2e-07 2e-07 2e-07" />
+              <geom class="visual" type="box" size="0.004 0.0235 0.0165" pos="-0.0225 -0.0075 0" rgba="0.25 0.25 0.28 1" />
+              <geom class="visual" type="box" size="0.01725 0.005 0.0015" pos="-0.01125 -0.00375 -0.02" rgba="0.25 0.25 0.28 1" />
               <body name="tibia__configuration_left" pos="0 0 0" quat="1 0 0 0">
-                <joint axis="0 0 1" name="left_knee" type="hinge" range="-0.967522 1.89482" class="xl330" />
+                <joint axis="0 0 1" name="left_knee" type="hinge" range="-0.645772 2.21657" class="xl330" />
                 <inertial pos="-0.00275805 0.0196679 -0.0145379" mass="0.0300463" fullinertia="1.53882e-05 5.33188e-06 1.38589e-05 2.25747e-06 7.7561e-08 -1.37001e-07" />
                 <geom type="mesh" class="visual" pos="-0 0 -0.0225" quat="0 1 0 0" mesh="xl330" material="xl330_material" />
                 <geom class="collision" pos="-0.017 0.0444631 -0.0317" quat="0.5 0.5 0.5 -0.5" type="box" size="0.00125 0.009 0.0115" />
@@ -228,17 +232,19 @@ Hip range -109..55 deg, knee -55..109 deg (pelvis-relative). See NOTICE.md for a
                   </body>
                 </body>
               </body>
-              <body name="left_shank_rear" pos="-0.02 -0.01 0">
+              <body name="left_shank_rear" pos="-0.025 -0.025 0">
                 <joint name="left_shank_rear" type="hinge" axis="0 0 1" class="passive" />
                 <inertial pos="-0.004 0.0306065 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-                <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 -0.008 0.0612131 -0" rgba="0.25 0.25 0.28 1" />
+                <geom class="visual" type="box" size="0.0348668 0.004 0.0015" pos="-0.004 0.0306065 -0.015" quat="0.659701 0 0 0.751528" rgba="0.25 0.25 0.28 1" />
+                <geom class="visual" type="box" size="0.0348668 0.004 0.0015" pos="-0.004 0.0306065 0.015" quat="0.659701 0 0 0.751528" rgba="0.25 0.25 0.28 1" />
               </body>
             </body>
           </body>
           <body name="left_thigh_rear" pos="-0.0145 0.01 0.0185" quat="0.707107 -0 -0.707107 0">
             <joint name="left_thigh_rear" type="hinge" axis="0 0 1" class="passive" />
             <inertial pos="0.0025 0.031 0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-            <geom class="visual" type="capsule" size="0.002" fromto="0 0 0 0.005 0.062 0" rgba="0.25 0.25 0.28 1" />
+            <geom class="visual" type="box" size="0.0351006 0.004 0.0015" pos="0.0025 0.031 -0.015" quat="0.734978 0 0 0.678091" rgba="0.25 0.25 0.28 1" />
+            <geom class="visual" type="box" size="0.0351006 0.004 0.0015" pos="0.0025 0.031 0.015" quat="0.734978 0 0 0.678091" rgba="0.25 0.25 0.28 1" />
           </body>
         </body>
       </body>
@@ -312,8 +318,8 @@ Hip range -109..55 deg, knee -55..109 deg (pelvis-relative). See NOTICE.md for a
   </actuator>
   <equality>
     <connect name="right_thigh_loop" body1="right_knee_block" body2="right_thigh_rear" anchor="0.02 -0.01 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
-    <connect name="right_shank_loop" body1="ankle_block__configuration_left" body2="right_shank_rear" anchor="-0.02 -0.01 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="right_shank_loop" body1="ankle_block__configuration_left" body2="right_shank_rear" anchor="-0.025 -0.025 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
     <connect name="left_thigh_loop" body1="left_knee_block" body2="left_thigh_rear" anchor="-0.02 0.01 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
-    <connect name="left_shank_loop" body1="ankle_block__configuration_right" body2="left_shank_rear" anchor="0.02 0.01 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="left_shank_loop" body1="ankle_block__configuration_right" body2="left_shank_rear" anchor="0.025 0.025 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
   </equality>
 </mujoco>

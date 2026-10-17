@@ -54,8 +54,11 @@ model/microban_pl/
   microban_pl_lme.xml    same model with LegacyMotionEditor joint names (r_hipjoint_yp, ...)
   scene.xml              floor + "standing" keyframe for the MuJoCo viewer
   assets/                Microban meshes (unmodified, CC BY-NC-SA 4.0)
+model/parts/             printable DRAFTS of the added parts (STL, from tools/make_parts.py)
 tools/
   make_microban_pl.py    generates the models above from Microban's robot.xml
+  make_parts.py          CadQuery script for the link bars, knee yoke, axle cap, standoffs, dummy servos
+  step_holes.py          reads hole patterns out of Microban's STEP parts
   verify_parallel_leg.py loop closure, foot-parallel sweep and standing tests
   render_preview.py      renders docs/images/preview.png
 docs/
@@ -80,10 +83,11 @@ Consequences:
 - The knee servo now acts between the knee block and the tibia, so the knee
   command is the shank angle **relative to the pelvis**, not to the thigh.
   Existing Microban motions must be re-authored.
-- The rear pivots sit 20 mm behind the front pivots with a 10 mm tilt (down on
-  the thigh, up on the shank), which moves the linkage singularities to 116.6°
-  of flexion and 63.4° of extension. The joint ranges are derived from that with
-  an 8° margin: hip −109°…+55°, knee −55°…+109° (pelvis-relative).
+- Thigh linkage: rear pivots 20 mm behind and 10 mm below the front pivots
+  (singular at 116.6° flexion / 63.4° extension). Shank linkage: 25 mm behind
+  and 25 mm above, which lifts the ankle pivot clear of the ankle-roll servo and
+  the foot (singular at 135° / 45°). Joint ranges follow with an 8° margin:
+  hip −109°…+55°, knee −37°…+127° (pelvis-relative).
 - The rear links are drawn as thin capsules and do not collide; interference
   with the real parts is not modelled yet.
 
@@ -103,6 +107,24 @@ has to produce (`--keep-ankle-servo` and `--neck-motor` restore the originals):
 | Shoulder roll (14- and 12-servo models) | The XL330 at the top of each humerus is removed; the humerus bolts to the shoulder bracket with the arm at the side. | −46 g. |
 
 Total mass: 0.833 kg (upstream model) → 0.765 kg (16-servo) → 0.719 kg (14-servo) → 0.673 kg (12-servo).
+
+### The printed parts (drafts)
+
+`tools/make_parts.py` (needs `cadquery`) writes STL drafts of everything the
+conversion adds, laid out in the Onshape frame of Microban's leg parts so they
+can be dropped into the original assembly for a fit check. The placement was
+checked against the model (below, originals transparent): link bars 3 × 8 mm
+with M2 pins, both thigh bars inside the arm's swing at ±14.5…17.5 mm, one
+shank bar outboard, a knee yoke behind the knee with one outboard arm on an
+axle cap bolted to the knee servo horn, 1 mm and 4 mm standoffs, and dummy
+XL330 blocks for the shoulder-roll and neck positions. The ankle's passive
+hinge reuses the tibia's existing Ø6 plate holes; the hip and ankle brackets
+each get one M2 hole. Why the pivots sit where they do, and what is still
+unverified, is in [docs/parts_ja.md](docs/parts_ja.md).
+
+<p align="center">
+  <img src="docs/images/parts_check.png" alt="Drafted parts placed on the model, originals transparent" width="640">
+</p>
 
 ### Verification
 

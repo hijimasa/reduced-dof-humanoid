@@ -103,8 +103,15 @@ def main():
     ap.add_argument("--keep-motor", action="store_true", help="keep <motor> actuators instead of <position>")
     ap.add_argument("--neck-motor", action="store_true",
                     help="keep the neck (head yaw) servo; by default the head is fixed to the trunk")
-    ap.add_argument("--back", type=float, default=0.020, help="rear pivot offset behind the front pivot [m]")
-    ap.add_argument("--tilt", type=float, default=0.010, help="vertical tilt of the rear pivots [m]")
+    ap.add_argument("--back", type=float, default=0.020, help="thigh linkage: rear pivot offset behind the front pivot [m]")
+    ap.add_argument("--tilt", type=float, default=0.010, help="thigh linkage: rear pivot DOWN by this much [m]")
+    ap.add_argument("--shank-back", type=float, default=0.025,
+                    help="shank linkage: rear pivot offset [m] (25 mm clears the tibia's rear edge and the ankle-roll servo)")
+    ap.add_argument("--shank-tilt", type=float, default=0.025,
+                    help="shank linkage: rear pivot UP by this much [m] (lifts the ankle pivot above the foot and the roll servo)")
+    ap.add_argument("--link-x", type=float, default=0.015,
+                    help="lateral position of the two bars of each linkage [m], +-link_x from the leg centre plane "
+                         "(15 mm: just outside the hip/ankle bracket side walls, inside the arm's swing)")
     ap.add_argument("--keep-ankle-servo", action="store_true",
                     help="keep the ankle-pitch servo's geometry and mass in the ankle block (by default "
                          "it is removed and the bracket shrunk to a clevis, which is what lets the knee fold deeper)")
@@ -152,19 +159,25 @@ def main():
     def inertial(el, mass, pos, diag):
         ET.SubElement(el, "inertial", {"pos": fmt(pos), "mass": f"{mass}", "diaginertia": fmt(diag)})
     def rod(el, v):
-        ET.SubElement(el, "geom", {"class": "visual", "type": "capsule", "size": "0.002",
-                                   "fromto": "0 0 0 " + fmt(v), "rgba": "0.25 0.25 0.28 1"})
+        # two printed bars per linkage, one each side of the leg's centre plane (local z is
+        # the pitch axis = lateral): 3 mm thick, 8 mm wide, pin to pin
+        ang = np.arctan2(v[1], v[0]); q = (np.cos(ang / 2), 0.0, 0.0, np.sin(ang / 2))
+        for zx in (-a.link_x, a.link_x):
+            ET.SubElement(el, "geom", {"class": "visual", "type": "box",
+                                       "size": fmt((np.linalg.norm(v) / 2 + 0.004, 0.004, 0.0015)),
+                                       "pos": fmt(v / 2 + np.array([0, 0, zx])), "quat": fmt(q),
+                                       "rgba": "0.25 0.25 0.28 1"})
 
-    ang = np.degrees(np.arctan2(a.tilt, a.back))
-    flex, ext = np.radians(90 + ang - RANGE_MARGIN), np.radians(90 - ang - RANGE_MARGIN)
-    HIP_RANGE, KNEE_RANGE = (-flex, ext), (-ext, flex)   # hip: +ve = thigh back; knee: +ve = shank back
+    ang1 = np.degrees(np.arctan2(a.tilt, a.back)); ang2 = np.degrees(np.arctan2(a.shank_tilt, a.shank_back))
+    HIP_RANGE = (-np.radians(90 + ang1 - RANGE_MARGIN), np.radians(90 - ang1 - RANGE_MARGIN))   # +ve = thigh back
+    KNEE_RANGE = (-np.radians(90 - ang2 - RANGE_MARGIN), np.radians(90 + ang2 - RANGE_MARGIN))  # +ve = shank back
 
     for side, L in LEG.items():
         hipblock, femur, tibia, ankle = (bodies[L[k]] for k in ("hipblock", "femur", "tibia", "ankle"))
         if not a.keep_ankle_servo:
             slim_ankle(ankle, a.clevis)
-        d1 = np.array([L["sx"] * a.back, -L["sx"] * a.tilt, 0.0])   # thigh rear pivot
-        d2 = np.array([L["sx"] * a.back, +L["sx"] * a.tilt, 0.0])   # shank rear pivot
+        d1 = np.array([L["sx"] * a.back, -L["sx"] * a.tilt, 0.0])               # thigh rear pivot (back, down)
+        d2 = np.array([L["sx"] * a.shank_back, +L["sx"] * a.shank_tilt, 0.0])   # shank rear pivot (back, up)
         v1 = vec(tibia.get("pos"))          # hip pitch axis -> knee axis (femur frame)
         v2 = vec(ankle.get("pos"))          # knee axis -> ankle axis (tibia frame)
         tq = tibia.get("quat", "1 0 0 0").replace("-0", "0").split()
@@ -175,9 +188,17 @@ def main():
         kb = ET.Element("body", {"name": f"{side}_knee_block", "pos": fmt(v1)})
         ET.SubElement(kb, "joint", {"name": name(f"{side}_knee_block"), "type": "hinge",
                                     "axis": "0 0 1", "class": "passive"})
-        inertial(kb, 0.003, (0, 0, 0), (1e-7, 1e-7, 1e-7))
-        ET.SubElement(kb, "geom", {"class": "visual", "type": "box", "size": "0.004 0.004 0.004",
-                                   "pos": fmt(d1), "rgba": "0.25 0.25 0.28 1"})
+        inertial(kb, 0.006, (0, 0, 0), (2e-7, 2e-7, 2e-7))
+        # knee yoke: a bar behind the knee carrying both rear-link pivots and spanning the two
+        # link planes, plus an outboard arm back to the knee axle (outside the femur plate)
+        mid = (d1 + d2) / 2
+        ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
+                                   "size": fmt((0.004, abs(d2[1] - d1[1]) / 2 + 0.006, a.link_x + 0.0015)),
+                                   "pos": fmt(mid), "rgba": "0.25 0.25 0.28 1"})
+        out_z = 0.020 * (1 if side == "right" else -1) * (-1 if L["sx"] > 0 else 1)   # outboard = away from the other leg
+        ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
+                                   "size": fmt((abs(mid[0]) / 2 + 0.006, 0.005, 0.0015)),
+                                   "pos": fmt((mid[0] / 2, mid[1] / 2, out_z)), "rgba": "0.25 0.25 0.28 1"})
         tibia.set("pos", "0 0 0"); tibia.set("quat", "1 0 0 0")
         kb.append(tibia)
         sr = ET.SubElement(kb, "body", {"name": f"{side}_shank_rear", "pos": fmt(d2)})
@@ -305,7 +326,7 @@ def main():
     body = ET.tostring(root, encoding="unicode")
     note = (f"<!--\n{model_name}: Microban with parallel-link legs (passive ankle pitch).\n"
             f"Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py\n"
-            f"(dof={a.dof}, naming={a.naming}, back={a.back}, tilt={a.tilt}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}).\n"
+            f"(dof={a.dof}, naming={a.naming}, thigh back/tilt={a.back}/{a.tilt}, shank back/tilt={a.shank_back}/{a.shank_tilt}, link_x={a.link_x}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}).\n"
             f"Hip range {np.degrees(HIP_RANGE[0]):.0f}..{np.degrees(HIP_RANGE[1]):.0f} deg, knee {np.degrees(KNEE_RANGE[0]):.0f}..{np.degrees(KNEE_RANGE[1]):.0f} deg (pelvis-relative). See NOTICE.md for attribution.\n-->\n")
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:
