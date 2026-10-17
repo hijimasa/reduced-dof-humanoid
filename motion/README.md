@@ -22,5 +22,6 @@ LME_ROBOT=microban_12 python3 motion/tune_getup.py face_down    # CEM re-timing 
 - `sim_check.py`: replays a project in MuJoCo under servo-offset and tilt perturbations; the tables in the README come from it.
 - `tune_gait.py`, `tune_getup.py`, `getup_supine.py`, `getup_roll.py`: tuners and searches.
 - `projects/`: the generated LME projects for the 12- and 14-servo builds.
+- `candidates/`: pickled search results (the rise in the profiles, a direct supine rise, a roll).
 
 Needs `mujoco` and `numpy`. The scripts have Python 3.12 f-strings in places.

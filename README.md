@@ -227,7 +227,8 @@ re-timing; the nine-pose rise from seed 72, re-timed by `motion/tune_getup.py`,
 is the one in the profiles. It rolls the robot over and stands it up facing
 the other way. The supine get-up is a one-pose roll onto the front followed by
 the same rise. A direct supine rise (sit up on the hands, hip flexed to the new
-−100° limit) was also found and is kept in `motion/log` as an alternative. The
+−100° limit) and a one-pose prone-to-supine roll were also found and are kept
+in `motion/candidates/` as alternatives. The
 gaits walk with the elbows bent 60° forward and the arms abducted 30° by the
 printed shoulder parts. The motion tools
 (keyframe IK, perturbed simulation checks, gait and get-up tuners, the beam
