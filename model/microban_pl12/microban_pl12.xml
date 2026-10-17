@@ -123,7 +123,7 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
                 <geom type="mesh" class="visual" pos="0.008 -0.0707131 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="tibia__configuration_right" material="tibia__configuration_right_material" />
                 <body name="ankle_block__configuration_left" pos="0.008 -0.0612131 -0" quat="0 -0 -0 1">
                   <joint axis="0 0 1" name="right_ankle_pitch" type="hinge" class="passive" />
-                  <inertial pos="-0.0110676 -0.00979852 -0.0144015" mass="0.031700" fullinertia="4.1507e-06 6.8740e-06 8.5224e-06 -3.1805e-07 -2.6356e-08 -3.2439e-09" />
+                  <inertial pos="-0.0110676 -0.00979852 -0.0144015" mass="0.033100" fullinertia="4.1507e-06 6.8740e-06 8.5224e-06 -3.1805e-07 -2.6356e-08 -3.2439e-09" />
                   <geom class="collision" pos="-0.01275 -0.006 -0.0145" quat="0.5 0.5 0.5 -0.5" type="box" size="0.0135 0.006 0.00625" />
                   <geom type="mesh" class="visual" pos="-0.032 0 -0.0145" quat="0.707107 0 -0.707107 -0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
                   <geom type="mesh" class="visual" pos="0 0.0095 -0.0145" quat="0.5 0.5 0.5 -0.5" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
@@ -216,7 +216,7 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
                 <geom type="mesh" class="visual" pos="-0.008 0.0707131 -0.0515" quat="0.5 0.5 0.5 -0.5" mesh="tibia__configuration_left" material="tibia__configuration_left_material" />
                 <body name="ankle_block__configuration_right" pos="-0.008 0.0612131 -0" quat="0 0 -0 1">
                   <joint axis="0 0 1" name="left_ankle_pitch" type="hinge" class="passive" />
-                  <inertial pos="0.0110706 0.00979852 -0.0145955" mass="0.031700" fullinertia="4.1508e-06 6.8724e-06 8.5208e-06 -3.1841e-07 -2.7326e-08 -3.5943e-09" />
+                  <inertial pos="0.0110706 0.00979852 -0.0145955" mass="0.033100" fullinertia="4.1508e-06 6.8724e-06 8.5208e-06 -3.1841e-07 -2.7326e-08 -3.5943e-09" />
                   <geom class="collision" pos="0.01275 0.006 -0.0145" quat="0.5 -0.5 0.5 0.5" type="box" size="0.0135 0.006 0.00625" />
                   <geom type="mesh" class="visual" pos="0.032 0 -0.0145" quat="0 0.707107 0 0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
                   <geom type="mesh" class="visual" pos="-0 -0.0095 -0.0145" quat="0.5 -0.5 0.5 0.5" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />

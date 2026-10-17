@@ -230,7 +230,8 @@ def ankle_block_integrated(step_dir, out_dir, side):
     Ø6 holes on the axis. The cap bolted to the servo's top; here the hinge body is fused to it.
     The same part orientation is used in both legs (the block is not mirrored upstream), so
     the horn side (-x) is inboard on the right leg and outboard on the left; only the shank-bar
-    pivot boss changes side: outboard = +x on the right leg, -x on the left."""
+    pivot lug changes side: outboard = +x on the right leg, -x on the left. The lug is checked in
+    CAD against the tibia over the knee range (__main__ report)."""
     cap = cq.importers.importStep(os.path.join(step_dir, "ankle_dbl_block.step"))
     body = _box(-9.0, 11.5, -6.0, 6.0, 9.5, 34.0)             # column from the hinge boss up to the cap
     pocket = _box(-7.4, 9.9, -4.4, 4.4, 14.0, 31.0)           # hollow, 1.6 mm walls
@@ -242,11 +243,22 @@ def ankle_block_integrated(step_dir, out_dir, side):
     stub_i = _cyl(2.95, (14.0, 0, 9.5), (20.0, 0, 9.5))
     part = cap.union(body.cut(pocket)).union(web).union(boss).union(collar_h).union(stub_h).union(collar_i).union(stub_i)
     sx = 1.0 if side == "right" else -1.0                     # outboard side for the shank-bar pivot
-    piv = _cyl(3.0, (sx * 12.5, P2A[0], P2A[1]), (sx * (SHANK_BAR_X[0] - 0.5), P2A[0], P2A[1]))
-    gus = _box(min(sx * 12.5, sx * 13.5), max(sx * 12.5, sx * 13.5), P2A[0] - 3, P2A[0] + 3, 31.0, P2A[1] + 3)
-    part = part.union(piv).union(gus)
-    part = part.cut(_cyl(PIN_D / 2, (sx * 10, P2A[0], P2A[1]), (sx * 30, P2A[0], P2A[1])))     # M2 clearance through the boss
+    # Shank-bar pivot support. The tibia's clevis plates (|x| 14.5..18.5) sweep, relative to this
+    # block, the band r <= 45 mm around the ankle axis (y 0, z 9.5) between 113 and 150 deg (their
+    # rear-top corner, knee extension); the pivot P2A = (-30, 39.5) is at r 42, 135 deg, so the
+    # support may only cross the plate zone at r > 45: a root block on the cap's rear corner
+    # (inboard of the plates), a beam leaving it at y -44..-38, z 36..44 (r >= 46 from the axis),
+    # and an arm outside the plates (x >= 21) coming forward to the pin. Built for +x (right) and
+    # mirrored for the left.
+    root = _box(11.0, 14.0, -38.5, -30.0, 31.0, 44.0).edges("|X").fillet(1.0)
+    beam = _box(11.0, SHANK_BAR_X[0] - 0.5, -44.0, -38.0, 36.0, 44.0).edges("|X").fillet(1.5)
+    arm = _box(21.0, SHANK_BAR_X[0] - 0.5, -44.0, P2A[0] + 5.0, 33.0, 44.0).edges("|X").fillet(1.5)
+    piv = root.union(beam).union(arm).cut(_cyl(PIN_D / 2, (10, P2A[0], P2A[1]), (30, P2A[0], P2A[1])))   # M2 clearance for the pin
+    if sx < 0:
+        piv = piv.mirror("YZ")
+    part = part.union(piv)
     part = part.cut(_cyl(0.8, (-21, 0, 9.5), (-15, 0, 9.5))).cut(_cyl(0.8, (15, 0, 9.5), (21, 0, 9.5)))   # M2 tap drills in the stub tips
+    assert len(part.solids().vals()) == 1 and part.val().Volume() > 12000, f"ankle_block_integrated_{side}: bad boolean result"
     os.makedirs(out_dir, exist_ok=True)
     cq.exporters.export(part, f"{out_dir}/ankle_block_integrated_{side}.stl")
     cq.exporters.export(part, f"{out_dir}/ankle_block_integrated_{side}.step")
