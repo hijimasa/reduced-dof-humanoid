@@ -69,12 +69,18 @@ def fmt(a): return " ".join(f"{float(t):.6g}" for t in np.atleast_1d(a))
 DUMMY_MASS = 0.008   # kg, a printed XL330-sized block (20 x 34 x 26 mm shell)
 
 
-def dummy_block(body, pos, quat):
+PART_HOOK = {"fn": None}   # set in main() when --parts is given: (body, name, pos, quat) -> adds a mesh geom
+
+
+def dummy_block(body, pos, quat, part_name=None):
     """Visual + mass of a printed XL330-shaped spacer in a servo's old place: same envelope,
     so the original brackets bolt on unchanged and a real servo can go back in later."""
-    ET.SubElement(body, "geom", {"class": "visual", "type": "box", "size": "0.010 0.017 0.013",
-                                 "pos": fmt(vec(pos) + q2m(vec(quat)) @ np.array([0, -0.0075, -0.0065])),
-                                 "quat": quat, "rgba": "0.85 0.6 0.25 1"})
+    if PART_HOOK["fn"] and part_name:
+        PART_HOOK["fn"](body, part_name, vec(pos), vec(quat))
+    else:
+        ET.SubElement(body, "geom", {"class": "visual", "type": "box", "size": "0.010 0.017 0.013",
+                                     "pos": fmt(vec(pos) + q2m(vec(quat)) @ np.array([0, -0.0075, -0.0065])),
+                                     "quat": quat, "rgba": "0.85 0.6 0.25 1"})
     ine = body.find("inertial")
     m0 = float(ine.get("mass")); m1 = m0 + DUMMY_MASS
     ine.set("mass", f"{m1:.6f}")
@@ -92,7 +98,7 @@ def slim_ankle(body, h):
     for g in list(body.findall("geom")):
         at = g.attrib
         if at.get("mesh") == "xl330":
-            body.remove(g); dummy_block(body, at.get("pos"), at.get("quat", "1 0 0 0"))
+            body.remove(g); dummy_block(body, at.get("pos"), at.get("quat", "1 0 0 0"), "xl330_dummy_ankle_hinge")
         elif at.get("mesh") in ("dc15_a01_horn_idle2_dummy", "bts2_m2_6x8", "dc15_a01_idle_cap_dummy"):
             body.remove(g)
         elif at.get("class") == "collision":
@@ -138,6 +144,10 @@ def main():
                     help="16: passive ankle pitch + fixed head. 14: additionally no shoulder roll "
                          "(legs 5x2 with hip yaw, arms 2x2 -- the chosen layout). 12: no hip yaw either")
     ap.add_argument("--meshdir", help="override the compiler meshdir written into the output")
+    ap.add_argument("--parts", default="",
+                    help="directory of the printed-part STLs (tools/make_parts.py), as a path RELATIVE TO MESHDIR; "
+                         "when given, the links, knee yoke, axle caps and spacer blocks are drawn with those meshes "
+                         "instead of boxes (which LegacyMotionEditor's preview cannot show)")
     ap.add_argument("--forearm-ext", type=float, default=0.0,
                     help="lengthen each forearm by this much [m] with a printed extension (a capsule "
                          "past the hand, 10 g per 40 mm). ROBO-ONE Light allows 26 cm from the shoulder.")
@@ -164,6 +174,18 @@ def main():
     model_name = {16: "microban_pl", 14: "microban_pl14", 12: "microban_pl12"}[a.dof] + ("_lme" if a.naming == "lme" else "")
     root.set("model", model_name)
 
+    asset = root.find("asset")
+    PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap",
+                   "xl330_dummy_shoulder_roll", "xl330_dummy_neck", "xl330_dummy_hip_yaw", "xl330_dummy_ankle_hinge")
+    if a.parts:
+        for nm in PART_MESHES:
+            ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{a.parts}/{nm}.stl", "scale": "0.001 0.001 0.001"})
+
+    def part(body, nm, pos, quat, rgba="0.85 0.6 0.25 1"):
+        ET.SubElement(body, "geom", {"class": "visual", "type": "mesh", "mesh": f"part_{nm}", "pos": fmt(pos),
+                                     "quat": fmt(quat), "rgba": rgba})
+    PART_HOOK["fn"] = part if a.parts else None
+
     dflt = root.find("default")
     pcls = ET.SubElement(dflt, "default", {"class": "passive"})
     ET.SubElement(pcls, "joint", {"damping": "0.005", "frictionloss": "0.001", "armature": "0.0001"})
@@ -174,11 +196,16 @@ def main():
 
     def inertial(el, mass, pos, diag):
         ET.SubElement(el, "inertial", {"pos": fmt(pos), "mass": f"{mass}", "diaginertia": fmt(diag)})
-    def rod(el, v):
-        # two printed bars per linkage, one each side of the leg's centre plane (local z is
-        # the pitch axis = lateral): 3 mm thick, 8 mm wide, pin to pin
+    def rod(el, v, bar="thigh_bar", lateral=None):
+        # printed bars, pin to pin, in sagittal planes offset laterally (local z is the pitch
+        # axis = world +y): thigh bars on both sides at +-link_x, the shank bar outboard only
         ang = np.arctan2(v[1], v[0]); q = (np.cos(ang / 2), 0.0, 0.0, np.sin(ang / 2))
-        for zx in (-a.link_x, a.link_x):
+        offsets = (-a.link_x, a.link_x) if lateral is None else lateral
+        if a.parts:
+            for zx in offsets:   # STL: centred at the origin along x, 3 mm thick in +z
+                part(el, bar, v / 2 + np.array([0, 0, zx - 0.0015]), q, "0.25 0.25 0.28 1")
+            return
+        for zx in offsets:
             ET.SubElement(el, "geom", {"class": "visual", "type": "box",
                                        "size": fmt((np.linalg.norm(v) / 2 + 0.004, 0.004, 0.0015)),
                                        "pos": fmt(v / 2 + np.array([0, 0, zx])), "quat": fmt(q),
@@ -199,28 +226,54 @@ def main():
         tq = tibia.get("quat", "1 0 0 0").replace("-0", "0").split()
         assert tq == ["1", "0", "0", "0"], f"{L['tibia']}: quat must be identity"
 
+        # The femur/tibia body origins sit on the INBOARD clevis plate, 14.5 mm from the leg's
+        # centre plane, so lateral placements are measured from the knee servo's centre:
+        # c_z in the femur body frame (local z = pitch axis = world +y), x_c in the femur
+        # mesh (= Onshape leg) frame.
+        sg = next(x for x in tibia.findall("geom") if x.get("mesh") == "xl330")
+        # leg centre = midway between the horn face (mesh z -22.5) and the idler face (+6.5)
+        p_servo = v1 + vec(sg.get("pos")) + q2m(vec(sg.get("quat", "1 0 0 0"))) @ np.array([0, -0.0075, -0.0080])
+        c_z = float(p_servo[2])
+        fg = next(x for x in femur.findall("geom") if x.get("mesh") == L["femur"])
+        fgp, fgq = vec(fg.get("pos")), vec(fg.get("quat", "1 0 0 0")); R_fg = q2m(fgq)
+        x_c = float((R_fg.T @ (p_servo - fgp))[0])
+        knee_mesh = R_fg.T @ (v1 - fgp)
+        out_sign = 1.0 if side == "right" else -1.0        # mesh +x is world -y: outboard on the right, inboard on the left
+        out_z = -1.0 if side == "right" else 1.0           # femur body +z is world +y
+
         # knee block: passive hinge, stays parallel to the pelvis
         femur.remove(tibia)
         kb = ET.Element("body", {"name": f"{side}_knee_block", "pos": fmt(v1)})
         ET.SubElement(kb, "joint", {"name": name(f"{side}_knee_block"), "type": "hinge",
                                     "axis": "0 0 1", "class": "passive"})
         inertial(kb, 0.006, (0, 0, 0), (2e-7, 2e-7, 2e-7))
-        # knee yoke: a bar behind the knee carrying both rear-link pivots and spanning the two
-        # link planes, plus an outboard arm back to the knee axle (outside the femur plate)
+        if a.parts:
+            # the parts are modelled in the Onshape leg frame with the leg centre at x = 0; that
+            # frame is the femur mesh geom's frame shifted to the actual centre x_c
+            part(kb, f"knee_yoke_{side}", fgp + R_fg @ np.array([x_c, 0, 0]) - v1, fgq, "0.25 0.25 0.28 1")
+            # axle cap: flange on the outer plate face (centre +- 18.5 mm), stub pointing outboard
+            cap_pos = fgp + R_fg @ np.array([x_c + out_sign * 0.0185, knee_mesh[1], knee_mesh[2]])
+            r2 = np.sqrt(0.5); q_rot = np.array([r2, 0, out_sign * r2, 0])        # cap +z -> mesh +-x
+            w1, x1, y1, z1 = fgq; w2, x2, y2, z2 = q_rot
+            cap_q = (w1*w2 - x1*x2 - y1*y2 - z1*z2, w1*x2 + x1*w2 + y1*z2 - z1*y2,
+                     w1*y2 - x1*z2 + y1*w2 + z1*x2, w1*z2 + x1*y2 - y1*x2 + z1*w2)
+            part(femur, "knee_axle_cap", cap_pos, cap_q, "0.6 0.2 0.2 1")
+        # box placeholders (shown when no --parts): a bar behind the knee carrying both
+        # rear-link pivots and spanning the two link planes, plus an outboard arm
         mid = (d1 + d2) / 2
-        ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
-                                   "size": fmt((0.004, abs(d2[1] - d1[1]) / 2 + 0.006, a.link_x + 0.0015)),
-                                   "pos": fmt(mid), "rgba": "0.25 0.25 0.28 1"})
-        out_z = 0.020 * (1 if side == "right" else -1) * (-1 if L["sx"] > 0 else 1)   # outboard = away from the other leg
-        ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
-                                   "size": fmt((abs(mid[0]) / 2 + 0.006, 0.005, 0.0015)),
-                                   "pos": fmt((mid[0] / 2, mid[1] / 2, out_z)), "rgba": "0.25 0.25 0.28 1"})
+        if not a.parts:
+            ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
+                                       "size": fmt((0.004, abs(d2[1] - d1[1]) / 2 + 0.006, a.link_x + 0.0015)),
+                                       "pos": fmt(mid + np.array([0, 0, c_z])), "rgba": "0.25 0.25 0.28 1"})
+            ET.SubElement(kb, "geom", {"class": "visual", "type": "box",
+                                       "size": fmt((abs(mid[0]) / 2 + 0.006, 0.005, 0.0015)),
+                                       "pos": fmt((mid[0] / 2, mid[1] / 2, c_z + out_z * 0.022)), "rgba": "0.25 0.25 0.28 1"})
         tibia.set("pos", "0 0 0"); tibia.set("quat", "1 0 0 0")
         kb.append(tibia)
         sr = ET.SubElement(kb, "body", {"name": f"{side}_shank_rear", "pos": fmt(d2)})
         ET.SubElement(sr, "joint", {"name": name(f"{side}_shank_rear"), "type": "hinge",
                                     "axis": "0 0 1", "class": "passive"})
-        inertial(sr, 0.002, v2 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(sr, v2)
+        inertial(sr, 0.002, v2 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(sr, v2, "shank_bar", (c_z + out_z * 0.019,))
         femur.append(kb)
 
         fpos, fq = vec(femur.get("pos")), vec(femur.get("quat"))
@@ -228,7 +281,7 @@ def main():
                                               "pos": fmt(fpos + q2m(fq) @ d1), "quat": femur.get("quat")})
         ET.SubElement(tr, "joint", {"name": name(f"{side}_thigh_rear"), "type": "hinge",
                                     "axis": "0 0 1", "class": "passive"})
-        inertial(tr, 0.002, v1 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(tr, v1)
+        inertial(tr, 0.002, v1 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(tr, v1, "thigh_bar", (c_z - 0.016, c_z + 0.016))
 
         for j in root.iter("joint"):
             n = j.get("name")
@@ -257,7 +310,7 @@ def main():
         trunk = bodies["trunk"]
         for g in list(trunk.findall("geom")):
             if g.get("mesh", "").startswith("xl330") and abs(vec(g.get("pos"))[2] - 0.1195) < 1e-3:
-                trunk.remove(g); dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"))
+                trunk.remove(g); dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_neck")
         ine = trunk.find("inertial")
         m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
         ine.set("mass", f"{m1:.6f}")
@@ -282,7 +335,7 @@ def main():
         for g in list(trunk.findall("geom")):
             pz = vec(g.get("pos", "0 0 0"))
             if g.get("mesh", "").startswith("xl330") and abs(abs(pz[1]) - 0.036) < 1e-3 and abs(pz[2] - 0.0065) < 1e-3:
-                trunk.remove(g); n_removed += 1; dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"))
+                trunk.remove(g); n_removed += 1; dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_hip_yaw")
         assert n_removed == 2, f"expected the two hip-yaw servos in the trunk, found {n_removed}"
         ine = trunk.find("inertial")
         m0 = float(ine.get("mass")); m1 = m0 - 2 * XL330_MASS
@@ -295,7 +348,7 @@ def main():
             hum = bodies[hb]; n_removed = 0
             for g in list(hum.findall("geom")):
                 if g.get("mesh") == "xl330" and abs(vec(g.get("pos"))[2] + 0.0065) < 1e-3:
-                    hum.remove(g); n_removed += 1; dummy_block(hum, g.get("pos"), g.get("quat", "1 0 0 0"))
+                    hum.remove(g); n_removed += 1; dummy_block(hum, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_shoulder_roll")
             assert n_removed == 1, f"{hb}: shoulder-roll servo not found"
             ine = hum.find("inertial")
             m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS

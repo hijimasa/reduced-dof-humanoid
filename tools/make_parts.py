@@ -109,9 +109,12 @@ def ankle_hinge_dummy(name="xl330_dummy_ankle_hinge"):
     hole added to the ankle bracket's side wall at (y -25.0, z 34.5)."""
     body = cq.Workplane("XY").box(20, 34, 26, centered=(True, False, False)).translate((0, -24.5, -19.5))
     body = body.faces("<Y").workplane().pushPoints([(-8, -8.0), (8, -8.0), (-8, 17.5), (8, 17.5)]).hole(2.2, 8)
-    for z_face, direction in ((-19.5, -1), (6.5, 1)):
-        spacer = cq.Workplane("XY").circle(6.0).extrude(4.5 * direction).translate((0, 0, z_face))       # keeps the block centred between the plates
-        stub = cq.Workplane("XY").circle(2.95).extrude(5.5 * direction).translate((0, 0, z_face + 4.5 * direction))  # through the 4 mm plate + 1.5
+    # The clevis is not symmetric about the servo: on the horn side the plate's inner face is
+    # 4.5 mm off the servo face (horn 3 mm + 1.5), on the idler side the plate sits directly
+    # on the servo face (the idle cap lives in the plate's hole). Spacers follow suit.
+    for z_face, direction, gap in ((-19.5, -1, 4.5), (6.5, 1, 0.5)):
+        spacer = cq.Workplane("XY").circle(6.0).extrude(gap * direction).translate((0, 0, z_face))
+        stub = cq.Workplane("XY").circle(2.95).extrude(5.5 * direction).translate((0, 0, z_face + gap * direction))  # through the 4 mm plate + 1.5
         body = body.union(spacer).union(stub)
     body = body.cut(cq.Workplane("XY").circle(0.8).extrude(60, both=True))   # M2 tap drill along the axis, both stubs
     cq.exporters.export(body, f"{OUT}/{name}.stl"); return body
