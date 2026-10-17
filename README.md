@@ -14,8 +14,8 @@ back later.
 | Model | Layout | Mass in the model |
 | --- | --- | --- |
 | 16-servo (intermediate step) | passive parallel-link ankle pitch, fixed head | 0.800 kg |
-| **12-servo (standard build)** | additionally no shoulder roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers where the hip-yaw servos were | 0.718 kg |
-| **14-servo (upgrade)** | the 12-servo build with the two hip-yaw spacers swapped for real servos, so it turns on the spot instead of scuffing its soles | 0.748 kg |
+| **12-servo (standard build)** | additionally no shoulder roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers where the hip-yaw servos were | 0.710 kg |
+| **14-servo (upgrade)** | the 12-servo build with the two hip-yaw spacers swapped for real servos, so it turns on the spot instead of scuffing its soles | 0.740 kg |
 
 Microban itself has 19 servos and weighs 0.819 kg in its model.
 
@@ -42,9 +42,9 @@ practical. The study behind this repository is in
 | Shoulder roll | remove (done here) | Rules require one actuated axis per arm; shoulder pitch + elbow is enough for punching and getting up. |
 | Hip roll, hip pitch, knee, ankle roll | keep | Needed for lateral stepping, 10 mm foot lift and flat-footed weight transfer with position-controlled servos. |
 
-Standard build: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.718 kg in the
+Standard build: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.710 kg in the
 model including the printed spacers. Upgrade: + 2 hip-yaw servos → 14 servos,
-0.748 kg. Microban: 19 servos, 0.819 kg.
+0.740 kg. Microban: 19 servos, 0.819 kg.
 
 ## What is in the repository
 
@@ -88,14 +88,14 @@ Consequences:
 - The knee servo now acts between the knee block and the tibia, so the knee
   command is the shank angle **relative to the pelvis**, not to the thigh.
   Existing Microban motions must be re-authored.
-- Thigh linkage: one bar **in front of** the thigh, pivots 27 mm ahead of and
-  12 mm above the hip and knee axes (singular at 114.0° flexion / 66.0°
-  extension; 29.5 mm from the axis, outside everything the femur's clevis
-  plates sweep). Shank linkage: one bar behind the shank, pivots 25 mm behind and
-  25 mm above the knee and ankle axes, which lifts the ankle pivot clear of the
+- Thigh linkage: one bar **behind** the thigh, pivots 22 mm behind and 8 mm
+  below the hip and knee axes (singular at 110.6° flexion / 69.4° extension).
+  The hip-side pivot then sits beside the hip bracket's rear skirt, in the
+  quadrant the femur's clevis plates never sweep, on a short lug grown out of
+  the bracket. Shank linkage: one bar behind the shank, pivots 30 mm behind and
+  30 mm above the knee and ankle axes, which lifts the ankle pivot clear of the
   ankle-roll servo and the foot (singular at 135° / 45°). Joint ranges follow
-  with an 8° margin, and hip flexion is capped at 85° where the thigh bar would
-  reach the knee axle: hip −85°…+58°, knee −37°…+127° (pelvis-relative).
+  with an 8° margin: hip −100°…+62°, knee −37°…+127° (pelvis-relative).
 - The added parts are drawn in green (mechanism) and amber (printed servo-shaped
   spacers). The green parts also collide (convex hulls), so interference between
   the mechanism and the rest of the robot shows up in simulation;
@@ -115,7 +115,7 @@ The generator edits the model to match the parts the physical conversion needs
 | Link bars | Per leg one thigh bar in front (62.2 mm between pins) and one shank bar behind (61.7 mm), 3 × 8 mm, M2 pins, both outboard of the leg in separate planes. | Close the parallelogram loops. |
 | Knee yoke | A triangular plate outboard of the knee carrying both bar pivots, riding on a printed axle cap bolted to the knee servo horn; a small ear on the hip bracket carries the thigh bar's upper pivot. | 6 g. |
 
-Total mass: 0.833 kg (upstream model) → 0.800 kg (16-servo) → 0.748 kg (14-servo) → 0.718 kg (12-servo). Printed parts are counted at 1.0 g/cm³ (PLA, three walls, about 40 % infill): integrated ankle block 15.9 cm³, shoulder + upper arm 9.3 cm³, the neck grown out of the head 6.4 cm³, XL330-shaped hip-yaw spacer 7.7 cm³ (2 mm shell). `--dummies` builds the earlier variant with servo-shaped spacer blocks at the ankle, shoulder and neck instead; the hip-yaw position always keeps the spacer so the 14-servo upgrade stays a drop-in.
+Total mass: 0.833 kg (upstream model) → 0.800 kg (16-servo) → 0.740 kg (14-servo) → 0.710 kg (12-servo). Printed parts are counted at 1.0 g/cm³ (PLA, three walls, about 40 % infill): integrated ankle block 15.9 cm³, shoulder + upper arm 9.3 cm³, the neck grown out of the head 6.4 cm³, XL330-shaped hip-yaw spacer 7.7 cm³ (2 mm shell). `--dummies` builds the earlier variant with servo-shaped spacer blocks at the ankle, shoulder and neck instead; the hip-yaw position always keeps the spacer so the 14-servo upgrade stays a drop-in.
 
 <p align="center">
   <img src="docs/images/integrated_parts.png" alt="Hip ear, integrated ankle block, simple shoulder + arm and head with neck on a transparent robot" width="900">
@@ -149,26 +149,29 @@ preview included); their lateral positions are measured from the leg's centre
 plane, not from the body origins, which sit on the inboard clevis plate. The placement was
 checked against the model with collision on (below, originals transparent):
 link bars 3 × 8 mm with M2 pins stacked outboard of the leg in three planes
-(thigh bar 22.5–25.5 mm from the leg's centre plane, shank bar 26–29 mm, knee
-yoke plate 29.5–32.5 mm), the yoke on an axle cap bolted to the knee servo
-horn, the thigh bar's upper pivot grown out of the hip bracket
-(`parts_derived/hip_block_integrated`: it leaves the bracket behind and below
-the hip axis, where the femur never goes, and rises outside the femur's plates;
-3 mm plates with an 18 mm tall rail, sized for the bar's pull of up to 18 N),
-the shank bar's pivot grown out of the ankle block, and a dummy XL330 block only
-at the (12-servo) hip-yaw position. The ankle's passive hinge reuses the tibia's
+(shank bar 26–29 mm from the leg's centre plane, knee yoke plate 29.5–32.5 mm,
+thigh bar 35–38 mm, outside the yoke and its axle stub so the rear bar can pass
+the knee axis near the extension limit), the yoke on an axle cap bolted to the
+knee servo horn, the thigh bar's upper pivot on a 10 × 10 mm lug grown out of
+the hip bracket's rear skirt (`parts_derived/hip_block_integrated`, 23 mm
+long), the shank bar's pivot grown out of the ankle block, and a dummy XL330
+block only at the (12-servo) hip-yaw position. The ankle's passive hinge reuses the tibia's
 existing Ø6 plate holes. Both bracket extensions were checked in CAD against the
 femur over the hip-pitch range and against the pelvis-side bracket over the
 hip-roll range.
 
-An earlier draft with the thigh bars behind the thigh did interfere: the inner
-bars of the two legs came within 8 mm of each other, the thigh and shank bars
-crossed in the same plane beyond 60° of hip flexion, and the hanging forearm
-hit the knee yoke in the walking crouch. The present layout was reached by
-sweeping hip and knee over their ranges with MuJoCo's collision detection
-(`tools/check_clearance.py`) and by replaying the gaits; the only contact left
-is the forearm brushing the shank bar by 0.5 mm when the robot squats with the
-arms hanging exactly vertical, which no motion does. Why the pivots sit where
+The layout went through several rounds, all checked by sweeping hip and knee
+over their ranges with MuJoCo's collision detection (`tools/check_clearance.py`),
+by replaying the gaits, and by CAD intersection checks of the bracket extensions
+against the femur and the pelvis-side bracket (`tools/make_parts.py` reports
+them). A front thigh bar was used for a while to keep the bar away from a
+hanging forearm; with the arms abducted that reason disappeared, and the front
+bar's pivot support had to detour around the femur's plates. The rear bar puts
+the pivot right next to the hip bracket. With both bars behind the leg, the
+thigh bar has to sit outside the yoke: inside it, the yoke's shank pin sweeps
+through it, and the knee axle stub meets it beyond 57° of hip extension. No
+contact remains inside the joint ranges, even with the arms hanging straight
+down. Why the pivots sit where
 they do, and what is still unverified, is in [docs/parts_ja.md](docs/parts_ja.md).
 
 <p align="center">

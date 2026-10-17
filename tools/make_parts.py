@@ -8,7 +8,7 @@ tibia_right.step, ankle_dbl_block.step share it): x lateral (+ = outboard on the
 leg), y forward, z up, millimetres. Pivot layout (docs/parts_ja.md):
 
     hip pitch axis   (y  3.0, z 132.7)    knee axis (8.0, 70.7)    ankle axis (0.0, 9.5)
-    thigh linkage    hip pivot ( 30.0, 144.7)  ->  knee pivot ( 35.0,  82.7)   bar 62.2 mm (in FRONT)
+    thigh linkage    hip pivot (-19.0, 124.7)  ->  knee pivot (-14.0,  62.7)   bar 62.2 mm (BEHIND)
     shank linkage    knee pivot (-17.0,  95.7)  ->  ankle pivot (-25.0, 34.5)  bar 61.7 mm (behind)
 
 These are DRAFTS for fit-checking against the originals in Onshape, not release parts:
@@ -25,18 +25,18 @@ os.makedirs(OUT, exist_ok=True)
 
 # ---- layout (mm, leg frame) --------------------------------------------------------
 HIP, KNEE, ANKLE = (3.0, 132.7), (8.0, 70.7), (0.0, 9.5)
-THIGH_BACK, THIGH_DOWN = -27.0, -12.0     # negative: the thigh linkage runs in FRONT of the thigh, pivots 12 mm up (r 29.5 from
-                                          # the hip axis: outside the femur plates' swept radius of 25.8)
-SHANK_BACK, SHANK_UP = 25.0, 25.0
+THIGH_BACK, THIGH_DOWN = 22.0, 8.0        # the thigh linkage runs BEHIND the thigh, pivots 8 mm down: the hip-side pivot then sits
+                                          # beside the hip bracket's rear skirt on a short lug, and the femur never sweeps that spot
+SHANK_BACK, SHANK_UP = 30.0, 30.0
 P1H = (HIP[0] - THIGH_BACK, HIP[1] - THIGH_DOWN)      # thigh bar, hip end
 P1K = (KNEE[0] - THIGH_BACK, KNEE[1] - THIGH_DOWN)    # thigh bar, knee end
 P2K = (KNEE[0] - SHANK_BACK, KNEE[1] + SHANK_UP)      # shank bar, knee end
 P2A = (ANKLE[0] - SHANK_BACK, ANKLE[1] + SHANK_UP)    # shank bar, ankle end
 BAR_T, BAR_W, PIN_D = 3.0, 8.0, 2.2                    # bar thickness, width, M2 clearance
 PLATE_X = 18.5          # outer face of the femur / tibia clevis plates
-THIGH_BAR_X = (22.5, 25.5)   # outboard of the hip bracket's pivot plate (x 19.5..22), 0.5 mm clear: at hip
+THIGH_BAR_X = (35.0, 38.0)   # OUTSIDE the knee yoke and its axle stub: a rear thigh bar sweeps close to the knee axis
                              # flexion beyond 100 deg the (front) thigh bar sweeps across the knee axis
-SHANK_BAR_X = (26.0, 29.0)   # one plane further out: at deep hip flexion the (front) thigh bar crosses
+SHANK_BAR_X = (26.0, 29.0)   # next to the yoke, no spacer   # one plane further out: at deep hip flexion the (front) thigh bar crosses
                              # back over the knee and would otherwise hit the shank bar's upper end
 YOKE_ARM_X = (29.5, 32.5)    # knee yoke plate, outside both bars
 
@@ -67,9 +67,13 @@ def knee_yoke(side="right"):
     # thigh pin: Ø2 (M2 screw) through the plate, with an integral Ø6 spacer down to the bar
     # plane (thigh bar at THIGH_BAR_X, shank bar at SHANK_BAR_X: the spacer fills the gap)
     for p, bar_x in ((P1K, THIGH_BAR_X), (P2K, SHANK_BAR_X)):
-        gap = (x0 - bar_x[1] if sx > 0 else bar_x[1] - abs(x1)) - 0.5   # between the bar and the plate, 0.5 mm clearance
-        if gap > 0.1:
-            sp = cq.Workplane("YZ").workplane(offset=(x0 - gap) if sx > 0 else -abs(x1)).center(*p).circle(3.0).extrude(gap)
+        if bar_x[0] >= YOKE_ARM_X[1]:            # bar OUTSIDE the plate: spacer grows outward from the plate's outer face
+            gap = bar_x[0] - 0.5 - YOKE_ARM_X[1]
+            sp = cq.Workplane("YZ").workplane(offset=x1 if sx > 0 else x0 - gap).center(*p).circle(3.0).extrude(gap)
+        else:                                    # bar inside: spacer fills the gap down to the bar plane
+            gap = (x0 - bar_x[1] if sx > 0 else bar_x[1] - abs(x1)) - 0.5
+            sp = cq.Workplane("YZ").workplane(offset=(x0 - gap) if sx > 0 else -abs(x1)).center(*p).circle(3.0).extrude(gap) if gap > 0.1 else None
+        if sp is not None and gap > 0.1:
             plate = plate.union(sp)
         plate = plate.cut(cq.Workplane("YZ").center(*p).circle(PIN_D / 2).extrude(60, both=True))
     cq.exporters.export(plate, f"{OUT}/knee_yoke_{side}.stl"); return plate
@@ -81,42 +85,22 @@ def hip_block_integrated(step_dir, out_dir, side):
     Frame = the leg frame (x lateral, +x outboard on the right; y forward; z up), mapped into the
     bracket's STEP frame with p_step = diag(-1, -1, 1) p_leg + t (t from robot.xml).
 
-    What the support has to clear (leg frame, right leg):
-    - the femur's clevis plates at x 14.5..18.5, a wide fan around the hip axis (y 3, z 132.7)
-      that sweeps everything in FRONT of the axis as the hip flexes (its front edge reaches r 40
-      and more), and the region below/behind the axis as it extends; the quadrant behind and
-      above the axis is never swept;
-    - the pelvis-side hip bracket (hip.step): a spine within x +-9 (mostly +-6.5) over the roll
-      servo, so the sides beyond x 11 are free;
-    - the hip block rolls +-35 deg about the roll axis (y axis through x 0, z 132.7).
-    So the support leaves the bracket's rear skirt BELOW the axis (a low bridge at y -30..-14,
-    z 116..123, crossing under the plates where the femur never is), runs forward as an 18 mm tall
-    rail OUTSIDE the plates (x 19..22), rises beside the axis (y -1..9, where the pelvis bracket's
-    top plate, y -24..-1 / z 149..154, cannot meet it under roll) and carries the pivot
-    P1H = (30, 144.7) on an upper plate in front. Everything inboard of the bar and in front of
-    the axis is swept by the femur plates, so there is no shorter way from the bracket to the
-    pivot; the detour is sized so the bar's pull (along the bar, nearly vertical) loads each
-    member in-plane. The thigh bar sits at x 22.5..25.5, just outside this plate. The __main__
-    report checks the part in CAD against the femur over the hip range and against the pelvis-
-    side bracket over the roll range."""
+    With the thigh linkage BEHIND the thigh and its pivots 12 mm below the axes, the hip-side pivot
+    P1H = (-29, 120.7) sits right beside the bracket's rear skirt (x 11.5..13.5, y -30..-6,
+    z 117..125), in the quadrant behind and below the hip axis that the femur's clevis plates
+    only brush at full extension and that the pelvis-side bracket (x +-9 there) does not reach.
+    So the support is a short lug: a block from the skirt out to the bar plane with the pin hole,
+    8 mm of cantilever. The __main__ report checks it in CAD against the femur over the hip range
+    and against the pelvis-side bracket over the roll range."""
     t = {"right": (0.0, -9.75, -105.71), "left": (27.0, -9.75, -105.71)}[side]
     sx = 1.0 if side == "right" else -1.0
     X = lambda x0, x1: (min(sx * x0, sx * x1), max(sx * x0, sx * x1))
-    # 3 mm plates between the femur plates (18.5) and the thigh bar (22.5), 0.5 mm clear of each.
-    # The bar pulls along its own length (nearly vertical, up to ~18 N = knee stall torque / 29.5 mm
-    # lever), so every member is loaded in its strong, in-plane direction; the rail is 18 mm tall
-    # to take the 0.9 N*m bending moment about x (about 7 MPa in PLA; 7 mm tall it would be 43 MPa).
-    low = _box(*X(11.0, 22.0), -30.0, -14.0, 116.0, 123.0)      # under the plates, behind the axis: the femur is never there
-    rail = _box(*X(19.0, 22.0), -30.0, 9.0, 116.0, 134.0)       # outside the plates, at or below the axis height
-    riser = _box(*X(19.0, 22.0), -1.0, 9.0, 116.0, 154.0)       # beside the axis: clear of the pelvis bracket's top plate (y -24..-1, z 149..154) when rolled
-    upper = _box(*X(19.0, 22.0), 0.0, P1H[0] + 4.0, 137.0, 154.0)
-    eye = _cyl(4.5, (sx * 19.0, P1H[0], P1H[1]), (sx * 22.0, P1H[0], P1H[1]))
-    sup = low.union(rail).union(riser).union(upper).union(eye)
+    lug = _box(*X(11.0, THIGH_BAR_X[0] - 0.5), P1H[0] - 5.0, P1H[0] + 5.0, P1H[1] - 5.0, P1H[1] + 5.0)
     try:
-        sup = sup.edges("|X").fillet(2.0)        # round the in-plane corners of the plate outline
+        lug = lug.edges("|X").fillet(2.0)
     except Exception:
         pass
-    sup = sup.cut(_cyl(PIN_D / 2, (sx * 15, P1H[0], P1H[1]), (sx * 30, P1H[0], P1H[1])))
+    sup = lug.cut(_cyl(PIN_D / 2, (sx * 8, P1H[0], P1H[1]), (sx * 30, P1H[0], P1H[1])))
     sup = sup.rotate((0, 0, 0), (0, 0, 1), 180).translate(t)           # leg -> bracket STEP frame
     blk = cq.importers.importStep(os.path.join(step_dir, f"hip_dbl_block_{side}.step"))
     part = blk.union(sup)
@@ -131,7 +115,7 @@ def knee_axle_cap():
     (PCD 12, lengthened to M2x12) and carries an Ø8 stub axle for the yoke, from the
     plate's outer face (x 18.5) out to x 34; M2 tapped hole in the tip for a retainer."""
     cap = (cq.Workplane("XY").circle(9.0).extrude(2.0)                   # 2 mm flange on the plate
-           .faces(">Z").workplane().circle(4.0).extrude(13.5))           # Ø8 stub through the yoke plate at 29.5..32.5
+           .faces(">Z").workplane().circle(4.0).extrude(12.5))           # Ø8 stub through the yoke plate at 29.5..32.5, 0.5 proud; countersunk M2 retainer
     cap = cap.faces("<Z").workplane().pushPoints([(6, 0), (-6, 0), (0, 6), (0, -6)]).hole(2.2)
     cap = cap.faces(">Z").workplane().hole(1.6, 5.0)                    # M2 tap drill in the stub
     cq.exporters.export(cap, f"{OUT}/knee_axle_cap.stl"); return cap

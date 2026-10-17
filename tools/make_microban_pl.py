@@ -57,7 +57,8 @@ LEG = {  # local frames: right femur +x = world back, +y = world up; left femur 
 # Shank: rear pivot UP   -> flexion singular at 90 + a, extension at 90 - a.
 # Both ranges keep RANGE_MARGIN degrees clear of the singularity.
 RANGE_MARGIN = 8.0
-HIP_FLEX_LIMIT = 85.0    # deg; thigh bar vs Ø8 knee axle stub clearance (2 mm at 85 deg, 0 at 90), see HIP_RANGE
+HIP_FLEX_LIMIT = 100.0   # deg; with the thigh bar behind the thigh the bar never nears the knee axle stub inside the
+                         # range, so this cap is above the singularity-based limit and inactive
 XL330_TORQUE = 0.52          # N*m, XL330-M288-T stall torque at 5 V
 XL330_MASS = 0.023           # kg
 SLIM_ANKLE_MASS = 0.025      # kg: ankle block minus the XL330 that is no longer there
@@ -76,7 +77,7 @@ DUMMY_MASS = 0.008   # kg, a printed XL330-sized block (20 x 34 x 26 mm, 2 mm sh
 PLA_G_PER_CM3 = 1.0
 ANKLE_CAP_CM3, ANKLE_INTEGRATED_CM3 = 9.2, 15.9        # ankle_dbl_block -> ankle_block_integrated_{side}
 HUMERUS_CM3, SHOULDER_CM3, SHOULDER_ARM_CM3 = 4.3, 8.8, 9.5    # humerus plate + shoulder bracket -> shoulder_arm_simple_{side}
-HIP_EAR_CM3 = 4.7                                               # the pivot support grown out of hip_block_integrated_{side}
+HIP_EAR_CM3 = 1.0                                               # the pivot support grown out of hip_block_integrated_{side}
 NECK_POST_CM3 = 6.4                                             # the neck grown out of head_integrated (head itself keeps the upstream mass)
 
 
@@ -145,20 +146,20 @@ def main():
     ap.add_argument("--keep-motor", action="store_true", help="keep <motor> actuators instead of <position>")
     ap.add_argument("--neck-motor", action="store_true",
                     help="keep the neck (head yaw) servo; by default the head is fixed to the trunk")
-    ap.add_argument("--back", type=float, default=-0.027,
-                    help="thigh linkage: pivot offset behind the joint axes [m]; NEGATIVE = in front. Default 22 mm in "
-                         "front: behind the thigh the bar would run through the hanging forearm (x >= 18.5, z 112..193)")
-    ap.add_argument("--tilt", type=float, default=-0.012,
-                    help="thigh linkage: pivot DOWN by this much [m]; NEGATIVE = up. A front linkage needs its pivots "
-                         "UP (10 mm): extension singularity at 65.6 deg (the get-ups use 55 deg of extension), flexion at "
-                         "114.4 deg; hip flexion is capped at HIP_FLEX_LIMIT before that by the thigh bar / axle stub clearance")
-    ap.add_argument("--shank-back", type=float, default=0.025,
+    ap.add_argument("--back", type=float, default=0.022,
+                    help="thigh linkage: pivot offset behind the joint axes [m]; NEGATIVE = in front. Default 32 mm "
+                         "behind (the arms are abducted, so the old reason for a front bar, the hanging forearm, is gone; "
+                         "behind the thigh the hip-side pivot sits beside the hip bracket's rear skirt on a short lug)")
+    ap.add_argument("--tilt", type=float, default=0.008,
+                    help="thigh linkage: pivot DOWN by this much [m]; NEGATIVE = up. A rear linkage needs its pivots DOWN "
+                         "(12 mm): extension singularity at 69.4 deg (the get-ups use 55), flexion at 110.6")
+    ap.add_argument("--shank-back", type=float, default=0.030,
                     help="shank linkage: rear pivot offset [m] (25 mm clears the tibia's rear edge and the ankle-roll servo)")
-    ap.add_argument("--shank-tilt", type=float, default=0.025,
+    ap.add_argument("--shank-tilt", type=float, default=0.030,
                     help="shank linkage: rear pivot UP by this much [m] (lifts the ankle pivot above the foot and the roll servo)")
-    ap.add_argument("--link-x", type=float, default=0.024,
-                    help="lateral centre of the THIGH bar [m] from the leg centre plane (24 mm = 22.5..25.5, 0.5 mm "
-                         "outside the hip bracket's pivot plate, which ends at 22). The shank bar sits one plane further out "
+    ap.add_argument("--link-x", type=float, default=0.0365,
+                    help="lateral centre of the THIGH bar [m] from the leg centre plane (36.5 mm = 35..38, outside the knee "
+                         "yoke and its axle stub, so the rear bar can sweep past the knee axis near the extension limit). The shank bar sits one plane further out "
                          "(--shank-link-x) so the two can cross at deep hip flexion.")
     ap.add_argument("--shank-link-x", type=float, default=0.0275,
                     help="lateral centre of the SHANK bar [m] (27.5 mm = 26..29); the knee yoke plate is outside it")
@@ -249,7 +250,7 @@ def main():
             # flange + stub as two cylinders: one convex hull of the cap would be a cone that reaches
             # from the Ø18 flange into the thigh-bar plane and reports a phantom 5 mm interference
             Rq = q2m(np.asarray(quat))
-            for r, h, zc in ((0.009, 0.001, 0.001), (0.004, 0.006, 0.008)):
+            for r, h, zc in ((0.009, 0.001, 0.001), (0.004, 0.00625, 0.00825)):
                 ET.SubElement(body, "geom", {"class": "collision", "type": "cylinder", "size": fmt((r, h)),
                                              "pos": fmt(np.asarray(pos) + Rq @ np.array([0, 0, zc])), "quat": fmt(quat)})
         elif "dummy" not in nm and nm not in NO_COLLISION:   # the mechanism parts also collide (convex hull), so interference is simulated
