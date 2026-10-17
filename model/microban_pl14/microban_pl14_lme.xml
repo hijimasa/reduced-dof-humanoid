@@ -13,7 +13,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 <!--
 microban_pl14_lme: Microban with parallel-link legs (passive ankle pitch).
 Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py
-(dof=14, elbow=free, naming=lme, thigh back/tilt=0.022/0.008, shank back/tilt=0.03/0.03, link_x=0.0365, fixed_head=True, slim_ankle=True, integrated_parts=True, forearm_ext=0.0, arm_abduct=30.0).
+(dof=14, elbow=free, naming=lme, thigh back/tilt=0.022/0.008, shank back/tilt=0.03/0.03, link_x=0.0365, fixed_head=True, slim_ankle=True, integrated_parts=True, forearm_ext=0.04, arm_abduct=30.0).
 Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for attribution.
 -->
 <mujoco model="microban_pl14_lme">
@@ -76,12 +76,13 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
           <geom type="mesh" class="visual" pos="-0.008 -0.0515 -0.0145" quat="0 0.707107 0 -0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
           <body name="radius" pos="-0.0145 -0.0515 -0.0145" quat="0.707107 0 0.707107 -0">
             <joint axis="0 0 1" name="r_elbow_yp" type="hinge" range="-2.181661564992912 2.181661564992912" class="xl330" />
-            <inertial pos="-4.0628e-08 -0.0310611 0.0130165" mass="0.0115415" fullinertia="5.26775e-06 1.21602e-06 4.45903e-06 -4e-12 -1.2e-11 1.7157e-07" />
+            <inertial pos="-2.17677e-08 -0.0570291 0.013241" mass="0.021541" fullinertia="6.60108e-06 1.21602e-06 5.79236e-06 -4.00000e-12 -1.20000e-11 1.71570e-07" />
             <geom class="collision" pos="-0 0 0.0135" quat="0.707107 -0 -0 -0.707107" type="cylinder" size="0.009 0.01675" />
             <geom class="collision" pos="-0 -0.067014 0.0135" quat="0.707107 -0 -0 -0.707107" type="cylinder" size="0.00525 0.008" />
-            <geom type="mesh" class="visual" pos="0 0.027 0.0472" quat="0.5 -0.5 -0.5 -0.5" mesh="radius" material="radius_material" />
             <geom type="mesh" class="visual" pos="0 0 0.0065" quat="0 0.707107 0.707107 -0" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
             <geom type="mesh" class="visual" pos="0 0 0.0065" quat="0 0.707107 0.707107 -0" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
+            <geom class="collision" type="capsule" size="0.005" fromto="0 -0.067 0.0135 0 -0.107 0.0135" />
+            <geom class="visual" type="mesh" mesh="part_radius_long" pos="0 0.027 0.0472" quat="0.5 -0.5 -0.5 -0.5" rgba="0.15 0.75 0.3 1" />
           </body>
         </body>
         <geom class="visual" type="mesh" mesh="part_shoulder_arm_simple_right" pos="1.12639e-08 0.0245 -0.0522" quat="-0.5 -0.5 -0.5 0.5" rgba="0.15 0.75 0.3 1" />
@@ -170,12 +171,13 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
           <geom type="mesh" class="visual" pos="-0.008 0.0515 -0.0145" quat="0.707107 0 -0.707107 -0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
           <body name="radius_2" pos="-0.0145 0.0515 -0.0145" quat="0.707107 0 -0.707107 0">
             <joint axis="0 0 1" name="l_elbow_yp" type="hinge" range="-2.1816615649929156 2.1816615649929085" class="xl330" />
-            <inertial pos="-4.0628e-08 0.0310611 -0.0130165" mass="0.0115415" fullinertia="5.26775e-06 1.21602e-06 4.45903e-06 4e-12 1.2e-11 1.7157e-07" />
+            <inertial pos="-2.17677e-08 0.0570291 -0.013241" mass="0.021541" fullinertia="6.60108e-06 1.21602e-06 5.79236e-06 4.00000e-12 1.20000e-11 1.71570e-07" />
             <geom class="collision" pos="-0 -0 -0.0135" quat="0 0.707107 0.707107 -0" type="cylinder" size="0.009 0.01675" />
             <geom class="collision" pos="-0 0.067014 -0.0135" quat="0 0.707107 0.707107 -0" type="cylinder" size="0.00525 0.008" />
-            <geom type="mesh" class="visual" pos="-0 -0.027 -0.0472" quat="0.5 0.5 0.5 -0.5" mesh="radius" material="radius_material" />
             <geom type="mesh" class="visual" pos="-0 0 -0.0065" quat="0.707107 -0 -0 -0.707107" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
             <geom type="mesh" class="visual" pos="-0 0 -0.0065" quat="0.707107 -0 -0 -0.707107" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
+            <geom class="collision" type="capsule" size="0.005" fromto="0 0.067 -0.0135 0 0.107 -0.0135" />
+            <geom class="visual" type="mesh" mesh="part_radius_long" pos="-0 -0.027 -0.0472" quat="0.5 0.5 0.5 -0.5" rgba="0.15 0.75 0.3 1" />
           </body>
         </body>
         <geom class="visual" type="mesh" mesh="part_shoulder_arm_simple_left" pos="-1.12639e-08 -0.0245 -0.0132" quat="0.5 -0.5 0.5 0.5" rgba="0.15 0.75 0.3 1" />
@@ -326,6 +328,7 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
     <mesh name="part_hip_block_integrated_right" file="../../parts_derived/hip_block_integrated_right.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_hip_block_integrated_left" file="../../parts_derived/hip_block_integrated_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_head_integrated" file="../../parts_derived/head_integrated.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_radius_long" file="../../parts_derived/radius_long.stl" scale="0.001 0.001 0.001" />
   </asset>
   <actuator>
     <position name="r_shoulder_yp" joint="r_shoulder_yp" kp="50" dampratio="1" forcerange="-0.52 0.52" />

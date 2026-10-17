@@ -201,9 +201,12 @@ def main():
                     help="directory of the printed-part STLs (tools/make_parts.py), as a path RELATIVE TO MESHDIR; "
                          "when given, the links, knee yoke, axle caps and spacer blocks are drawn with those meshes "
                          "instead of boxes (which LegacyMotionEditor's preview cannot show)")
-    ap.add_argument("--forearm-ext", type=float, default=0.0,
-                    help="lengthen each forearm by this much [m] with a printed extension (a capsule "
-                         "past the hand, 10 g per 40 mm). ROBO-ONE Light allows 26 cm from the shoulder.")
+    ap.add_argument("--forearm-ext", type=float, default=0.04,
+                    help="lengthen each forearm by this much [m] (default 40 mm: KXR / Robovie-nano proportions; "
+                         "ROBO-ONE Light allows 26 cm from the shoulder and wants the hands 50 mm up while walking, "
+                         "the hands then hang 72 mm up with straight arms in the walking crouch). With --parts the "
+                         "forearm mesh becomes parts_derived/radius_long (a Ø10 rod with a rounded end), 10 g per 40 mm; "
+                         "0 keeps Microban's forearm")
     a = ap.parse_args()
 
     head = header_comments(a.src)
@@ -231,8 +234,8 @@ def main():
     PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap",
                    "xl330_dummy_shoulder_roll_right", "xl330_dummy_shoulder_roll_left", "xl330_dummy_neck", "xl330_dummy_hip_yaw", "xl330_dummy_ankle_hinge")
     PART_MESHES += ("shoulder_arm_simple_right", "shoulder_arm_simple_left")
-    DERIVED_MESHES = ("ankle_block_integrated_right", "ankle_block_integrated_left", "hip_block_integrated_right", "hip_block_integrated_left", "head_integrated")
-    NO_COLLISION = DERIVED_MESHES + ("shoulder_arm_simple_right", "shoulder_arm_simple_left")   # a convex hull of these would be meaningless
+    DERIVED_MESHES = ("ankle_block_integrated_right", "ankle_block_integrated_left", "hip_block_integrated_right", "hip_block_integrated_left", "head_integrated", "radius_long")
+    NO_COLLISION = DERIVED_MESHES + ("shoulder_arm_simple_right", "shoulder_arm_simple_left")   # radius_long collides through the capsule added below   # a convex hull of these would be meaningless
     if a.parts:
         for nm in PART_MESHES:
             ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{a.parts}/{nm}.stl", "scale": "0.001 0.001 0.001"})
@@ -495,13 +498,22 @@ def main():
         for rb in ("radius", "radius_2"):
             rad = bodies[rb]
             sy = -1.0 if rb == "radius" else 1.0
+            zc = 0.0135 * (-sy)                  # the upstream hand cylinder sits at z +0.0135 (right) / -0.0135 (left)
             y0, y1 = sy * 0.067, sy * (0.067 + a.forearm_ext)
-            for cls, extra in (("collision", {}), ("visual", {"rgba": "0.3 0.3 0.32 1"})):
-                ET.SubElement(rad, "geom", {"class": cls, "type": "capsule", "size": "0.005",
-                                            "fromto": fmt((0, y0, 0.0135)) + " " + fmt((0, y1, 0.0135)), **extra})
+            ET.SubElement(rad, "geom", {"class": "collision", "type": "capsule", "size": "0.005",
+                                        "fromto": fmt((0, y0, zc)) + " " + fmt((0, y1, zc))})
+            swapped = False
+            if a.parts and not a.dummies and abs(a.forearm_ext - 0.04) < 1e-6:
+                # the printed forearm: Microban's radius with the rod grown out of it (parts_derived/radius_long)
+                for g in list(rad.findall("geom")):
+                    if g.get("mesh") == "radius":
+                        rad.remove(g); part(rad, "radius_long", vec(g.get("pos")), vec(g.get("quat", "1 0 0 0"))); swapped = True
+            if not swapped:
+                ET.SubElement(rad, "geom", {"class": "visual", "type": "capsule", "size": "0.005", "rgba": "0.3 0.3 0.32 1",
+                                            "fromto": fmt((0, y0, zc)) + " " + fmt((0, y1, zc))})
             ine = rad.find("inertial")
             m0 = float(ine.get("mass")); madd = 0.010 * a.forearm_ext / 0.040
-            c0 = vec(ine.get("pos")); c1 = np.array([0, (y0 + y1) / 2, 0.0135])
+            c0 = vec(ine.get("pos")); c1 = np.array([0, (y0 + y1) / 2, zc])
             ine.set("pos", fmt((c0 * m0 + c1 * madd) / (m0 + madd))); ine.set("mass", f"{m0 + madd:.6f}")
             fi = [float(v) for v in ine.get("fullinertia").split()]
             L = a.forearm_ext; I = madd * L * L / 12

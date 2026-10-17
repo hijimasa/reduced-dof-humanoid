@@ -12,6 +12,7 @@ All files here are made by tools/make_parts.py from Microban's cad/step files
   fused into it in place of the ankle-pitch servo.
 - hip_block_integrated_{right,left}.stl/.step: hip_dbl_block_{right,left}.step
   with the thigh bar's upper pivot support grown out of it.
+- radius_long.stl/.step: radius.step with a 40 mm rod grown out of the hand tip.
 - head_integrated.stl/.step: head.step with the old servo-horn seat on its
   underside filled and a hollow neck stalk grown out of it in place of the
   neck servo.

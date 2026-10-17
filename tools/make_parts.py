@@ -317,6 +317,25 @@ def shoulder_arm_simple(side, abduct=30.0):
     cq.exporters.export(part, f"{OUT}/shoulder_arm_simple_{side}.step")
     return part
 
+def radius_long(step_dir, out_dir, ext=40.0):
+    """Microban's forearm (radius.step) lengthened by `ext` mm: a Ø10 rod with a rounded end grown
+    out of the hand tip along the forearm's axis (the part runs along -z, tip at z -98.5). ROBO-ONE
+    Light allows 26 cm from the shoulder axis and asks for the hands to stay 50 mm above the floor
+    while walking; with ext 40 the arm is 183 mm and the hands hang 72 mm up with straight arms in
+    the walking crouch (102 mm with the elbows bent as the gaits use them)."""
+    rad = cq.importers.importStep(os.path.join(step_dir, "radius.step"))
+    vs = [(v.X, v.Y, v.Z) for v in rad.vertices().vals()]
+    tip = [v for v in vs if v[2] < -88.0]
+    cx = sum(v[0] for v in tip) / len(tip); cy = sum(v[1] for v in tip) / len(tip); z0 = min(v[2] for v in vs)
+    rod = _cyl(5.0, (cx, cy, z0 + 6.0), (cx, cy, z0 - ext + 5.0)).union(
+        cq.Workplane("XY").add(cq.Solid.makeSphere(5.0, cq.Vector(cx, cy, z0 - ext + 5.0))))
+    part = rad.union(rod)
+    assert len(part.solids().vals()) == 1, "radius_long: extension not fused"
+    os.makedirs(out_dir, exist_ok=True)
+    cq.exporters.export(part, f"{out_dir}/radius_long.stl")
+    cq.exporters.export(part, f"{out_dir}/radius_long.step")
+    return part
+
 def head_integrated(step_dir, out_dir):
     """Microban's head with the neck grown out of it as one printed part. The servo-horn joint on
     the head's underside (PCD 12 holes, recess) is filled by a Ø24 pad and a plain Ø18 stalk
@@ -366,7 +385,8 @@ if __name__ == "__main__":
             vols[f"ankle_block_integrated_{side}"] = ankle_block_integrated(step_dir, derived, side).val().Volume()
             vols[f"hip_block_integrated_{side}"] = hip_block_integrated(step_dir, derived, side).val().Volume()
         vols["head_integrated"] = head_integrated(step_dir, derived).val().Volume()
-        for n in ("ankle_dbl_block", "hip_dbl_block_right", "head"):
+        vols["radius_long"] = radius_long(step_dir, derived).val().Volume()
+        for n in ("ankle_dbl_block", "hip_dbl_block_right", "head", "radius"):
             vols[n + " (original)"] = cq.importers.importStep(os.path.join(step_dir, n + ".step")).val().Volume()
         print("wrote the 80 mm foot, the integrated ankle blocks and the head into parts_derived/")
     print("volumes [cm3]:", {k: round(v / 1000, 2) for k, v in vols.items()})
