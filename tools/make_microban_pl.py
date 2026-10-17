@@ -111,10 +111,13 @@ def main():
     ap.add_argument("--clevis", type=float, default=0.006,
                     help="half-height of the slimmed ankle bracket's collision box [m]")
     ap.add_argument("--scene", help="also write a viewer scene (floor + standing keyframe) to this path")
-    ap.add_argument("--dof", type=int, choices=[16, 12], default=16,
-                    help="16: passive ankle pitch + fixed head. 12: additionally no hip yaw and no "
-                         "shoulder roll (the ROBO-ONE Light target layout: legs 4x2, arms 2x2)")
+    ap.add_argument("--dof", type=int, choices=[16, 14, 12], default=16,
+                    help="16: passive ankle pitch + fixed head. 14: additionally no shoulder roll "
+                         "(legs 5x2 with hip yaw, arms 2x2 -- the chosen layout). 12: no hip yaw either")
     ap.add_argument("--meshdir", help="override the compiler meshdir written into the output")
+    ap.add_argument("--forearm-ext", type=float, default=0.0,
+                    help="lengthen each forearm by this much [m] with a printed extension (a capsule "
+                         "past the hand, 10 g per 40 mm). ROBO-ONE Light allows 26 cm from the shoulder.")
     a = ap.parse_args()
 
     head = header_comments(a.src)
@@ -135,7 +138,7 @@ def main():
                 if el.get(attr) in rename:
                     el.set(attr, rename[el.get(attr)])
 
-    model_name = ("microban_pl" if a.dof == 16 else "microban_pl12") + ("_lme" if a.naming == "lme" else "")
+    model_name = {16: "microban_pl", 14: "microban_pl14", 12: "microban_pl12"}[a.dof] + ("_lme" if a.naming == "lme" else "")
     root.set("model", model_name)
 
     dflt = root.find("default")
@@ -223,18 +226,20 @@ def main():
         ine.set("mass", f"{m1:.6f}")
         ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
 
+    drop = []
+    if a.dof <= 14:
+        drop.append("shoulder_roll")   # joint on the humerus, servo at the top of the humerus
     if a.dof == 12:
-        # Hip yaw: the joint sits on the hip bracket, the servo in the bottom of the trunk
-        # (one XL330 each side at y = +-36 mm). The bracket bolts straight to the trunk.
-        # Shoulder roll: the joint sits on the humerus, which carries its servo at its top
-        # (the other XL330 in the humerus is the elbow's). The humerus bolts to the
-        # shoulder bracket with the arm hanging at the side.
-        for side in ("right", "left"):
-            for jn_up in (f"{side}_hip_yaw", f"{side}_shoulder_roll"):
-                for b in root.iter("body"):
-                    for j in list(b.findall("joint")):
-                        if j.get("name") == name(jn_up):
-                            b.remove(j); removed_joints.add(name(jn_up))
+        drop.append("hip_yaw")         # joint on the hip bracket, servo in the bottom of the trunk
+    for side in ("right", "left"):
+        for base in drop:
+            for b in root.iter("body"):
+                for j in list(b.findall("joint")):
+                    if j.get("name") == name(f"{side}_{base}"):
+                        b.remove(j); removed_joints.add(name(f"{side}_{base}"))
+    if a.dof == 12:
+        # Hip yaw servos: one XL330 each side at y = +-36 mm in the bottom of the trunk.
+        # Without them each hip bracket bolts straight to the trunk.
         trunk = bodies["trunk"]
         n_removed = 0
         for g in list(trunk.findall("geom")):
@@ -246,6 +251,9 @@ def main():
         m0 = float(ine.get("mass")); m1 = m0 - 2 * XL330_MASS
         ine.set("mass", f"{m1:.6f}")
         ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
+    if a.dof <= 14:
+        # Shoulder roll servos: the XL330 at the top of each humerus (the other one in the
+        # humerus is the elbow's). The humerus bolts to the shoulder bracket, arm at the side.
         for hb in ("humerus__configuration_right", "humerus__configuration_left"):
             hum = bodies[hb]; n_removed = 0
             for g in list(hum.findall("geom")):
@@ -256,6 +264,25 @@ def main():
             m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
             ine.set("mass", f"{m1:.6f}")
             ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
+
+    if a.forearm_ext > 0:
+        # The radius runs along its local -y from the elbow; the upstream hand collision
+        # cylinder is centred 67 mm down it. Add a capsule from there to 67 mm + ext.
+        for rb in ("radius", "radius_2"):
+            rad = bodies[rb]
+            sy = -1.0 if rb == "radius" else 1.0
+            y0, y1 = sy * 0.067, sy * (0.067 + a.forearm_ext)
+            for cls, extra in (("collision", {}), ("visual", {"rgba": "0.3 0.3 0.32 1"})):
+                ET.SubElement(rad, "geom", {"class": cls, "type": "capsule", "size": "0.005",
+                                            "fromto": fmt((0, y0, 0.0135)) + " " + fmt((0, y1, 0.0135)), **extra})
+            ine = rad.find("inertial")
+            m0 = float(ine.get("mass")); madd = 0.010 * a.forearm_ext / 0.040
+            c0 = vec(ine.get("pos")); c1 = np.array([0, (y0 + y1) / 2, 0.0135])
+            ine.set("pos", fmt((c0 * m0 + c1 * madd) / (m0 + madd))); ine.set("mass", f"{m0 + madd:.6f}")
+            fi = [float(v) for v in ine.get("fullinertia").split()]
+            L = a.forearm_ext; I = madd * L * L / 12
+            fi[0] += I; fi[2] += I          # rod inertia about the two axes across it
+            ine.set("fullinertia", " ".join(f"{v:.5e}" for v in fi))
 
     # actuators: drop ankle pitch (and neck), motor -> position unless asked otherwise
     act = root.find("actuator")
@@ -278,7 +305,7 @@ def main():
     body = ET.tostring(root, encoding="unicode")
     note = (f"<!--\n{model_name}: Microban with parallel-link legs (passive ankle pitch).\n"
             f"Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py\n"
-            f"(dof={a.dof}, naming={a.naming}, back={a.back}, tilt={a.tilt}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}).\n"
+            f"(dof={a.dof}, naming={a.naming}, back={a.back}, tilt={a.tilt}, fixed_head={not a.neck_motor}, slim_ankle={not a.keep_ankle_servo}, forearm_ext={a.forearm_ext}).\n"
             f"Hip range {np.degrees(HIP_RANGE[0]):.0f}..{np.degrees(HIP_RANGE[1]):.0f} deg, knee {np.degrees(KNEE_RANGE[0]):.0f}..{np.degrees(KNEE_RANGE[1]):.0f} deg (pelvis-relative). See NOTICE.md for attribution.\n-->\n")
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:
