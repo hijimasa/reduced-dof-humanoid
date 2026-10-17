@@ -24,17 +24,8 @@ JOINT_ORDER = [
 ARM_HOME = dict(l_shoulder_yp=10.0, l_elbow_yp=-60.0, r_shoulder_yp=10.0, r_elbow_yp=-60.0)
 JAB = dict(JAB, G_ROLL=0.0, P_ROLL=0.0)
 
-GETUP_SUPINE, F_RISE_U, F_HOLD_U = [], [], []
 SKIP_ACTIONS = ('bow', 'kick', 'Attack_upper_l', 'Attack_upper_r')
 
-# ---- supine: roll onto the front, then use the prone rise ---------------------------
-# tools/getup_roll.py --to prone --robust 2 on this model: one pose (60 frames + 1.0 s
-# hold) turns the chest face-down (-0.99, tilt 0.00) in every perturbed copy.
-ROLL_TO_PRONE = [
-    ('roll_0', dict(r_shoulder_yp=65.69, r_elbow_yp=-25.81, r_hipjoint_zy=49.57, r_hipjoint_xr=35.00, r_hipjoint_yp=-18.70, r_knee_yp=4.57, r_ankle_xr=-23.26, l_shoulder_yp=144.50, l_elbow_yp=-19.72, l_hipjoint_zy=-27.91, l_hipjoint_xr=-35.00, l_hipjoint_yp=-9.69, l_knee_yp=-0.16, l_ankle_xr=21.50), 60),
-    ('hold_0', dict(), 100),
-]
-F_SETTLE_ROLL = 100
 
 # ---- prone get-up -----------------------------------------------------------------
 # The 12-servo rise (tools/getup_supine.py --pitch 90 --seed 0 on microban_12, timed by
@@ -77,3 +68,31 @@ F_HOME_D = 28
 X0, Z0, LIFT, WY, WY_D = 0.0086, -0.141809, 0.0198224, 0.0391393, -0.00128318
 STEP, ARM_SWING = 0.0222771, 14.6795
 F_SHIFT, F_LIFT, F_SWING, F_PLACE = 65, 6, 40, 11
+
+# ---- supine: a DIRECT rise (2026-10-17) ---------------------------------------------
+# motion/getup_supine.py --pitch -90 --seed 80 --robust 3 --steps 20 on the final geometry: the
+# 40 mm longer forearms let the robot sit up on its hands, the hip then folds to the new -100 deg
+# limit and it squats and stands. Eight poses, 4/8 at the search cadence; motion/tune_getup.py
+# face_up (pop 90, gens 25, trials 8): 6.2 s -> 5.3 s, 100% of its screens, 15/24 finalists held
+# 40 verification trials. Replaces the roll-onto-the-front + prone-rise scheme (7/8).
+# Re-timed again on THIS model (same tuner settings): 5.4 s -> 4.9 s; the 12-servo cadence gave
+# 3/8 here, this one 8/8 (39/40 over 40 trials; the roll + prone-rise scheme held 37/40 in 8.0 s).
+_SUPINE_POSES = [
+    # (leg: hip yaw, hip roll, hip pitch, knee, ankle roll), (shoulder pitch, [unused], elbow)
+    ((0.0, 35.000000, -100.000043, -37.000010, -10.957765), (82.365255, 102.292400, -125.000000)),
+    ((0.0, -3.862485, -21.985642, -31.083634, -35.000000), (130.208685, 61.544520, -118.957559)),
+    ((0.0, 5.696653, -54.053162, -14.820980, -7.412180), (103.126907, 78.885826, -90.077569)),
+    ((0.0, 35.000000, -100.000043, 20.947117, -8.653312), (46.898822, 81.335915, -32.626929)),
+    ((0.0, 26.018069, -100.000043, 8.294092, -11.464974), (70.107278, 130.187932, -43.369711)),
+    ((0.0, -35.000000, -80.311343, 6.987364, 35.000000), (25.148267, -4.625093, -5.245178)),
+    ((0.0, -35.000000, -100.000043, 70.803735, 35.000000), (141.561042, 29.652828, -27.876010)),
+    ((0.0, -35.000000, 18.043450, -12.368676, 35.000000), (180.000000, 42.351237, -61.384149)),
+]
+GETUP_SUPINE = _SUPINE_POSES
+F_RISE_U = [27, 32, 20, 49, 46, 48, 50, 38]
+F_HOLD_U = [17, 9, 13, 16, 16, 13, 13, 20]
+SUPINE_PREP = [('lie_flat', (0, 150, 0), 13)]
+F_HOME_U = 54
+# The old one-pose roll onto the front (supine = roll + prone rise, 7/8) is kept in
+# motion/candidates/roll_to_prone_14.pkl; putting it back here would restore that scheme.
+ROLL_TO_PRONE = []

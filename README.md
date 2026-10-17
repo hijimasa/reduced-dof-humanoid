@@ -217,18 +217,20 @@ servo zero-offset and initial-tilt disturbances, 8 trials each:
 | Turn | 8/8 (scuffing, about 33° per cycle) | 8/8 (hip yaw, 72° / 141°) |
 | Jab left / right | 8/8 | 8/8 |
 | Get up from prone | 8/8 (6.7 s, nine poses) | 8/8 (same poses, re-timed: 5.2 s) |
-| Get up from supine (roll over + the same rise) | 7/8 | 7/8 |
+| Get up from supine | 8/8 (5.1 s, eight poses; 40/40 over 40 trials) | 8/8 (same poses, re-timed: 4.8 s; 39/40) |
 
-The rise was searched on the final geometry (`motion/getup_supine.py
---pitch 90`, eight seeds): with the 40 mm longer forearms the search stopped
-falling into the kneeling local optimum that had caught fifteen of sixteen
-seeds on the earlier geometry, and two seeds stood with 5/8 and 6/8 before
-re-timing; the nine-pose rise from seed 72, re-timed by `motion/tune_getup.py`,
-is the one in the profiles. It rolls the robot over and stands it up facing
-the other way. The supine get-up is a one-pose roll onto the front followed by
-the same rise. A direct supine rise (sit up on the hands, hip flexed to the new
-−100° limit) and a one-pose prone-to-supine roll were also found and are kept
-in `motion/candidates/` as alternatives. The
+Both rises were searched on the final geometry (`motion/getup_supine.py
+--pitch 90` and `--pitch -90`): with the 40 mm longer forearms the prone search
+stopped falling into the kneeling local optimum that had caught fifteen of
+sixteen seeds on the earlier geometry, and two of eight seeds stood with 5/8 and
+6/8 before re-timing; the nine-pose rise from seed 72, re-timed by
+`motion/tune_getup.py`, is the one in the profiles. It rolls the robot over and
+stands it up facing the other way. From supine the robot sits up on its hands,
+folds the hip to the new −100° limit (the rear thigh link's wider flexion
+range), squats and stands: eight poses from seed 80, 4/8 at the search cadence
+and 8/8 after re-timing, each build timed on its own model. The earlier supine
+scheme (a one-pose roll onto the front, then the prone rise) held 7/8 and took
+8 s; its roll poses and a prone-to-supine roll are kept in `motion/candidates/`. The
 gaits walk with the elbows bent 60° forward and the arms abducted 30° by the
 printed shoulder parts. The motion tools
 (keyframe IK, perturbed simulation checks, gait and get-up tuners, the beam
