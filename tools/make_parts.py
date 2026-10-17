@@ -8,8 +8,8 @@ tibia_right.step, ankle_dbl_block.step share it): x lateral (+ = outboard on the
 leg), y forward, z up, millimetres. Pivot layout (docs/parts_ja.md):
 
     hip pitch axis   (y  3.0, z 132.7)    knee axis (8.0, 70.7)    ankle axis (0.0, 9.5)
-    thigh linkage    hip pivot (-17.0, 122.7)  ->  knee pivot (-12.0,  60.7)   bar 62.2 mm
-    shank linkage    knee pivot (-17.0,  95.7)  ->  ankle pivot (-25.0, 34.5)  bar 61.7 mm
+    thigh linkage    hip pivot ( 25.0, 142.7)  ->  knee pivot ( 30.0,  80.7)   bar 62.2 mm (in FRONT)
+    shank linkage    knee pivot (-17.0,  95.7)  ->  ankle pivot (-25.0, 34.5)  bar 61.7 mm (behind)
 
 These are DRAFTS for fit-checking against the originals in Onshape, not release parts:
 the screw holes that mate with Microban's brackets are placed from the STEP files'
@@ -25,7 +25,7 @@ os.makedirs(OUT, exist_ok=True)
 
 # ---- layout (mm, leg frame) --------------------------------------------------------
 HIP, KNEE, ANKLE = (3.0, 132.7), (8.0, 70.7), (0.0, 9.5)
-THIGH_BACK, THIGH_DOWN = 20.0, 10.0
+THIGH_BACK, THIGH_DOWN = -22.0, -10.0     # negative: the thigh linkage runs in FRONT of the thigh, pivots 10 mm up
 SHANK_BACK, SHANK_UP = 25.0, 25.0
 P1H = (HIP[0] - THIGH_BACK, HIP[1] - THIGH_DOWN)      # thigh bar, hip end
 P1K = (KNEE[0] - THIGH_BACK, KNEE[1] - THIGH_DOWN)    # thigh bar, knee end
@@ -33,9 +33,11 @@ P2K = (KNEE[0] - SHANK_BACK, KNEE[1] + SHANK_UP)      # shank bar, knee end
 P2A = (ANKLE[0] - SHANK_BACK, ANKLE[1] + SHANK_UP)    # shank bar, ankle end
 BAR_T, BAR_W, PIN_D = 3.0, 8.0, 2.2                    # bar thickness, width, M2 clearance
 PLATE_X = 18.5          # outer face of the femur / tibia clevis plates
-THIGH_BAR_X = (14.5, 17.5)   # thigh bars: both sides, just outside the hip bracket wall (13.5)
-SHANK_BAR_X = (17.5, 20.5)   # shank bar: outboard only (the inner side has no room between the legs)
-YOKE_ARM_X = (20.5, 23.5)    # knee yoke's arm to the knee axle, outside the shank bar
+THIGH_BAR_X = (21.0, 24.0)   # outboard of the knee axle cap flange (x 18.5..20.5), 0.5 mm clear: at hip
+                             # flexion beyond 100 deg the (front) thigh bar sweeps across the knee axis
+SHANK_BAR_X = (24.5, 27.5)   # one plane further out: at deep hip flexion the (front) thigh bar crosses
+                             # back over the knee and would otherwise hit the shank bar's upper end
+YOKE_ARM_X = (28.0, 31.0)    # knee yoke plate, outside both bars
 
 def dist(p, q): return math.hypot(q[0] - p[0], q[1] - p[1])
 
@@ -46,38 +48,53 @@ def bar(length, name):
     cq.exporters.export(b, f"{OUT}/{name}.stl"); return b
 
 def knee_yoke(side="right"):
-    """Block behind the knee carrying both rear-link pivots, with one outboard arm to the
-    knee axle. Pivots: thigh bars on both faces at P1K, shank bar on the arm at P2K.
-    The block stays inside the clevis plates (|x| < 14.5) and behind the knee servo
-    (y < -8), the arm runs outside the plates below the hanging arm."""
+    """One flat plate OUTBOARD of the leg (x 20.5..23.5 on the right) that ties the knee axle to
+    the two rear-link pivots: a Ø8.2 bore on the knee axis, the thigh pin at P1K and the
+    shank pin at P2K, each pin reaching inboard to its bar. No block behind the knee and no
+    inner bar: the first draft's crossbar ran straight through the bars' paths and the inner
+    thigh bars of the two legs were only 8 mm apart, so both were dropped. The plate sits
+    below the hanging forearm (which starts at z 112) and outside the femur/tibia plates."""
     sx = 1 if side == "right" else -1
-    y0, y1 = -21.0, -9.0                       # block depth: behind the knee servo (y > -2) and the femur (y > -6)
-    z0, z1 = P1K[1] - 6.0, P2K[1] + 6.0        # 54.7 .. 101.7
-    blk = cq.Workplane("XY").box(29.0, y1 - y0, z1 - z0, centered=(True, False, False)).translate((0, y0, z0))
-    # lightening pocket through the block (keeps 3 mm walls)
-    blk = blk.cut(cq.Workplane("XY").box(23.0, y1 - y0 - 6, z1 - z0 - 24, centered=(True, False, False)).translate((0, y0 + 3, z0 + 12)))
-    # thigh pivot: M2 through hole along x at P1K
-    blk = blk.cut(cq.Workplane("YZ").center(P1K[0], P1K[1]).circle(PIN_D / 2).extrude(40, both=True))
-    # outboard arm: plate at x in YOKE_ARM_X from the block to the knee axle
-    ax0, ax1 = (YOKE_ARM_X if sx > 0 else (-YOKE_ARM_X[1], -YOKE_ARM_X[0]))
-    arm = (cq.Workplane("YZ").workplane(offset=ax0)
-           .polyline([(y0, z0 + 8), (y0, z1 - 8), (P2K[0] + 6, P2K[1] + 6), (KNEE[0] + 2, KNEE[1] + 9),
-                      (KNEE[0] + 9, KNEE[1]), (KNEE[0] + 2, KNEE[1] - 9), (y1 + 2, z0 + 2)]).close()
-           .extrude(ax1 - ax0))
-    # bridge from the block face to the arm (fills x from 14.5 to the arm, behind the plates)
-    bridge = cq.Workplane("XY").box(abs(ax1) - 14.5, 8.0, 20.0, centered=(False, True, True)).translate((sx * 14.5 if sx > 0 else -abs(ax1), -15.0, (z0 + z1) / 2))
-    yoke = blk.union(arm).union(bridge)
-    # knee axle bore and shank pivot on the arm
-    yoke = yoke.cut(cq.Workplane("YZ").center(KNEE[0], KNEE[1]).circle(4.1).extrude(60, both=True))
-    yoke = yoke.cut(cq.Workplane("YZ").center(P2K[0], P2K[1]).circle(PIN_D / 2).extrude(60, both=True))
-    cq.exporters.export(yoke, f"{OUT}/knee_yoke_{side}.stl"); return yoke
+    x0, x1 = (YOKE_ARM_X if sx > 0 else (-YOKE_ARM_X[1], -YOKE_ARM_X[0]))
+    pts = [KNEE, P1K, P2K]
+    # plate outline: the triangle of the three pivots offset by 5 mm, plus a Ø16 boss round the
+    # knee bore. 5 mm (not 7) keeps the top of the plate 2 mm lower: in the walk the hanging
+    # forearm passes 3 mm above it when the hip is flexed 45 deg
+    tri = cq.Workplane("YZ").workplane(offset=x0).polyline(pts).close().offset2D(5.0).extrude(x1 - x0)
+    tri = tri.union(cq.Workplane("YZ").workplane(offset=x0).center(*KNEE).circle(8.0).extrude(x1 - x0))
+    plate = tri.cut(cq.Workplane("YZ").center(*KNEE).circle(4.1).extrude(60, both=True))
+    # thigh pin: Ø2 (M2 screw) through the plate, with an integral Ø6 spacer down to the bar
+    # plane (thigh bar at THIGH_BAR_X, shank bar at SHANK_BAR_X: the spacer fills the gap)
+    for p, bar_x in ((P1K, THIGH_BAR_X), (P2K, SHANK_BAR_X)):
+        gap = (x0 - bar_x[1] if sx > 0 else bar_x[1] - abs(x1)) - 0.5   # between the bar and the plate, 0.5 mm clearance
+        if gap > 0.1:
+            sp = cq.Workplane("YZ").workplane(offset=(x0 - gap) if sx > 0 else -abs(x1)).center(*p).circle(3.0).extrude(gap)
+            plate = plate.union(sp)
+        plate = plate.cut(cq.Workplane("YZ").center(*p).circle(PIN_D / 2).extrude(60, both=True))
+    cq.exporters.export(plate, f"{OUT}/knee_yoke_{side}.stl"); return plate
+
+
+def hip_front_ear():
+    """Carries the thigh bar's upper pivot, P1H = 22 mm in front of and 10 mm above the hip
+    pitch axis, where nothing of Microban's exists: a 3 mm plate against the outer face of the
+    hip bracket's side wall (x 13.5), reaching forward past the bracket (y <= 17) to the pivot,
+    with a Ø6 boss out to the bar plane. The two screw positions into the bracket wall are
+    placeholders to be set against the real part."""
+    pl = (cq.Workplane("YZ").workplane(offset=13.5)
+          .polyline([(2, 124), (2, 140), (P1H[0] + 6, P1H[1] + 5), (P1H[0] + 6, P1H[1] - 6), (14, 124)]).close().extrude(3.0))
+    boss = cq.Workplane("YZ").workplane(offset=16.5).center(*P1H).circle(3.0).extrude(THIGH_BAR_X[0] - 0.5 - 16.5)
+    ear = pl.union(boss).cut(cq.Workplane("YZ").center(*P1H).circle(PIN_D / 2).extrude(40, both=True))
+    for y, z in ((6, 128), (6, 137)):
+        ear = ear.cut(cq.Workplane("YZ").center(y, z).circle(1.1).extrude(40, both=True))
+    cq.exporters.export(ear, f"{OUT}/hip_front_ear.stl"); return ear
+
 
 def knee_axle_cap():
     """Bolts onto the knee servo horn through the femur plate with the four M2 horn screws
     (PCD 12, lengthened to M2x12) and carries an Ø8 stub axle for the yoke, from the
-    plate's outer face (x 18.5) out to x 24.5; M2 tapped hole in the tip for a retainer."""
+    plate's outer face (x 18.5) out to x 32.5; M2 tapped hole in the tip for a retainer."""
     cap = (cq.Workplane("XY").circle(9.0).extrude(2.0)                   # 2 mm flange on the plate
-           .faces(">Z").workplane().circle(4.0).extrude(6.0))            # Ø8 stub, 6 mm
+           .faces(">Z").workplane().circle(4.0).extrude(12.0))           # Ø8 stub through the yoke plate at 28..31
     cap = cap.faces("<Z").workplane().pushPoints([(6, 0), (-6, 0), (0, 6), (0, -6)]).hole(2.2)
     cap = cap.faces(">Z").workplane().hole(1.6, 5.0)                    # M2 tap drill in the stub
     cq.exporters.export(cap, f"{OUT}/knee_axle_cap.stl"); return cap
@@ -139,12 +156,12 @@ def foot_sole80(step_path, out_dir, sole=80.0):
 if __name__ == "__main__":
     L1, L2 = dist(P1H, P1K), dist(P2K, P2A)
     assert abs(L1 - dist(HIP, KNEE)) < 1e-6 and abs(L2 - dist(KNEE, ANKLE)) < 1e-6, "parallelogram: bar = front link"
-    bar(L1, "thigh_bar")           # x4 (two per leg)
+    bar(L1, "thigh_bar")           # x2 (one per leg, outboard)
     bar(L2, "shank_bar")           # x2 (one per leg, outboard)
     knee_yoke("right"); knee_yoke("left")
     knee_axle_cap()                # x2
-    standoff(THIGH_BAR_X[0] - 13.5, "standoff_thigh_hip")    # 1 mm: hip bracket wall (13.5) -> thigh bar
-    standoff(SHANK_BAR_X[0] - 13.5, "standoff_shank_ankle")  # 4 mm: ankle bracket wall (13.5) -> shank bar
+    standoff(SHANK_BAR_X[0] - 13.5, "standoff_shank_ankle")  # 9 mm: ankle bracket wall (13.5) -> shank bar
+    hip_front_ear()
     xl330_dummy("xl330_dummy_shoulder_roll")   # x2
     xl330_dummy("xl330_dummy_neck")            # x1
     xl330_dummy("xl330_dummy_hip_yaw")         # x2, the 12-servo kit's standard; swap for real XL330s to get 14

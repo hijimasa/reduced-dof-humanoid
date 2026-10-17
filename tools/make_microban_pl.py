@@ -57,6 +57,7 @@ LEG = {  # local frames: right femur +x = world back, +y = world up; left femur 
 # Shank: rear pivot UP   -> flexion singular at 90 + a, extension at 90 - a.
 # Both ranges keep RANGE_MARGIN degrees clear of the singularity.
 RANGE_MARGIN = 8.0
+HIP_FLEX_LIMIT = 85.0    # deg; thigh bar vs Ø8 knee axle stub clearance (2 mm at 85 deg, 0 at 90), see HIP_RANGE
 XL330_TORQUE = 0.52          # N*m, XL330-M288-T stall torque at 5 V
 XL330_MASS = 0.023           # kg
 SLIM_ANKLE_MASS = 0.025      # kg: ankle block minus the XL330 that is no longer there
@@ -128,15 +129,23 @@ def main():
     ap.add_argument("--keep-motor", action="store_true", help="keep <motor> actuators instead of <position>")
     ap.add_argument("--neck-motor", action="store_true",
                     help="keep the neck (head yaw) servo; by default the head is fixed to the trunk")
-    ap.add_argument("--back", type=float, default=0.020, help="thigh linkage: rear pivot offset behind the front pivot [m]")
-    ap.add_argument("--tilt", type=float, default=0.010, help="thigh linkage: rear pivot DOWN by this much [m]")
+    ap.add_argument("--back", type=float, default=-0.022,
+                    help="thigh linkage: pivot offset behind the joint axes [m]; NEGATIVE = in front. Default 22 mm in "
+                         "front: behind the thigh the bar would run through the hanging forearm (x >= 18.5, z 112..193)")
+    ap.add_argument("--tilt", type=float, default=-0.010,
+                    help="thigh linkage: pivot DOWN by this much [m]; NEGATIVE = up. A front linkage needs its pivots "
+                         "UP (10 mm): extension singularity at 65.6 deg (the get-ups use 55 deg of extension), flexion at "
+                         "114.4 deg; hip flexion is capped at HIP_FLEX_LIMIT before that by the thigh bar / axle stub clearance")
     ap.add_argument("--shank-back", type=float, default=0.025,
                     help="shank linkage: rear pivot offset [m] (25 mm clears the tibia's rear edge and the ankle-roll servo)")
     ap.add_argument("--shank-tilt", type=float, default=0.025,
                     help="shank linkage: rear pivot UP by this much [m] (lifts the ankle pivot above the foot and the roll servo)")
-    ap.add_argument("--link-x", type=float, default=0.015,
-                    help="lateral position of the two bars of each linkage [m], +-link_x from the leg centre plane "
-                         "(15 mm: just outside the hip/ankle bracket side walls, inside the arm's swing)")
+    ap.add_argument("--link-x", type=float, default=0.0225,
+                    help="lateral centre of the THIGH bar [m] from the leg centre plane (22.5 mm = 21..24, 0.5 mm "
+                         "outside the knee axle cap flange, which ends at 20.5). The shank bar sits one plane further out "
+                         "(--shank-link-x) so the two can cross at deep hip flexion.")
+    ap.add_argument("--shank-link-x", type=float, default=0.026,
+                    help="lateral centre of the SHANK bar [m] (26 mm = 24.5..27.5); the knee yoke plate is outside it")
     ap.add_argument("--keep-ankle-servo", action="store_true",
                     help="keep the ankle-pitch servo's geometry and mass in the ankle block (by default "
                          "it is removed and the bracket shrunk to a clevis, which is what lets the knee fold deeper)")
@@ -199,6 +208,16 @@ def main():
         rgba = rgba or (DUMMY_AMBER if "dummy" in nm else PART_GREEN)
         ET.SubElement(body, "geom", {"class": "visual", "type": "mesh", "mesh": f"part_{nm}", "pos": fmt(pos),
                                      "quat": fmt(quat), "rgba": rgba})
+        if nm == "knee_axle_cap":
+            # flange + stub as two cylinders: one convex hull of the cap would be a cone that reaches
+            # from the Ø18 flange into the thigh-bar plane and reports a phantom 5 mm interference
+            Rq = q2m(np.asarray(quat))
+            for r, h, zc in ((0.009, 0.001, 0.001), (0.004, 0.006, 0.008)):
+                ET.SubElement(body, "geom", {"class": "collision", "type": "cylinder", "size": fmt((r, h)),
+                                             "pos": fmt(np.asarray(pos) + Rq @ np.array([0, 0, zc])), "quat": fmt(quat)})
+        elif "dummy" not in nm:   # the mechanism parts also collide (convex hull), so interference is simulated
+            ET.SubElement(body, "geom", {"class": "collision", "type": "mesh", "mesh": f"part_{nm}", "pos": fmt(pos),
+                                         "quat": fmt(quat)})
     PART_HOOK["fn"] = part if a.parts else None
 
     dflt = root.find("default")
@@ -215,7 +234,7 @@ def main():
         # printed bars, pin to pin, in sagittal planes offset laterally (local z is the pitch
         # axis = world +y): thigh bars on both sides at +-link_x, the shank bar outboard only
         ang = np.arctan2(v[1], v[0]); q = (np.cos(ang / 2), 0.0, 0.0, np.sin(ang / 2))
-        offsets = (-a.link_x, a.link_x) if lateral is None else lateral
+        offsets = lateral if lateral is not None else (c_z + out_z * a.link_x,)
         if a.parts:
             for zx in offsets:   # STL: centred at the origin along x, 3 mm thick in +z
                 part(el, bar, v / 2 + np.array([0, 0, zx - 0.0015]), q)
@@ -226,9 +245,17 @@ def main():
                                        "pos": fmt(v / 2 + np.array([0, 0, zx])), "quat": fmt(q),
                                        "rgba": "0.15 0.75 0.3 1"})
 
-    ang1 = np.degrees(np.arctan2(a.tilt, a.back)); ang2 = np.degrees(np.arctan2(a.shank_tilt, a.shank_back))
-    HIP_RANGE = (-np.radians(90 + ang1 - RANGE_MARGIN), np.radians(90 - ang1 - RANGE_MARGIN))   # +ve = thigh back
-    KNEE_RANGE = (-np.radians(90 - ang2 - RANGE_MARGIN), np.radians(90 + ang2 - RANGE_MARGIN))  # +ve = shank back
+    def singularities(back, tilt):
+        """(forward, backward) swing angle at which the parallelogram folds flat, for a pivot
+        offset `back` behind and `tilt` below the joint axis (either may be negative)."""
+        fwd, up = -back, -tilt
+        angs = [np.degrees(np.arctan2(sx * fwd, -(sx * up))) for sx in (1, -1)]   # from 'down' toward 'forward'
+        return max(angs), -min(angs)
+    f1, b1 = singularities(a.back, a.tilt); f2, b2 = singularities(a.shank_back, -a.shank_tilt)   # shank tilt is UP
+    # hip flexion is also capped at HIP_FLEX_LIMIT: beyond ~90 deg the front thigh bar sweeps across the
+    # knee axis and would touch the Ø8 knee axle stub (the get-ups use at most 37 deg of hip flexion)
+    HIP_RANGE = (-np.radians(min(f1 - RANGE_MARGIN, HIP_FLEX_LIMIT)), np.radians(b1 - RANGE_MARGIN))    # hip: +ve = thigh back
+    KNEE_RANGE = (-np.radians(f2 - RANGE_MARGIN), np.radians(b2 - RANGE_MARGIN))   # knee: +ve = shank back
 
     for side, L in LEG.items():
         hipblock, femur, tibia, ankle = (bodies[L[k]] for k in ("hipblock", "femur", "tibia", "ankle"))
@@ -288,7 +315,7 @@ def main():
         sr = ET.SubElement(kb, "body", {"name": f"{side}_shank_rear", "pos": fmt(d2)})
         ET.SubElement(sr, "joint", {"name": name(f"{side}_shank_rear"), "type": "hinge",
                                     "axis": "0 0 1", "class": "passive"})
-        inertial(sr, 0.002, v2 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(sr, v2, "shank_bar", (c_z + out_z * 0.019,))
+        inertial(sr, 0.002, v2 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(sr, v2, "shank_bar", (c_z + out_z * a.shank_link_x,))
         femur.append(kb)
 
         fpos, fq = vec(femur.get("pos")), vec(femur.get("quat"))
@@ -296,7 +323,7 @@ def main():
                                               "pos": fmt(fpos + q2m(fq) @ d1), "quat": femur.get("quat")})
         ET.SubElement(tr, "joint", {"name": name(f"{side}_thigh_rear"), "type": "hinge",
                                     "axis": "0 0 1", "class": "passive"})
-        inertial(tr, 0.002, v1 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(tr, v1, "thigh_bar", (c_z - 0.016, c_z + 0.016))
+        inertial(tr, 0.002, v1 / 2, (6.4e-7, 6.4e-7, 2e-8)); rod(tr, v1, "thigh_bar", (c_z + out_z * a.link_x,))
 
         for j in root.iter("joint"):
             n = j.get("name")

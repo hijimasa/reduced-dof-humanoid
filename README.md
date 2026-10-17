@@ -57,7 +57,9 @@ tools/
   make_microban_pl.py    generates the models above from Microban's robot.xml
   make_parts.py          CadQuery script: link bars, knee yoke, axle cap, standoffs, servo-shaped spacers
   verify_parallel_leg.py loop closure, foot-parallel sweep and standing tests
+  check_clearance.py     sweeps hip/knee over their ranges and reports any part-vs-robot interference
   render_preview.py      renders the preview images
+  render_parts_check.py  renders the added parts on a transparent robot (docs/images/parts_check.png)
   step_holes.py          reads hole patterns out of Microban's STEP parts
 docs/
   design_ja.md           DOF reduction study: ROBO-ONE Light rules, Microduck, per-joint decisions, results, cost (Japanese)
@@ -76,7 +78,7 @@ generator to keep the servo.
 ### The parallel-link leg
 
 Per leg, a passive knee block is inserted between the femur and the tibia and
-two passive rear links close two parallelogram loops (`<connect>` constraints).
+two passive link bars close two parallelogram loops (`<connect>` constraints).
 The knee block, and therefore the foot, stay parallel to the pelvis in pitch.
 Consequences:
 
@@ -85,14 +87,17 @@ Consequences:
 - The knee servo now acts between the knee block and the tibia, so the knee
   command is the shank angle **relative to the pelvis**, not to the thigh.
   Existing Microban motions must be re-authored.
-- Thigh linkage: rear pivots 20 mm behind and 10 mm below the front pivots
-  (singular at 116.6° flexion / 63.4° extension). Shank linkage: 25 mm behind
-  and 25 mm above, which lifts the ankle pivot clear of the ankle-roll servo and
-  the foot (singular at 135° / 45°). Joint ranges follow with an 8° margin:
-  hip −109°…+55°, knee −37°…+127° (pelvis-relative).
+- Thigh linkage: one bar **in front of** the thigh, pivots 22 mm ahead of and
+  10 mm above the hip and knee axes (singular at 114.4° flexion / 65.6°
+  extension). Shank linkage: one bar behind the shank, pivots 25 mm behind and
+  25 mm above the knee and ankle axes, which lifts the ankle pivot clear of the
+  ankle-roll servo and the foot (singular at 135° / 45°). Joint ranges follow
+  with an 8° margin, and hip flexion is capped at 85° where the thigh bar would
+  reach the knee axle: hip −85°…+58°, knee −37°…+127° (pelvis-relative).
 - The added parts are drawn in green (mechanism) and amber (printed servo-shaped
-  spacers); they do not collide, so interference with the real parts is not
-  modelled yet.
+  spacers). The green parts also collide (convex hulls), so interference between
+  the mechanism and the rest of the robot shows up in simulation;
+  `tools/check_clearance.py` sweeps the ranges and reports none inside them.
 
 ### Parts that change on the printed robot
 
@@ -105,8 +110,8 @@ The generator edits the model to match the parts the physical conversion needs
 | Neck | The XL330 in the top of the trunk comes out; a spacer goes in and the head bolts on. | −15 g. |
 | Shoulder roll | The XL330 at the top of each humerus comes out; a spacer goes in, arm at the side. | −30 g. |
 | Hip yaw (12-servo) | The two XL330s in the bottom of the trunk come out; spacers go in. The 14-servo upgrade puts the servos back. | −30 g. No turning on the spot. |
-| Rear links | Per leg two thigh bars (62.2 mm between pins) and one shank bar (61.7 mm), 3 × 8 mm, M2 pins. | Close the parallelogram loops. |
-| Knee yoke | New part behind the knee carrying both rear-link pivots, with one outboard arm riding on an axle cap bolted to the knee servo horn. | 6 g. |
+| Link bars | Per leg one thigh bar in front (62.2 mm between pins) and one shank bar behind (61.7 mm), 3 × 8 mm, M2 pins, both outboard of the leg in separate planes. | Close the parallelogram loops. |
+| Knee yoke | A triangular plate outboard of the knee carrying both bar pivots, riding on a printed axle cap bolted to the knee servo horn; a small ear on the hip bracket carries the thigh bar's upper pivot. | 6 g. |
 
 Total mass with the printed spacers (8 g each): 0.833 kg (upstream model) → 0.795 kg (16-servo) → 0.765 kg (14-servo) → 0.735 kg (12-servo).
 
@@ -136,14 +141,24 @@ model generator draws these STLs in place of its box placeholders, so the
 mechanism shows up in any viewer that renders meshes (LegacyMotionEditor's
 preview included); their lateral positions are measured from the leg's centre
 plane, not from the body origins, which sit on the inboard clevis plate. The placement was
-checked against the model (below, originals transparent): link bars 3 × 8 mm
-with M2 pins, both thigh bars inside the arm's swing at ±14.5…17.5 mm, one
-shank bar outboard, a knee yoke behind the knee with one outboard arm on an
-axle cap bolted to the knee servo horn, 1 mm and 4 mm standoffs, and dummy
-XL330 blocks for the shoulder-roll and neck positions. The ankle's passive
-hinge reuses the tibia's existing Ø6 plate holes; the hip and ankle brackets
-each get one M2 hole. Why the pivots sit where they do, and what is still
-unverified, is in [docs/parts_ja.md](docs/parts_ja.md).
+checked against the model with collision on (below, originals transparent):
+link bars 3 × 8 mm with M2 pins stacked outboard of the leg in three planes
+(thigh bar 21–24 mm from the leg's centre plane, shank bar 24.5–27.5 mm, knee
+yoke plate 28–31 mm), the yoke on an axle cap bolted to the knee servo horn, an
+ear on the hip bracket for the thigh bar, an 11 mm standoff on the ankle
+bracket for the shank bar, and dummy XL330 blocks for the shoulder-roll, neck
+and (12-servo) hip-yaw positions. The ankle's passive hinge reuses the tibia's
+existing Ø6 plate holes; the hip and ankle brackets each get M2 holes.
+
+An earlier draft with the thigh bars behind the thigh did interfere: the inner
+bars of the two legs came within 8 mm of each other, the thigh and shank bars
+crossed in the same plane beyond 60° of hip flexion, and the hanging forearm
+hit the knee yoke in the walking crouch. The present layout was reached by
+sweeping hip and knee over their ranges with MuJoCo's collision detection
+(`tools/check_clearance.py`) and by replaying the gaits; the only contact left
+is the forearm brushing the shank bar by 0.5 mm when the robot squats with the
+arms hanging exactly vertical, which no motion does. Why the pivots sit where
+they do, and what is still unverified, is in [docs/parts_ja.md](docs/parts_ja.md).
 
 <p align="center">
   <img src="docs/images/parts_check.png" alt="Drafted parts placed on the model, originals transparent" width="640">
@@ -171,8 +186,15 @@ servo zero-offset and initial-tilt disturbances, 8 trials each:
 | Walk forward / back, sidestep | 8/8 (about 36 mm/s) | 8/8 |
 | Turn | 8/8 (scuffing, about 33° per cycle) | 8/8 (hip yaw, 72° / 141°) |
 | Jab left / right | 8/8 | 8/8 |
-| Get up from prone | 8/8 | 8/8 |
-| Get up from supine (roll over + the same rise) | 8/8 | 8/8 |
+| Get up from prone | 8/8 (3.3 s) | 6/8 |
+| Get up from supine (roll over + the same rise) | 8/8 | 4/8 |
+
+The rise was searched again after the printed parts were given collision
+geometry: lying prone, the robot now rests on the front thigh bars and the knee
+yokes, which stopped the earlier seven-pose rise. The new five-pose rise rolls
+the robot over and stands it facing the other way. The 14-servo build carries
+the same poses with its own timing; its 30 g of extra hip-yaw servos leave it
+less robust to the servo-offset and tilt perturbations.
 
 The walk is a statically stable keyframe gait; Microban's own learned walk
 (commands up to 0.7 m/s) is a dynamic one and out of scope here.
@@ -203,14 +225,17 @@ python tools/make_microban_pl.py path/to/microban/src/model/mjcf/robot.xml \
     model/microban_pl12/microban_pl12_lme.xml --dof 12 --naming lme --meshdir ../microban_pl/assets --parts ../../parts
 # verify
 python tools/verify_parallel_leg.py model/microban_pl12/microban_pl12.xml
-# part drafts and preview image
+python tools/check_clearance.py model/microban_pl12/microban_pl12.xml       # part interference sweep
+# part drafts and preview images
 python tools/make_parts.py model/parts
 MUJOCO_GL=egl python tools/render_preview.py model/microban_pl12/scene.xml docs/images/preview12.png
+MUJOCO_GL=egl python tools/render_parts_check.py model/microban_pl12/scene.xml docs/images/parts_check.png
 ```
 
 Generator options: `--dof 16|14|12`; `--naming lme`; `--back`/`--tilt` (thigh
-linkage) and `--shank-back`/`--shank-tilt` (shank linkage) set the rear-pivot
-geometry and the joint ranges follow; `--link-x` the lateral position of the bars;
+linkage, negative = in front / above) and `--shank-back`/`--shank-tilt` (shank
+linkage) set the pivot geometry and the joint ranges follow; `--link-x` and
+`--shank-link-x` the lateral planes of the bars;
 `--clevis` the slimmed ankle bracket; `--parts <dir relative to meshdir>` draws
 the STL drafts instead of boxes; `--keep-ankle-servo`, `--neck-motor`,
 `--keep-motor` (Microban's torque actuators, for RL), `--elbow-flexion-only`,
