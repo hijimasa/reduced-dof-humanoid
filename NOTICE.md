@@ -48,7 +48,10 @@ All changes are applied programmatically by `tools/make_microban_pl.py`:
 - `--dof 12` additionally removes the hip-yaw joints (and the two XL330s that drive
   them from the bottom of the trunk) and the shoulder-roll joints (and the XL330 at
   the top of each humerus), with the corresponding mass.
-- A `--naming lme` option renames joints to the LegacyMotionEditor convention.
+- A `--naming lme` option renames joints to the LegacyMotionEditor convention. The
+  passive joints get names outside LME's Meridim slot table (`r_kneeblock_yp`,
+  `r_thighlink_yp`, `r_shanklink_yp`, `r_anklepassive_yp`) so that nothing LME
+  publishes can land in a servo's slot.
 
 The upstream copyright and license header of `robot.xml` is preserved at the
 top of every generated model file, followed by a note describing the

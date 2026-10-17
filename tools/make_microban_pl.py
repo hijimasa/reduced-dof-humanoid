@@ -30,9 +30,12 @@ for side, s in (("right", "r"), ("left", "l")):
         f"{side}_hip_roll": f"{s}_hipjoint_xr",       f"{side}_hip_pitch": f"{s}_hipjoint_yp",
         f"{side}_knee": f"{s}_knee_yp",               f"{side}_ankle_pitch": f"{s}_ankle_yp",
         f"{side}_ankle_roll": f"{s}_ankle_xr",
-        # passive joints added by this script
-        f"{side}_knee_block": f"{s}_knee_yp_1", f"{side}_thigh_rear": f"{s}_hipjoint_yp_1",
-        f"{side}_shank_rear": f"{s}_knee_yp_2",
+        # passive joints added by this script. Their LME names must NOT appear in
+        # LegacyMotionEditor's JOINT_TO_MERIDIM table: "r_knee_yp_1" is an alias there
+        # for the knee's own Meridim slot, and LME publishing the passive knee-block
+        # angle into it made the knee servo flip between two targets at 100 Hz.
+        f"{side}_knee_block": f"{s}_kneeblock_yp", f"{side}_thigh_rear": f"{s}_thighlink_yp",
+        f"{side}_shank_rear": f"{s}_shanklink_yp",
     })
 LME2UP = {v: k for k, v in UP2LME.items()}
 
@@ -287,6 +290,8 @@ def main():
             n = j.get("name")
             if n == name(f"{side}_ankle_pitch"):
                 j.set("class", "passive"); j.attrib.pop("range", None)
+                if a.naming == "lme":
+                    j.set("name", f"{side[0]}_anklepassive_yp")   # "r_ankle_yp" is Meridim slot 69 in LME
             elif n == name(f"{side}_hip_pitch"):
                 j.set("range", fmt(HIP_RANGE))
             elif n == name(f"{side}_knee"):
