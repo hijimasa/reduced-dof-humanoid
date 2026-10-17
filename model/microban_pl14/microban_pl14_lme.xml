@@ -13,7 +13,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 <!--
 microban_pl14_lme: Microban with parallel-link legs (passive ankle pitch).
 Derived from Rhoban/microban src/model/mjcf/robot.xml by tools/make_microban_pl.py
-(dof=14, elbow=free, naming=lme, thigh back/tilt=-0.022/-0.01, shank back/tilt=0.025/0.025, link_x=0.0225, fixed_head=True, slim_ankle=True, integrated_parts=True, forearm_ext=0.0, arm_abduct=30.0).
+(dof=14, elbow=free, naming=lme, thigh back/tilt=-0.027/-0.012, shank back/tilt=0.025/0.025, link_x=0.024, fixed_head=True, slim_ankle=True, integrated_parts=True, forearm_ext=0.0, arm_abduct=30.0).
 Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for attribution.
 -->
 <mujoco model="microban_pl14_lme">
@@ -48,7 +48,7 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
   <worldbody>
     <body name="trunk" pos="0 0 0" quat="1 0 0 0" childclass="microban">
       <freejoint name="trunk_freejoint" />
-      <inertial pos="-0.00454781 -0.000104579 0.053896" mass="0.329983" fullinertia="5.69058e-04 4.46129e-04 3.33948e-04 -4.80387e-07 -1.08710e-05 1.80415e-06" />
+      <inertial pos="-0.00454781 -0.000104579 0.053896" mass="0.324283" fullinertia="5.68407e-04 4.45618e-04 3.33566e-04 -4.79837e-07 -1.08585e-05 1.80209e-06" />
       <geom type="mesh" class="visual" pos="0.00575 -0.036 -0.0484" quat="0.707107 0 0 0.707107" mesh="arm_bearing_support__configuration_right" material="arm_bearing_support__configuration_right_material" />
       <geom type="mesh" class="visual" pos="0 -0.044 0.081" quat="0.707107 0.707107 0 0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
       <geom class="collision" pos="0 0 0.05375" quat="0.707107 0 0 0.707107" type="box" size="0.054 0.008 0.05375" />
@@ -65,15 +65,14 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
       <site group="3" name="body" pos="0 0 0" quat="1 -0 -0 -0" />
       <site group="3" name="imu" pos="0.01483 -0.002 0.0675" quat="0.5 -0.5 -0.5 0.5" />
       <body name="head" pos="-0.00204165 -0 0.126" quat="0.707107 0 0 0.707107">
-        <inertial pos="5.1303e-08 -0.0074561 0.0161837" mass="0.0166215" fullinertia="2.92963e-06 3.58354e-06 4.24694e-06 -1.6e-11 4e-12 2.61187e-07" />
-        <geom type="mesh" class="visual" pos="-0.036 -0.00779165 -0.1744" quat="1 -0 -0 0" mesh="head__configuration_right" material="head__configuration_right_material" />
+        <inertial pos="5.1303e-08 -0.0074561 0.0161837" mass="0.023022" fullinertia="2.92963e-06 3.58354e-06 4.24694e-06 -1.6e-11 4e-12 2.61187e-07" />
+        <geom class="visual" type="mesh" mesh="part_head_integrated" pos="-0.036 -0.00779165 -0.1744" quat="1 -0 -0 0" rgba="0.15 0.75 0.3 1" />
       </body>
       <body name="shoulder" pos="0 -0.0505 0.081" quat="0.707107 -0.707107 -0 0">
         <joint axis="0 0 1" name="r_shoulder_yp" type="hinge" range="-3.141592653589793 3.141592653589793" class="xl330" />
-        <inertial pos="4.19e-10 2.814e-09 -0.00850029" mass="0.00898451" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 0 0 -0" />
-        <geom type="mesh" class="visual" pos="-0 -0.0245 0.0132" quat="0.5 -0.5 -0.5 -0.5" mesh="shoulder" material="shoulder_material" />
+        <inertial pos="4.19e-10 2.814e-09 -0.00850029" mass="0.005385" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 0 0 -0" />
         <body name="humerus__configuration_right" pos="0.0145 0 -0.0195" quat="0.183013 0.683013 0.183013 0.683013">
-          <inertial pos="-0.000309872 -0.0252784 -0.0143918" mass="0.025087" fullinertia="1.06456e-05 2.37787e-06 1.05827e-05 -1.82473e-07 -1.37088e-09 -4.70505e-08" />
+          <inertial pos="-0.000309872 -0.0252784 -0.0143918" mass="0.018687" fullinertia="7.92977e-06 1.77124e-06 7.88292e-06 -1.35921e-07 -1.02115e-09 -3.50472e-08" />
           <geom type="mesh" class="visual" pos="-0.008 -0.0515 -0.0145" quat="0 0.707107 0 -0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
           <body name="radius" pos="-0.0145 -0.0515 -0.0145" quat="0.707107 0 0.707107 -0">
             <joint axis="0 0 1" name="r_elbow_yp" type="hinge" range="-2.181661564992912 2.181661564992912" class="xl330" />
@@ -84,8 +83,8 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
             <geom type="mesh" class="visual" pos="0 0 0.0065" quat="0 0.707107 0.707107 -0" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
             <geom type="mesh" class="visual" pos="0 0 0.0065" quat="0 0.707107 0.707107 -0" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
           </body>
-          <geom class="visual" type="mesh" mesh="part_upper_arm_integrated_right" pos="-0.0327 -0.0245 -0.0145" quat="0 0 0.707107 0.707107" rgba="0.15 0.75 0.3 1" />
         </body>
+        <geom class="visual" type="mesh" mesh="part_shoulder_arm_simple_right" pos="1.12639e-08 0.0245 -0.0522" quat="-0.5 -0.5 -0.5 0.5" rgba="0.15 0.75 0.3 1" />
       </body>
       <body name="hip" pos="0 -0.036 0" quat="1 -0 -0 0">
         <joint axis="0 0 1" name="r_hipjoint_zy" type="hinge" range="-4.188790204786353 1.047197551196635" class="xl330" />
@@ -93,17 +92,16 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
         <geom type="mesh" class="visual" pos="0.00575 -0 -0.0484" quat="0.707107 0 0 0.707107" mesh="hip__configuration_right" material="hip__configuration_right_material" />
         <body name="hip_block__configuration_right" pos="-0.02 0 -0.0214" quat="0.5 -0.5 0.5 -0.5">
           <joint axis="0 0 1" name="r_hipjoint_xr" type="hinge" range="-0.610865238197994 0.6108652381980366" class="xl330" />
-          <inertial pos="-5.75932e-05 0.00982795 0.0271518" mass="0.04763" fullinertia="1.64064e-05 1.33088e-05 7.85889e-06 -9.153e-09 7.8745e-08 6.63067e-07" />
+          <inertial pos="-5.75932e-05 0.00982795 0.0271518" mass="0.052330" fullinertia="1.64064e-05 1.33088e-05 7.85889e-06 -9.153e-09 7.8745e-08 6.63067e-07" />
           <geom type="mesh" class="visual" pos="-0.008 -0 0.0385" quat="0 0.707107 0 -0.707107" mesh="xl330" material="xl330_material" />
           <geom type="mesh" class="visual" pos="0 -0 0.033" quat="0 -0 1 0" mesh="dc15_a01_horn_idle2_dummy" material="dc15_a01_horn_idle2_dummy_material" />
           <geom class="collision" pos="-0 0.02075 0.02575" quat="0 -0 0.707107 -0.707107" type="box" size="0.0135 0.02525 0.00625" />
-          <geom type="mesh" class="visual" pos="0 0.027 0.02575" quat="0 -0 0.707107 -0.707107" mesh="hip_dbl_block__configuration_right" material="hip_dbl_block__configuration_right_material" />
           <geom type="mesh" class="visual" pos="-0 0 0.0065" quat="0 1 0 0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
           <geom type="mesh" class="visual" pos="0 -0 0.033" quat="0 -0 1 0" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
           <geom type="mesh" class="visual" pos="0 -0 0.033" quat="0 -0 1 0" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
           <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 -0.707107 -0.707107" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
           <body name="femur__configuration_right" pos="-0.0145 -0 0.0385" quat="0 0.707107 0 -0.707107">
-            <joint axis="0 0 1" name="r_hipjoint_yp" type="hinge" range="-1.48353 1.00454" class="xl330" />
+            <joint axis="0 0 1" name="r_hipjoint_yp" type="hinge" range="-1.48353 1.01295" class="xl330" />
             <inertial pos="-0.0109472 -0.0366847 -0.0147025" mass="0.014726" fullinertia="1.12665e-05 4.38335e-06 8.95932e-06 -1.12592e-06 1.333e-09 -4.521e-09" />
             <geom class="collision" pos="-0.015 -0.0335001 0.00275" quat="0.5 -0.5 0.5 0.5" type="box" size="0.00125 0.009 0.022228" />
             <geom class="collision" pos="-0.008818 -0.00881806 0.00275" quat="0.653281 -0.270598 0.653281 0.270598" type="box" size="0.00125 0.009 0.0124705" />
@@ -150,25 +148,25 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
               <body name="right_shank_rear" pos="0.025 0.025 0">
                 <joint name="r_shanklink_yp" type="hinge" axis="0 0 1" class="passive" />
                 <inertial pos="0.004 -0.0306065 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-                <geom class="visual" type="mesh" mesh="part_shank_bar" pos="0.004 -0.0306065 -0.042" quat="0.751528 0 0 -0.659701" rgba="0.15 0.75 0.3 1" />
-                <geom class="collision" type="mesh" mesh="part_shank_bar" pos="0.004 -0.0306065 -0.042" quat="0.751528 0 0 -0.659701" />
+                <geom class="visual" type="mesh" mesh="part_shank_bar" pos="0.004 -0.0306065 -0.0435" quat="0.751528 0 0 -0.659701" rgba="0.15 0.75 0.3 1" />
+                <geom class="collision" type="mesh" mesh="part_shank_bar" pos="0.004 -0.0306065 -0.0435" quat="0.751528 0 0 -0.659701" />
               </body>
             </body>
           </body>
-          <body name="right_thigh_rear" pos="-0.0145 -0.01 0.0605" quat="0 0.707107 0 -0.707107">
+          <geom class="visual" type="mesh" mesh="part_hip_block_integrated_right" pos="0 0.027 0.02575" quat="0 -0 0.707107 -0.707107" rgba="0.15 0.75 0.3 1" />
+          <body name="right_thigh_rear" pos="-0.0145 -0.012 0.0655" quat="0 0.707107 0 -0.707107">
             <joint name="r_thighlink_yp" type="hinge" axis="0 0 1" class="passive" />
             <inertial pos="-0.0025 -0.031 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-            <geom class="visual" type="mesh" mesh="part_thigh_bar" pos="-0.0025 -0.031 -0.0385" quat="0.678091 0 0 -0.734978" rgba="0.15 0.75 0.3 1" />
-            <geom class="collision" type="mesh" mesh="part_thigh_bar" pos="-0.0025 -0.031 -0.0385" quat="0.678091 0 0 -0.734978" />
+            <geom class="visual" type="mesh" mesh="part_thigh_bar" pos="-0.0025 -0.031 -0.04" quat="0.678091 0 0 -0.734978" rgba="0.15 0.75 0.3 1" />
+            <geom class="collision" type="mesh" mesh="part_thigh_bar" pos="-0.0025 -0.031 -0.04" quat="0.678091 0 0 -0.734978" />
           </body>
         </body>
       </body>
       <body name="shoulder_2" pos="-0 0.0505 0.081" quat="0 0 -0.707107 -0.707107">
         <joint axis="0 0 1" name="l_shoulder_yp" type="hinge" range="-3.141592653589793 3.141592653589793" class="xl330" />
-        <inertial pos="-4.19e-10 2.814e-09 0.00850029" mass="0.00898451" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 -0 0 0" />
-        <geom type="mesh" class="visual" pos="0 -0.0245 -0.0132" quat="0.5 -0.5 0.5 0.5" mesh="shoulder" material="shoulder_material" />
+        <inertial pos="-4.19e-10 2.814e-09 0.00850029" mass="0.005385" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 -0 0 0" />
         <body name="humerus__configuration_left" pos="-0.0145 0 0.0195" quat="-0.183013 -0.683013 0.183013 0.683013">
-          <inertial pos="-0.000313281 0.0252784 -0.0143884" mass="0.025087" fullinertia="1.06456e-05 2.37780e-06 1.05827e-05 1.81551e-07 -3.47234e-10 4.60557e-08" />
+          <inertial pos="-0.000313281 0.0252784 -0.0143884" mass="0.018687" fullinertia="7.92977e-06 1.77119e-06 7.88288e-06 1.35234e-07 -2.58649e-10 3.43062e-08" />
           <geom type="mesh" class="visual" pos="-0.008 0.0515 -0.0145" quat="0.707107 0 -0.707107 -0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
           <body name="radius_2" pos="-0.0145 0.0515 -0.0145" quat="0.707107 0 -0.707107 0">
             <joint axis="0 0 1" name="l_elbow_yp" type="hinge" range="-2.1816615649929156 2.1816615649929085" class="xl330" />
@@ -179,8 +177,8 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
             <geom type="mesh" class="visual" pos="-0 0 -0.0065" quat="0.707107 -0 -0 -0.707107" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
             <geom type="mesh" class="visual" pos="-0 0 -0.0065" quat="0.707107 -0 -0 -0.707107" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
           </body>
-          <geom class="visual" type="mesh" mesh="part_upper_arm_integrated_left" pos="0.0327 0.0245 -0.0145" quat="0.707107 0.707107 0 0" rgba="0.15 0.75 0.3 1" />
         </body>
+        <geom class="visual" type="mesh" mesh="part_shoulder_arm_simple_left" pos="-1.12639e-08 -0.0245 -0.0132" quat="0.5 -0.5 0.5 0.5" rgba="0.15 0.75 0.3 1" />
       </body>
       <body name="hip_2" pos="-0 0.036 0" quat="0 -0 0 -1">
         <joint axis="0 0 1" name="l_hipjoint_zy" type="hinge" range="-1.0471975511965976 4.1887902047863905" class="xl330" />
@@ -188,17 +186,16 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
         <geom type="mesh" class="visual" pos="-0.00575 -0 -0.0484" quat="0.707107 -0 -0 -0.707107" mesh="hip__configuration_right" material="hip__configuration_right_material" />
         <body name="hip_block__configuration_left" pos="0.02 0 -0.0214" quat="0.5 -0.5 -0.5 0.5">
           <joint axis="0 0 1" name="l_hipjoint_xr" type="hinge" range="-0.6108652381980162 0.6108652381980144" class="xl330" />
-          <inertial pos="6.0554e-05 0.00982795 0.0271548" mass="0.04763" fullinertia="1.64096e-05 1.3312e-05 7.85888e-06 8.495e-09 -7.6959e-08 6.62404e-07" />
+          <inertial pos="6.0554e-05 0.00982795 0.0271548" mass="0.052330" fullinertia="1.64096e-05 1.3312e-05 7.85888e-06 8.495e-09 -7.6959e-08 6.62404e-07" />
           <geom type="mesh" class="visual" pos="0.008 -0 0.0385" quat="0 0.707107 0 0.707107" mesh="xl330" material="xl330_material" />
           <geom type="mesh" class="visual" pos="-0 0 0.033" quat="0 -0 -1 -0" mesh="dc15_a01_horn_idle2_dummy" material="dc15_a01_horn_idle2_dummy_material" />
           <geom class="collision" pos="-0 0.02075 0.02575" quat="0 -0 0.707107 -0.707107" type="box" size="0.0135 0.02525 0.00625" />
-          <geom type="mesh" class="visual" pos="0.027 0.027 0.02575" quat="0 -0 0.707107 -0.707107" mesh="hip_dbl_block__configuration_left" material="hip_dbl_block__configuration_left_material" />
           <geom type="mesh" class="visual" pos="0 0 0.0065" quat="0 1 0 0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
           <geom type="mesh" class="visual" pos="-0 0 0.033" quat="0 -0 -1 -0" mesh="bts2_m2_6x8" material="bts2_m2_6x8_material" />
           <geom type="mesh" class="visual" pos="-0 0 0.033" quat="0 -0 -1 -0" mesh="dc15_a01_idle_cap_dummy" material="dc15_a01_idle_cap_dummy_material" />
           <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 -0.707107 -0.707107" mesh="spacer__configuration_right" material="spacer__configuration_right_material" />
           <body name="femur__configuration_left" pos="-0.0145 -0 0.0385" quat="0.707107 -0 -0.707107 0">
-            <joint axis="0 0 1" name="l_hipjoint_yp" type="hinge" range="-1.48353 1.00454" class="xl330" />
+            <joint axis="0 0 1" name="l_hipjoint_yp" type="hinge" range="-1.48353 1.01295" class="xl330" />
             <inertial pos="0.0109472 0.0366847 -0.0142975" mass="0.014726" fullinertia="1.12665e-05 4.38335e-06 8.95932e-06 -1.12592e-06 1.333e-09 -4.521e-09" />
             <geom class="collision" pos="0.015 0.0335001 -0.03175" quat="0.5 0.5 0.5 -0.5" type="box" size="0.00125 0.009 0.022228" />
             <geom class="collision" pos="0.008818 0.00881806 -0.03175" quat="0.270598 0.653281 0.270598 -0.653281" type="box" size="0.00125 0.009 0.0124705" />
@@ -245,20 +242,20 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
               <body name="left_shank_rear" pos="-0.025 -0.025 0">
                 <joint name="l_shanklink_yp" type="hinge" axis="0 0 1" class="passive" />
                 <inertial pos="-0.004 0.0306065 -0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-                <geom class="visual" type="mesh" mesh="part_shank_bar" pos="-0.004 0.0306065 0.01" quat="0.659701 0 0 0.751528" rgba="0.15 0.75 0.3 1" />
-                <geom class="collision" type="mesh" mesh="part_shank_bar" pos="-0.004 0.0306065 0.01" quat="0.659701 0 0 0.751528" />
+                <geom class="visual" type="mesh" mesh="part_shank_bar" pos="-0.004 0.0306065 0.0115" quat="0.659701 0 0 0.751528" rgba="0.15 0.75 0.3 1" />
+                <geom class="collision" type="mesh" mesh="part_shank_bar" pos="-0.004 0.0306065 0.0115" quat="0.659701 0 0 0.751528" />
               </body>
             </body>
           </body>
-          <body name="left_thigh_rear" pos="-0.0145 -0.01 0.0605" quat="0.707107 -0 -0.707107 0">
+          <geom class="visual" type="mesh" mesh="part_hip_block_integrated_left" pos="0.027 0.027 0.02575" quat="0 -0 0.707107 -0.707107" rgba="0.15 0.75 0.3 1" />
+          <body name="left_thigh_rear" pos="-0.0145 -0.012 0.0655" quat="0.707107 -0 -0.707107 0">
             <joint name="l_thighlink_yp" type="hinge" axis="0 0 1" class="passive" />
             <inertial pos="0.0025 0.031 0" mass="0.002" diaginertia="6.4e-07 6.4e-07 2e-08" />
-            <geom class="visual" type="mesh" mesh="part_thigh_bar" pos="0.0025 0.031 0.0065" quat="0.734978 0 0 0.678091" rgba="0.15 0.75 0.3 1" />
-            <geom class="collision" type="mesh" mesh="part_thigh_bar" pos="0.0025 0.031 0.0065" quat="0.734978 0 0 0.678091" />
+            <geom class="visual" type="mesh" mesh="part_thigh_bar" pos="0.0025 0.031 0.008" quat="0.734978 0 0 0.678091" rgba="0.15 0.75 0.3 1" />
+            <geom class="collision" type="mesh" mesh="part_thigh_bar" pos="0.0025 0.031 0.008" quat="0.734978 0 0 0.678091" />
           </body>
         </body>
       </body>
-      <geom class="visual" type="mesh" mesh="part_neck_post" pos="-0.00204165 -0 0.1195" quat="0.707107 0 0 0.707107" rgba="0.15 0.75 0.3 1" />
     </body>
   </worldbody>
   <asset>
@@ -317,16 +314,18 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
     <mesh name="part_knee_yoke_right" file="../../parts/knee_yoke_right.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_knee_yoke_left" file="../../parts/knee_yoke_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_knee_axle_cap" file="../../parts/knee_axle_cap.stl" scale="0.001 0.001 0.001" />
-    <mesh name="part_neck_post" file="../../parts/neck_post.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_shoulder_roll_right" file="../../parts/xl330_dummy_shoulder_roll_right.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_shoulder_roll_left" file="../../parts/xl330_dummy_shoulder_roll_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_neck" file="../../parts/xl330_dummy_neck.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_hip_yaw" file="../../parts/xl330_dummy_hip_yaw.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_xl330_dummy_ankle_hinge" file="../../parts/xl330_dummy_ankle_hinge.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_shoulder_arm_simple_right" file="../../parts/shoulder_arm_simple_right.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_shoulder_arm_simple_left" file="../../parts/shoulder_arm_simple_left.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_ankle_block_integrated_right" file="../../parts_derived/ankle_block_integrated_right.stl" scale="0.001 0.001 0.001" />
     <mesh name="part_ankle_block_integrated_left" file="../../parts_derived/ankle_block_integrated_left.stl" scale="0.001 0.001 0.001" />
-    <mesh name="part_upper_arm_integrated_right" file="../../parts_derived/upper_arm_integrated_right.stl" scale="0.001 0.001 0.001" />
-    <mesh name="part_upper_arm_integrated_left" file="../../parts_derived/upper_arm_integrated_left.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_hip_block_integrated_right" file="../../parts_derived/hip_block_integrated_right.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_hip_block_integrated_left" file="../../parts_derived/hip_block_integrated_left.stl" scale="0.001 0.001 0.001" />
+    <mesh name="part_head_integrated" file="../../parts_derived/head_integrated.stl" scale="0.001 0.001 0.001" />
   </asset>
   <actuator>
     <position name="r_shoulder_yp" joint="r_shoulder_yp" kp="50" dampratio="1" forcerange="-0.52 0.52" />
@@ -345,9 +344,9 @@ Hip range -85..58 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for at
     <position name="l_ankle_xr" joint="l_ankle_xr" kp="50" dampratio="1" forcerange="-0.52 0.52" />
   </actuator>
   <equality>
-    <connect name="right_thigh_loop" body1="right_knee_block" body2="right_thigh_rear" anchor="-0.022 0.01 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="right_thigh_loop" body1="right_knee_block" body2="right_thigh_rear" anchor="-0.027 0.012 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
     <connect name="right_shank_loop" body1="ankle_block__configuration_left" body2="right_shank_rear" anchor="-0.025 -0.025 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
-    <connect name="left_thigh_loop" body1="left_knee_block" body2="left_thigh_rear" anchor="0.022 -0.01 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
+    <connect name="left_thigh_loop" body1="left_knee_block" body2="left_thigh_rear" anchor="0.027 -0.012 0" solref="0.005 1" solimp="0.99 0.999 0.001" />
     <connect name="left_shank_loop" body1="ankle_block__configuration_right" body2="left_shank_rear" anchor="0.025 0.025 -0" solref="0.005 1" solimp="0.99 0.999 0.001" />
   </equality>
 </mujoco>

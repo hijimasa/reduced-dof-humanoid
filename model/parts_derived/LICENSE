@@ -10,9 +10,11 @@ All files here are made by tools/make_parts.py from Microban's cad/step files
 - ankle_block_integrated_{right,left}.stl/.step: ankle_dbl_block.step with a
   printed hinge body (stub axles on the ankle-pitch axis, shank-bar pivot boss)
   fused into it in place of the ankle-pitch servo.
-- upper_arm_integrated_{right,left}.stl/.step: humerus.step with a hollow
-  column, a fixed horn disc indexed 30 deg and an idle-side stub fused into it
-  in place of the shoulder-roll servo.
+- hip_block_integrated_{right,left}.stl/.step: hip_dbl_block_{right,left}.step
+  with the thigh bar's upper pivot support grown out of it.
+- head_integrated.stl/.step: head.step with the old servo-horn seat on its
+  underside filled and a hollow neck stalk grown out of it in place of the
+  neck servo.
 
 Like the original, these files are licensed under the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).

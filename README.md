@@ -13,9 +13,9 @@ back later.
 
 | Model | Layout | Mass in the model |
 | --- | --- | --- |
-| 16-servo (intermediate step) | passive parallel-link ankle pitch, fixed head | 0.791 kg |
-| **12-servo (standard build)** | additionally no shoulder roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers where the hip-yaw servos were | 0.727 kg |
-| **14-servo (upgrade)** | the 12-servo build with the two hip-yaw spacers swapped for real servos, so it turns on the spot instead of scuffing its soles | 0.757 kg |
+| 16-servo (intermediate step) | passive parallel-link ankle pitch, fixed head | 0.800 kg |
+| **12-servo (standard build)** | additionally no shoulder roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers where the hip-yaw servos were | 0.718 kg |
+| **14-servo (upgrade)** | the 12-servo build with the two hip-yaw spacers swapped for real servos, so it turns on the spot instead of scuffing its soles | 0.748 kg |
 
 Microban itself has 19 servos and weighs 0.819 kg in its model.
 
@@ -42,9 +42,9 @@ practical. The study behind this repository is in
 | Shoulder roll | remove (done here) | Rules require one actuated axis per arm; shoulder pitch + elbow is enough for punching and getting up. |
 | Hip roll, hip pitch, knee, ankle roll | keep | Needed for lateral stepping, 10 mm foot lift and flat-footed weight transfer with position-controlled servos. |
 
-Standard build: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.727 kg in the
+Standard build: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.718 kg in the
 model including the printed spacers. Upgrade: + 2 hip-yaw servos → 14 servos,
-0.757 kg. Microban: 19 servos, 0.819 kg.
+0.748 kg. Microban: 19 servos, 0.819 kg.
 
 ## What is in the repository
 
@@ -53,7 +53,7 @@ model/microban_pl12/     12-servo model (standard): upstream joint names, LME jo
 model/microban_pl14/     14-servo model (upgrade)
 model/microban_pl/       16-servo model, plus Microban's meshes (unmodified, CC BY-NC-SA 4.0) in assets/
 model/parts/             printable DRAFTS of the added parts (STL, from tools/make_parts.py)
-model/parts_derived/     parts derived from Microban's CAD (CC BY-NC-SA 4.0): 80 mm foot, integrated ankle block, upper arm
+model/parts_derived/     parts derived from Microban's CAD (CC BY-NC-SA 4.0): 80 mm foot, integrated ankle block, head with neck
 tools/
   make_microban_pl.py    generates the models above from Microban's robot.xml
   make_parts.py          CadQuery script: link bars, knee yoke, axle cap, standoffs, servo-shaped spacers
@@ -88,9 +88,10 @@ Consequences:
 - The knee servo now acts between the knee block and the tibia, so the knee
   command is the shank angle **relative to the pelvis**, not to the thigh.
   Existing Microban motions must be re-authored.
-- Thigh linkage: one bar **in front of** the thigh, pivots 22 mm ahead of and
-  10 mm above the hip and knee axes (singular at 114.4° flexion / 65.6°
-  extension). Shank linkage: one bar behind the shank, pivots 25 mm behind and
+- Thigh linkage: one bar **in front of** the thigh, pivots 27 mm ahead of and
+  12 mm above the hip and knee axes (singular at 114.0° flexion / 66.0°
+  extension; 29.5 mm from the axis, outside everything the femur's clevis
+  plates sweep). Shank linkage: one bar behind the shank, pivots 25 mm behind and
   25 mm above the knee and ankle axes, which lifts the ankle pivot clear of the
   ankle-roll servo and the foot (singular at 135° / 45°). Joint ranges follow
   with an 8° margin, and hip flexion is capped at 85° where the thigh bar would
@@ -108,16 +109,16 @@ The generator edits the model to match the parts the physical conversion needs
 | Part | Change | Effect in the model |
 | --- | --- | --- |
 | Ankle block | The ankle-pitch XL330 and its idler horn come out. Microban's ankle block (the cap over the two servos) is reprinted as one part with a hinge body in the servo's place: Ø5.9 stub axles on the pitch axis into the tibia's existing plate holes, and the shank-bar pivot boss on the outboard side (`parts_derived/ankle_block_integrated_{right,left}`). | 47 g → 32 g per ankle. The knee folds to 132° before the ankle meets the hip bracket, instead of 117°. |
-| Neck | The XL330 in the top of the trunk comes out (Microban mounts it upside down: horn in the trunk, head on the servo body). A hollow printed post (`neck_post`) with the horn's PCD 12 pattern at both ends sits in the same pocket and carries the head at the same height. | −17 g. |
-| Shoulder roll | The XL330 at the top of each humerus comes out. Microban's humerus plate is reprinted as one part with a hollow column in the servo's place (`parts_derived/upper_arm_integrated_{right,left}`); its fixed horn disc is indexed 30° about the roll axis, so the arm hangs abducted 30°. A hanging arm sits right over the knee's link stack; abducted, the forearm can be bent forward (60° in the gaits) like a walking human without touching it. `--arm-abduct` sets the angle. | −30 g. |
+| Neck | The XL330 in the top of the trunk comes out (Microban mounts it upside down: horn in the trunk, head on the servo body). The head is reprinted with the neck grown out of it (`parts_derived/head_integrated`): the old horn seat on its underside is filled by a pad, a plain Ø18 stalk on the former servo axis runs down into a base that fits the servo pocket, and four M2 screws from inside the trunk hold it on the horn's PCD 12. The head stays where it was. | −17 g. |
+| Shoulder roll | The XL330 at the top of each humerus comes out. Shoulder bracket and upper arm become one stout printed part (`parts/shoulder_arm_simple_{right,left}`) that keeps only Microban's interfaces: the shoulder-pitch horn's PCD 12 plate, and the elbow servo held exactly as Microban's humerus plate holds it (an XL330 has no holes in its end face: four screws along the horn axis into the top corner holes of its horn-side and idler-side faces, through two short tabs at x −45.4 / −20.0), with the arm turned 30° about the former roll axis. A 24 × 18 body (3 mm walls, filleted edges) joins plate and 16 × 16 post; the four horn screws are reached through Ø5 stepped access holes along it. A hanging arm sits right over the knee's link stack; abducted, the forearm can be bent forward (60° in the gaits) like a walking human without touching it. `--arm-abduct` sets the angle. | −30 g. |
 | Hip yaw (12-servo) | The two XL330s in the bottom of the trunk come out; spacers go in. The 14-servo upgrade puts the servos back. | −30 g. No turning on the spot. |
 | Link bars | Per leg one thigh bar in front (62.2 mm between pins) and one shank bar behind (61.7 mm), 3 × 8 mm, M2 pins, both outboard of the leg in separate planes. | Close the parallelogram loops. |
 | Knee yoke | A triangular plate outboard of the knee carrying both bar pivots, riding on a printed axle cap bolted to the knee servo horn; a small ear on the hip bracket carries the thigh bar's upper pivot. | 6 g. |
 
-Total mass: 0.833 kg (upstream model) → 0.791 kg (16-servo) → 0.757 kg (14-servo) → 0.727 kg (12-servo). Printed parts are counted at 1.0 g/cm³ (PLA, three walls, about 40 % infill): integrated ankle block 15.9 cm³, upper arm 10.7 cm³, neck post 5.7 cm³, XL330-shaped hip-yaw spacer 7.7 cm³ (2 mm shell). `--dummies` builds the earlier variant with servo-shaped spacer blocks at the ankle, shoulder and neck instead; the hip-yaw position always keeps the spacer so the 14-servo upgrade stays a drop-in.
+Total mass: 0.833 kg (upstream model) → 0.800 kg (16-servo) → 0.748 kg (14-servo) → 0.718 kg (12-servo). Printed parts are counted at 1.0 g/cm³ (PLA, three walls, about 40 % infill): integrated ankle block 15.9 cm³, shoulder + upper arm 9.3 cm³, the neck grown out of the head 6.4 cm³, XL330-shaped hip-yaw spacer 7.7 cm³ (2 mm shell). `--dummies` builds the earlier variant with servo-shaped spacer blocks at the ankle, shoulder and neck instead; the hip-yaw position always keeps the spacer so the 14-servo upgrade stays a drop-in.
 
 <p align="center">
-  <img src="docs/images/integrated_parts.png" alt="Integrated ankle block, upper arm and neck post on a transparent robot" width="900">
+  <img src="docs/images/integrated_parts.png" alt="Hip ear, integrated ankle block, simple shoulder + arm and head with neck on a transparent robot" width="900">
 </p>
 
 ### Cost
@@ -148,12 +149,17 @@ preview included); their lateral positions are measured from the leg's centre
 plane, not from the body origins, which sit on the inboard clevis plate. The placement was
 checked against the model with collision on (below, originals transparent):
 link bars 3 × 8 mm with M2 pins stacked outboard of the leg in three planes
-(thigh bar 21–24 mm from the leg's centre plane, shank bar 24.5–27.5 mm, knee
-yoke plate 28–31 mm), the yoke on an axle cap bolted to the knee servo horn, an
-ear on the hip bracket for the thigh bar, an 11 mm standoff on the ankle
-bracket for the shank bar, and dummy XL330 blocks for the shoulder-roll, neck
-and (12-servo) hip-yaw positions. The ankle's passive hinge reuses the tibia's
-existing Ø6 plate holes; the hip and ankle brackets each get M2 holes.
+(thigh bar 22.5–25.5 mm from the leg's centre plane, shank bar 26–29 mm, knee
+yoke plate 29.5–32.5 mm), the yoke on an axle cap bolted to the knee servo
+horn, the thigh bar's upper pivot grown out of the hip bracket
+(`parts_derived/hip_block_integrated`: it leaves the bracket behind and below
+the hip axis, where the femur never goes, and rises outside the femur's plates;
+3 mm plates with an 18 mm tall rail, sized for the bar's pull of up to 18 N),
+the shank bar's pivot grown out of the ankle block, and a dummy XL330 block only
+at the (12-servo) hip-yaw position. The ankle's passive hinge reuses the tibia's
+existing Ø6 plate holes. Both bracket extensions were checked in CAD against the
+femur over the hip-pitch range and against the pelvis-side bracket over the
+hip-roll range.
 
 An earlier draft with the thigh bars behind the thigh did interfere: the inner
 bars of the two legs came within 8 mm of each other, the thigh and shank bars
@@ -191,11 +197,14 @@ servo zero-offset and initial-tilt disturbances, 8 trials each:
 | Walk forward / back, sidestep | 8/8 (about 36 mm/s) | 8/8 |
 | Turn | 8/8 (scuffing, about 33° per cycle) | 8/8 (hip yaw, 72° / 141°) |
 | Jab left / right | 8/8 | 8/8 |
-| Get up from prone | 7/8 (4.6 s) | 8/8 (3.8 s) |
-| Get up from supine (roll over + the same rise) | 5/8 | 8/8 |
+| Get up from prone | 0/8 (open) | 0/8 (open) |
+| Get up from supine (roll over + the same rise) | 0/8 (open) | 0/8 (open) |
 
-The gaits walk with the elbows bent 60° forward and the arms abducted 30° by
-the printed shoulder blocks. The rise was searched again after the printed
+The get-ups are open again: the thigh bars now sit 5 mm further forward, so
+the prone resting posture changed and the six-pose rise found for the previous
+geometry (7/8 and 8/8 then) no longer works; a new search on the final geometry
+is in progress. The gaits walk with the elbows bent 60° forward and the arms
+abducted 30° by the printed shoulder parts. The rise was searched again after the printed
 parts were given collision geometry and the arms were abducted: lying prone,
 the robot rests on the front thigh bars and the knee yokes, and the push-up
 geometry changed with the arms, which stopped the earlier rises. The present

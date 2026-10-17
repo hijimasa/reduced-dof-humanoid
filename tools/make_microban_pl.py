@@ -75,8 +75,9 @@ DUMMY_MASS = 0.008   # kg, a printed XL330-sized block (20 x 34 x 26 mm, 2 mm sh
 # effective 1.0 g/cm3 (PLA, 3 walls, ~40 % infill). The originals they absorb are taken out at the same density.
 PLA_G_PER_CM3 = 1.0
 ANKLE_CAP_CM3, ANKLE_INTEGRATED_CM3 = 9.2, 15.9        # ankle_dbl_block -> ankle_block_integrated_{side}
-HUMERUS_CM3, UPPER_ARM_CM3 = 4.3, 10.7                 # humerus plate -> upper_arm_integrated_{side}
-NECK_POST_CM3 = 5.7                                    # xl330_dummy_neck -> neck_post
+HUMERUS_CM3, SHOULDER_CM3, SHOULDER_ARM_CM3 = 4.3, 8.8, 9.5    # humerus plate + shoulder bracket -> shoulder_arm_simple_{side}
+HIP_EAR_CM3 = 4.7                                               # the pivot support grown out of hip_block_integrated_{side}
+NECK_POST_CM3 = 6.4                                             # the neck grown out of head_integrated (head itself keeps the upstream mass)
 
 
 PART_HOOK = {"fn": None}   # set in main() when --parts is given: (body, name, pos, quat) -> adds a mesh geom
@@ -144,10 +145,10 @@ def main():
     ap.add_argument("--keep-motor", action="store_true", help="keep <motor> actuators instead of <position>")
     ap.add_argument("--neck-motor", action="store_true",
                     help="keep the neck (head yaw) servo; by default the head is fixed to the trunk")
-    ap.add_argument("--back", type=float, default=-0.022,
+    ap.add_argument("--back", type=float, default=-0.027,
                     help="thigh linkage: pivot offset behind the joint axes [m]; NEGATIVE = in front. Default 22 mm in "
                          "front: behind the thigh the bar would run through the hanging forearm (x >= 18.5, z 112..193)")
-    ap.add_argument("--tilt", type=float, default=-0.010,
+    ap.add_argument("--tilt", type=float, default=-0.012,
                     help="thigh linkage: pivot DOWN by this much [m]; NEGATIVE = up. A front linkage needs its pivots "
                          "UP (10 mm): extension singularity at 65.6 deg (the get-ups use 55 deg of extension), flexion at "
                          "114.4 deg; hip flexion is capped at HIP_FLEX_LIMIT before that by the thigh bar / axle stub clearance")
@@ -155,12 +156,12 @@ def main():
                     help="shank linkage: rear pivot offset [m] (25 mm clears the tibia's rear edge and the ankle-roll servo)")
     ap.add_argument("--shank-tilt", type=float, default=0.025,
                     help="shank linkage: rear pivot UP by this much [m] (lifts the ankle pivot above the foot and the roll servo)")
-    ap.add_argument("--link-x", type=float, default=0.0225,
-                    help="lateral centre of the THIGH bar [m] from the leg centre plane (22.5 mm = 21..24, 0.5 mm "
-                         "outside the knee axle cap flange, which ends at 20.5). The shank bar sits one plane further out "
+    ap.add_argument("--link-x", type=float, default=0.024,
+                    help="lateral centre of the THIGH bar [m] from the leg centre plane (24 mm = 22.5..25.5, 0.5 mm "
+                         "outside the hip bracket's pivot plate, which ends at 22). The shank bar sits one plane further out "
                          "(--shank-link-x) so the two can cross at deep hip flexion.")
-    ap.add_argument("--shank-link-x", type=float, default=0.026,
-                    help="lateral centre of the SHANK bar [m] (26 mm = 24.5..27.5); the knee yoke plate is outside it")
+    ap.add_argument("--shank-link-x", type=float, default=0.0275,
+                    help="lateral centre of the SHANK bar [m] (27.5 mm = 26..29); the knee yoke plate is outside it")
     ap.add_argument("--arm-abduct", type=float, default=30.0,
                     help="12/14-servo models: fixed outward angle [deg] of the arm, built into the printed block that "
                          "replaces the shoulder-roll servo. With the arm straight down the hanging forearm sits right "
@@ -226,10 +227,11 @@ def main():
     root.set("model", model_name)
 
     asset = root.find("asset")
-    PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap", "neck_post",
+    PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap",
                    "xl330_dummy_shoulder_roll_right", "xl330_dummy_shoulder_roll_left", "xl330_dummy_neck", "xl330_dummy_hip_yaw", "xl330_dummy_ankle_hinge")
-    DERIVED_MESHES = ("ankle_block_integrated_right", "ankle_block_integrated_left", "upper_arm_integrated_right", "upper_arm_integrated_left")
-    NO_COLLISION = ("neck_post",) + DERIVED_MESHES     # big parts fused with originals: a convex hull would be meaningless
+    PART_MESHES += ("shoulder_arm_simple_right", "shoulder_arm_simple_left")
+    DERIVED_MESHES = ("ankle_block_integrated_right", "ankle_block_integrated_left", "hip_block_integrated_right", "hip_block_integrated_left", "head_integrated")
+    NO_COLLISION = DERIVED_MESHES + ("shoulder_arm_simple_right", "shoulder_arm_simple_left")   # a convex hull of these would be meaningless
     if a.parts:
         for nm in PART_MESHES:
             ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{a.parts}/{nm}.stl", "scale": "0.001 0.001 0.001"})
@@ -328,6 +330,13 @@ def main():
             # the parts are modelled in the Onshape leg frame with the leg centre at x = 0; that
             # frame is the femur mesh geom's frame shifted to the actual centre x_c
             part(kb, f"knee_yoke_{side}", fgp + R_fg @ np.array([x_c, 0, 0]) - v1, fgq)
+            # the thigh bar's upper pivot is grown out of the hip bracket: swap its mesh for the
+            # integrated one (same STEP frame), unless the spacer-block variant is wanted
+            if not a.dummies:
+                for g in list(hipblock.findall("geom")):
+                    if g.get("mesh", "").startswith("hip_dbl_block"):
+                        hipblock.remove(g); part(hipblock, f"hip_block_integrated_{side}", vec(g.get("pos")), vec(g.get("quat", "1 0 0 0")))
+                        hi = hipblock.find("inertial"); hi.set("mass", f"{float(hi.get('mass')) + HIP_EAR_CM3 * PLA_G_PER_CM3 / 1000:.6f}")
             # axle cap: flange on the outer plate face (centre +- 18.5 mm), stub pointing outboard
             cap_pos = fgp + R_fg @ np.array([x_c + out_sign * 0.0185, knee_mesh[1], knee_mesh[2]])
             r2 = np.sqrt(0.5); q_rot = np.array([r2, 0, out_sign * r2, 0])        # cap +z -> mesh +-x
@@ -393,13 +402,20 @@ def main():
                 if a.dummies or not a.parts:
                     dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"), "xl330_dummy_neck")
                 else:
-                    part(trunk, "neck_post", vec(g.get("pos")), vec(g.get("quat", "1 0 0 0")))
-                    ine = trunk.find("inertial"); ine.set("mass", f"{float(ine.get('mass')) + NECK_POST_CM3 * PLA_G_PER_CM3 / 1000:.6f}")
+                    # head and neck post become one printed part, drawn in the head body in the head's own frame
+                    for hb in root.iter("body"):
+                        if hb.get("name", "").startswith("head"):
+                            for hg in list(hb.findall("geom")):
+                                if hg.get("mesh", "").startswith("head"):
+                                    hb.remove(hg); part(hb, "head_integrated", vec(hg.get("pos")), vec(hg.get("quat", "1 0 0 0")))
+                            hi = hb.find("inertial"); hi.set("mass", f"{float(hi.get('mass')) + NECK_POST_CM3 * PLA_G_PER_CM3 / 1000:.6f}")
         ine = trunk.find("inertial")
         m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
         ine.set("mass", f"{m1:.6f}")
         ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
 
+    parent_of = {c.get("name"): p for p in root.iter("body") for c in p.findall("body")}
+    humerus_pose0 = {n: (vec(b.get("pos")), vec(b.get("quat", "1 0 0 0"))) for n, b in bodies.items() if n.startswith("humerus")}
     drop = []
     if a.dof <= 14:
         drop.append("shoulder_roll")   # joint on the humerus, servo at the top of the humerus
@@ -453,11 +469,22 @@ def main():
             ine = hum.find("inertial")
             m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
             if not (a.dummies or not a.parts):
-                # the humerus plate and the servo-shaped column become one printed part (parts_derived/upper_arm_integrated_*)
+                # shoulder bracket, humerus plate and a column in the servo's place become one printed part
+                # (parts/shoulder_arm_simple_*), drawn in the shoulder body in the humerus STEP frame
+                # as it was before the abduction was baked into the humerus quat (the part has the turn built in)
+                side = hb.rsplit("_", 1)[1]; shoulder = parent_of[hb]
+                hp0, hq0 = humerus_pose0[hb]
                 for g in list(hum.findall("geom")):
                     if g.get("mesh") == "humerus":
-                        hum.remove(g); part(hum, "upper_arm_integrated_" + hb.rsplit("_", 1)[1], vec(g.get("pos")), vec(g.get("quat", "1 0 0 0")))
-                m1 += (UPPER_ARM_CM3 - HUMERUS_CM3) * PLA_G_PER_CM3 / 1000
+                        hum.remove(g); gp, gq = vec(g.get("pos")), vec(g.get("quat", "1 0 0 0"))
+                        w1, x1, y1, z1 = hq0; w2, x2, y2, z2 = gq
+                        qq = (w1*w2 - x1*x2 - y1*y2 - z1*z2, w1*x2 + x1*w2 + y1*z2 - z1*y2,
+                              w1*y2 - x1*z2 + y1*w2 + z1*x2, w1*z2 + x1*y2 - y1*x2 + z1*w2)
+                        part(shoulder, f"shoulder_arm_simple_{side}", hp0 + q2m(hq0) @ gp, qq)
+                for g in list(shoulder.findall("geom")):
+                    if g.get("mesh") == "shoulder":
+                        shoulder.remove(g)
+                si = shoulder.find("inertial"); si.set("mass", f"{float(si.get('mass')) + (SHOULDER_ARM_CM3 - SHOULDER_CM3 - HUMERUS_CM3) * PLA_G_PER_CM3 / 1000:.6f}")
             ine.set("mass", f"{m1:.6f}")
             ine.set("fullinertia", " ".join(f"{float(v) * m1 / m0:.5e}" for v in ine.get("fullinertia").split()))
 

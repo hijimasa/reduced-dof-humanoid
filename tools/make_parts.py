@@ -8,7 +8,7 @@ tibia_right.step, ankle_dbl_block.step share it): x lateral (+ = outboard on the
 leg), y forward, z up, millimetres. Pivot layout (docs/parts_ja.md):
 
     hip pitch axis   (y  3.0, z 132.7)    knee axis (8.0, 70.7)    ankle axis (0.0, 9.5)
-    thigh linkage    hip pivot ( 25.0, 142.7)  ->  knee pivot ( 30.0,  80.7)   bar 62.2 mm (in FRONT)
+    thigh linkage    hip pivot ( 30.0, 144.7)  ->  knee pivot ( 35.0,  82.7)   bar 62.2 mm (in FRONT)
     shank linkage    knee pivot (-17.0,  95.7)  ->  ankle pivot (-25.0, 34.5)  bar 61.7 mm (behind)
 
 These are DRAFTS for fit-checking against the originals in Onshape, not release parts:
@@ -25,7 +25,8 @@ os.makedirs(OUT, exist_ok=True)
 
 # ---- layout (mm, leg frame) --------------------------------------------------------
 HIP, KNEE, ANKLE = (3.0, 132.7), (8.0, 70.7), (0.0, 9.5)
-THIGH_BACK, THIGH_DOWN = -22.0, -10.0     # negative: the thigh linkage runs in FRONT of the thigh, pivots 10 mm up
+THIGH_BACK, THIGH_DOWN = -27.0, -12.0     # negative: the thigh linkage runs in FRONT of the thigh, pivots 12 mm up (r 29.5 from
+                                          # the hip axis: outside the femur plates' swept radius of 25.8)
 SHANK_BACK, SHANK_UP = 25.0, 25.0
 P1H = (HIP[0] - THIGH_BACK, HIP[1] - THIGH_DOWN)      # thigh bar, hip end
 P1K = (KNEE[0] - THIGH_BACK, KNEE[1] - THIGH_DOWN)    # thigh bar, knee end
@@ -33,11 +34,11 @@ P2K = (KNEE[0] - SHANK_BACK, KNEE[1] + SHANK_UP)      # shank bar, knee end
 P2A = (ANKLE[0] - SHANK_BACK, ANKLE[1] + SHANK_UP)    # shank bar, ankle end
 BAR_T, BAR_W, PIN_D = 3.0, 8.0, 2.2                    # bar thickness, width, M2 clearance
 PLATE_X = 18.5          # outer face of the femur / tibia clevis plates
-THIGH_BAR_X = (21.0, 24.0)   # outboard of the knee axle cap flange (x 18.5..20.5), 0.5 mm clear: at hip
+THIGH_BAR_X = (22.5, 25.5)   # outboard of the hip bracket's pivot plate (x 19.5..22), 0.5 mm clear: at hip
                              # flexion beyond 100 deg the (front) thigh bar sweeps across the knee axis
-SHANK_BAR_X = (24.5, 27.5)   # one plane further out: at deep hip flexion the (front) thigh bar crosses
+SHANK_BAR_X = (26.0, 29.0)   # one plane further out: at deep hip flexion the (front) thigh bar crosses
                              # back over the knee and would otherwise hit the shank bar's upper end
-YOKE_ARM_X = (28.0, 31.0)    # knee yoke plate, outside both bars
+YOKE_ARM_X = (29.5, 32.5)    # knee yoke plate, outside both bars
 
 def dist(p, q): return math.hypot(q[0] - p[0], q[1] - p[1])
 
@@ -74,27 +75,63 @@ def knee_yoke(side="right"):
     cq.exporters.export(plate, f"{OUT}/knee_yoke_{side}.stl"); return plate
 
 
-def hip_front_ear():
-    """Carries the thigh bar's upper pivot, P1H = 22 mm in front of and 10 mm above the hip
-    pitch axis, where nothing of Microban's exists: a 3 mm plate against the outer face of the
-    hip bracket's side wall (x 13.5), reaching forward past the bracket (y <= 17) to the pivot,
-    with a Ø6 boss out to the bar plane. The two screw positions into the bracket wall are
-    placeholders to be set against the real part."""
-    pl = (cq.Workplane("YZ").workplane(offset=13.5)
-          .polyline([(2, 124), (2, 140), (P1H[0] + 6, P1H[1] + 5), (P1H[0] + 6, P1H[1] - 6), (14, 124)]).close().extrude(3.0))
-    boss = cq.Workplane("YZ").workplane(offset=16.5).center(*P1H).circle(3.0).extrude(THIGH_BAR_X[0] - 0.5 - 16.5)
-    ear = pl.union(boss).cut(cq.Workplane("YZ").center(*P1H).circle(PIN_D / 2).extrude(40, both=True))
-    for y, z in ((6, 128), (6, 137)):
-        ear = ear.cut(cq.Workplane("YZ").center(y, z).circle(1.1).extrude(40, both=True))
-    cq.exporters.export(ear, f"{OUT}/hip_front_ear.stl"); return ear
+def hip_block_integrated(step_dir, out_dir, side):
+    """Microban's hip bracket (hip_dbl_block_{side}.step: the cap under the hip roll and pitch servos,
+    with a front tab for the roll-axis idler) with the thigh bar's upper pivot grown out of it.
+    Frame = the leg frame (x lateral, +x outboard on the right; y forward; z up), mapped into the
+    bracket's STEP frame with p_step = diag(-1, -1, 1) p_leg + t (t from robot.xml).
 
+    What the support has to clear (leg frame, right leg):
+    - the femur's clevis plates at x 14.5..18.5, a wide fan around the hip axis (y 3, z 132.7)
+      that sweeps everything in FRONT of the axis as the hip flexes (its front edge reaches r 40
+      and more), and the region below/behind the axis as it extends; the quadrant behind and
+      above the axis is never swept;
+    - the pelvis-side hip bracket (hip.step): a spine within x +-9 (mostly +-6.5) over the roll
+      servo, so the sides beyond x 11 are free;
+    - the hip block rolls +-35 deg about the roll axis (y axis through x 0, z 132.7).
+    So the support leaves the bracket's rear skirt BELOW the axis (a low bridge at y -30..-14,
+    z 116..123, crossing under the plates where the femur never is), runs forward as an 18 mm tall
+    rail OUTSIDE the plates (x 19..22), rises beside the axis (y -1..9, where the pelvis bracket's
+    top plate, y -24..-1 / z 149..154, cannot meet it under roll) and carries the pivot
+    P1H = (30, 144.7) on an upper plate in front. Everything inboard of the bar and in front of
+    the axis is swept by the femur plates, so there is no shorter way from the bracket to the
+    pivot; the detour is sized so the bar's pull (along the bar, nearly vertical) loads each
+    member in-plane. The thigh bar sits at x 22.5..25.5, just outside this plate. The __main__
+    report checks the part in CAD against the femur over the hip range and against the pelvis-
+    side bracket over the roll range."""
+    t = {"right": (0.0, -9.75, -105.71), "left": (27.0, -9.75, -105.71)}[side]
+    sx = 1.0 if side == "right" else -1.0
+    X = lambda x0, x1: (min(sx * x0, sx * x1), max(sx * x0, sx * x1))
+    # 3 mm plates between the femur plates (18.5) and the thigh bar (22.5), 0.5 mm clear of each.
+    # The bar pulls along its own length (nearly vertical, up to ~18 N = knee stall torque / 29.5 mm
+    # lever), so every member is loaded in its strong, in-plane direction; the rail is 18 mm tall
+    # to take the 0.9 N*m bending moment about x (about 7 MPa in PLA; 7 mm tall it would be 43 MPa).
+    low = _box(*X(11.0, 22.0), -30.0, -14.0, 116.0, 123.0)      # under the plates, behind the axis: the femur is never there
+    rail = _box(*X(19.0, 22.0), -30.0, 9.0, 116.0, 134.0)       # outside the plates, at or below the axis height
+    riser = _box(*X(19.0, 22.0), -1.0, 9.0, 116.0, 154.0)       # beside the axis: clear of the pelvis bracket's top plate (y -24..-1, z 149..154) when rolled
+    upper = _box(*X(19.0, 22.0), 0.0, P1H[0] + 4.0, 137.0, 154.0)
+    eye = _cyl(4.5, (sx * 19.0, P1H[0], P1H[1]), (sx * 22.0, P1H[0], P1H[1]))
+    sup = low.union(rail).union(riser).union(upper).union(eye)
+    try:
+        sup = sup.edges("|X").fillet(2.0)        # round the in-plane corners of the plate outline
+    except Exception:
+        pass
+    sup = sup.cut(_cyl(PIN_D / 2, (sx * 15, P1H[0], P1H[1]), (sx * 30, P1H[0], P1H[1])))
+    sup = sup.rotate((0, 0, 0), (0, 0, 1), 180).translate(t)           # leg -> bracket STEP frame
+    blk = cq.importers.importStep(os.path.join(step_dir, f"hip_dbl_block_{side}.step"))
+    part = blk.union(sup)
+    assert len(part.solids().vals()) == 1, f"hip_block_integrated_{side}: support not fused ({len(part.solids().vals())} solids)"
+    os.makedirs(out_dir, exist_ok=True)
+    cq.exporters.export(part, f"{out_dir}/hip_block_integrated_{side}.stl")
+    cq.exporters.export(part, f"{out_dir}/hip_block_integrated_{side}.step")
+    return part
 
 def knee_axle_cap():
     """Bolts onto the knee servo horn through the femur plate with the four M2 horn screws
     (PCD 12, lengthened to M2x12) and carries an Ø8 stub axle for the yoke, from the
-    plate's outer face (x 18.5) out to x 32.5; M2 tapped hole in the tip for a retainer."""
+    plate's outer face (x 18.5) out to x 34; M2 tapped hole in the tip for a retainer."""
     cap = (cq.Workplane("XY").circle(9.0).extrude(2.0)                   # 2 mm flange on the plate
-           .faces(">Z").workplane().circle(4.0).extrude(12.0))           # Ø8 stub through the yoke plate at 28..31
+           .faces(">Z").workplane().circle(4.0).extrude(13.5))           # Ø8 stub through the yoke plate at 29.5..32.5
     cap = cap.faces("<Z").workplane().pushPoints([(6, 0), (-6, 0), (0, 6), (0, -6)]).hole(2.2)
     cap = cap.faces(">Z").workplane().hole(1.6, 5.0)                    # M2 tap drill in the stub
     cq.exporters.export(cap, f"{OUT}/knee_axle_cap.stl"); return cap
@@ -214,49 +251,69 @@ def ankle_block_integrated(step_dir, out_dir, side):
     cq.exporters.export(part, f"{out_dir}/ankle_block_integrated_{side}.step")
     return part
 
-def upper_arm_integrated(step_dir, out_dir, side, abduct=30.0):
-    """Microban's humerus plate merged with a column in the place of the shoulder-roll servo.
+def shoulder_arm_simple(side, abduct=30.0):
+    """Shoulder bracket + upper arm as ONE stout printed part (original design; only Microban's
+    interfaces are kept, from robot.xml and the STEP hole patterns). Frame = the humerus STEP
+    frame (y = the robot's forward axis, the former roll axis).
 
-    Frame = the humerus STEP frame. The roll servo occupied x -42.7..-22.7, y -11.5..14.5,
-    z 0..34 with its horn axis along +y (the robot's forward axis), horn face at y -11.5
-    (horn disc to -14.5, bolted to the shoulder bracket) and idle cap at y 14.5 (in the
-    bracket's other plate). The column carries a fixed horn disc whose PCD 12 pattern is
-    turned by +-abduct about +y, so the arm hangs abducted (right +, left -: the model turns
-    the right humerus -30 deg about this axis, the pattern that stays with the bracket
-    therefore appears at +30 in the arm's frame), and an idle-side stub into the bracket."""
-    hum = cq.importers.importStep(os.path.join(step_dir, "humerus.step"))
+    - shoulder-pitch horn: a 4 mm plate at x -52.2..-48.2 with the horn's PCD 12 M2 holes around
+      (y 0, z 24.5) and a Ø7.5 centre hole. The screws are driven from the outboard side, so Ø5
+      access holes continue through the body (stepped hole: head on the plate, driver through).
+    - elbow servo: Microban's humerus-plate pattern, 25.4 x 16 (x -45.4 / -20.0, y +-8), through a
+      5 mm plate whose underside has a 1.5 mm pocket (26.4 x 20.4) that locates the servo's end;
+      the servo's end face stays at z -2.5 as upstream.
+    The arm (elbow plate + 16 x 16 post) is turned by the abduction angle about the former roll
+    axis (x -32.7, z 24.5; right -abduct, left +abduct as in the model); a 24 x 18 x 21 body joins
+    the horn plate to the post. Walls 3 mm, outer edges chamfered, no overhangs when printed on
+    the elbow plate."""
     cx, zc = -32.7, 24.5
-    col = _box(cx - 6.0, cx + 6.0, -8.0, 11.5, 0.0, 30.0)
-    hollow = _box(cx - 4.4, cx + 4.4, -6.4, 9.9, 2.0, 28.0)
-    web = _box(cx - 6.0, cx + 6.0, -1.0, 1.0, 0.0, 30.0)
-    hub = _cyl(6.0, (cx, -9.5, zc), (cx, 13.0, zc))                 # Ø12 hub through the column on the axis
-    disc = _cyl(8.0, (cx, -9.5, zc), (cx, -14.5, zc))               # fixed horn: disc out to the bracket's inner face
-    spig = _cyl(3.6, (cx, -14.5, zc), (cx, -16.0, zc))              # Ø7.2 spigot into the bracket's horn hole
-    idle = _cyl(2.95, (cx, 13.0, zc), (cx, 18.5, zc))               # idle-side stub through the bracket plate
-    part = hum.union(col.cut(hollow)).union(web).union(hub).union(disc).union(spig).union(idle)
-    rot = abduct if side == "right" else -abduct
-    for (dx, dy, dz) in _pcd_points(6.0, 4, rot, "y"):
-        part = part.cut(_cyl(0.8, (cx + dx, -17.0, zc + dz), (cx + dx, -8.0, zc + dz)))        # M2 tap drills, PCD 12
-    part = part.cut(_cyl(0.8, (cx, 19.0, zc), (cx, 13.5, zc)))                                 # M2 tap in the idle stub
-    os.makedirs(out_dir, exist_ok=True)
-    cq.exporters.export(part, f"{out_dir}/upper_arm_integrated_{side}.stl")
-    cq.exporters.export(part, f"{out_dir}/upper_arm_integrated_{side}.step")
+    # elbow servo mount, as on Microban's humerus plate: the XL330 has no holes in its end face; it is
+    # held by the top corner holes of its HORN-side face (x -44.2) and idler-side face, screws along
+    # the horn axis (x). The plate's holes are at x -45.4 and -20.0, (y +-8, z -4.5): two short tabs
+    # hang from the top plate, 2.4 mm thick, outside each face, with Ø2.2 holes along x.
+    top = _box(-47.5, -17.5, -11.5, 11.5, -2.5, 1.5).edges("|Z").chamfer(1.5)
+    tab_h = _box(-46.6, -44.2, -11.5, 11.5, -8.0, -2.5)        # horn side: holes at x -45.4
+    tab_i = _box(-20.6, -18.2, -11.5, 11.5, -8.0, -2.5)        # idler side: holes at x -20.0
+    elbow = top.union(tab_h).union(tab_i)
+    for y in (-8.0, 8.0):
+        elbow = elbow.cut(_cyl(1.1, (-48.0, y, -4.5), (-43.0, y, -4.5))).cut(_cyl(1.1, (-22.0, y, -4.5), (-17.0, y, -4.5)))
+    post = _box(cx - 8.0, cx + 8.0, -8.0, 8.0, 0.0, 32.0).cut(_box(cx - 5.0, cx + 5.0, -5.0, 5.0, 3.0, 29.0))
+    arm = elbow.union(post).rotate((cx, 0, zc), (cx, 1, zc), -abduct if side == "right" else abduct)
+    plate = _box(-52.2, -48.2, -11.0, 11.0, 12.0, 37.0).edges("|X").chamfer(1.5)
+    body = _box(-48.2, -24.0, -9.0, 9.0, 14.0, 35.0).cut(_box(-45.0, -27.0, -5.0, 5.0, 18.0, 31.0))
+    part = plate.union(body).union(arm)
+    part = part.cut(_cyl(3.75, (-53, 0, zc), (-47, 0, zc)))                      # horn centre boss
+    for (y, z) in ((6.0, zc), (-6.0, zc), (0.0, 18.5), (0.0, 30.5)):
+        part = part.cut(_cyl(1.1, (-53.0, y, z), (-47.0, y, z)))                # M2 clearance in the plate
+        part = part.cut(_cyl(2.5, (-48.2, y, z), (-16.0, y, z)))                # driver access through body and post
+    for r in (1.5, 1.0, 0.6):                                                   # round the outer edges; OCC may refuse the larger radii
+        try:
+            part = part.edges("not %CIRCLE").fillet(r); break
+        except Exception:
+            continue
+    cq.exporters.export(part, f"{OUT}/shoulder_arm_simple_{side}.stl")
+    cq.exporters.export(part, f"{OUT}/shoulder_arm_simple_{side}.step")
     return part
 
-def neck_post(name="neck_post"):
-    """Replaces the neck servo, which Microban mounts upside down: its horn is bolted to the
-    floor of a pocket in the trunk top (z -19.5 in the servo's frame, PCD 12 M2) and the head
-    bolts to the servo's idle side (z 6.5, PCD 12). Frame = the servo mesh frame (horn axis
-    +z). Lower block fills the pocket (7.5 mm deep) for location; a hollow stalk carries the
-    head at the same height as before; tapped holes top and bottom."""
-    base = _box(-9.8, 9.8, -24.3, 9.3, -19.5, -12.0).cut(_box(-8.2, 8.2, -22.7, 7.7, -17.5, -12.0))   # 2 mm floor, 1.6 mm walls
-    stalk = _cyl(9.0, (0, -7.5, -12.0), (0, -7.5, 6.5)).cut(_cyl(6.0, (0, -7.5, -10.0), (0, -7.5, 4.5)))
-    top = _cyl(8.0, (0, 0, 3.5), (0, 0, 6.5)).union(_box(-8, 8, -15.5, 0, 3.5, 6.5))   # head seat on the axis, bridged to the stalk
-    part = base.union(stalk).union(top)
+def head_integrated(step_dir, out_dir):
+    """Microban's head with the neck grown out of it as one printed part. The servo-horn joint on
+    the head's underside (PCD 12 holes, recess) is filled by a Ø24 pad and a plain Ø18 stalk
+    centred on the former servo axis runs down into the pocket base, so nothing of the old horn
+    interface remains. Frame = the head STEP frame, which is the trunk-top frame; the neck servo
+    sat at (36, 7.79, 167.9) with its axis +z: pocket floor z 148.4, trunk top surface z 155.9,
+    head underside z 174.4. Fixed from inside the trunk by the four M2 screws of the horn's PCD 12."""
+    head = cq.importers.importStep(os.path.join(step_dir, "head.step"))
+    ax = (36.0, 7.79)
+    base = _box(-9.8, 9.8, -24.3, 9.3, -19.5, -12.0).cut(_box(-8.2, 8.2, -22.7, 7.7, -17.5, -12.0)).translate((ax[0], ax[1], 167.9))
+    stalk = _cyl(9.0, (ax[0], ax[1], 155.9 - 0.5), (ax[0], ax[1], 175.0)).cut(_cyl(6.0, (ax[0], ax[1], 158.0), (ax[0], ax[1], 172.5)))
+    pad = _cyl(12.0, (ax[0], ax[1], 174.4), (ax[0], ax[1], 178.0))
+    part = head.union(pad).union(stalk).union(base)
     for (dx, dy, dz) in _pcd_points(6.0, 4, 0.0, "z"):
-        part = part.cut(_cyl(0.8, (dx, dy, -20), (dx, dy, -13)))      # bottom: M2 taps on the horn's PCD 12 (trunk floor)
-        part = part.cut(_cyl(0.8, (dx, dy, 0.5), (dx, dy, 7)))        # top: M2 taps on PCD 12 for the head
-    cq.exporters.export(part, f"{OUT}/{name}.stl"); return part
+        part = part.cut(_cyl(0.8, (ax[0] + dx, ax[1] + dy, 147.5), (ax[0] + dx, ax[1] + dy, 154.5)))   # M2 taps, screws from inside the trunk
+    os.makedirs(out_dir, exist_ok=True)
+    cq.exporters.export(part, f"{out_dir}/head_integrated.stl")
+    cq.exporters.export(part, f"{out_dir}/head_integrated.step")
+    return part
 
 
 if __name__ == "__main__":
@@ -267,7 +324,6 @@ if __name__ == "__main__":
     knee_yoke("right"); knee_yoke("left")
     knee_axle_cap()                # x2
     standoff(SHANK_BAR_X[0] - 13.5, "standoff_shank_ankle")  # 9 mm: ankle bracket wall (13.5) -> shank bar
-    hip_front_ear()
     # shoulder roll: the horn pattern is indexed +30 deg (right) / -30 deg (left) about the roll
     # axis, which is the block's +z in both arms, so the arm hangs 30 deg abducted. (The humerus
     # is turned -30 / +30 in the model; the horn stays with the shoulder bracket.)
@@ -276,21 +332,21 @@ if __name__ == "__main__":
     xl330_dummy("xl330_dummy_neck")            # x1
     xl330_dummy("xl330_dummy_hip_yaw")         # x2, the 12-servo kit's standard; swap for real XL330s to get 14
     ankle_hinge_dummy()                        # x2
-    neck_post()                                # x1, integrated replacement for xl330_dummy_neck
+    vols = {"shoulder_arm_simple_right": shoulder_arm_simple("right").val().Volume(),
+            "shoulder_arm_simple_left": shoulder_arm_simple("left").val().Volume(),
+            "xl330_dummy (shell)": xl330_dummy("xl330_dummy_hip_yaw").val().Volume()}
     # optional: parts derived from Microban's CAD (second argument = path to microban/cad/step or to foot.step)
     if len(sys.argv) > 2 and os.path.exists(sys.argv[2]):
         step_dir = sys.argv[2] if os.path.isdir(sys.argv[2]) else os.path.dirname(sys.argv[2])
         derived = os.path.join(os.path.dirname(OUT.rstrip("/")) or ".", "parts_derived")
         foot_sole80(os.path.join(step_dir, "foot.step"), derived)
-        vols = {}
         for side in ("right", "left"):
             vols[f"ankle_block_integrated_{side}"] = ankle_block_integrated(step_dir, derived, side).val().Volume()
-            vols[f"upper_arm_integrated_{side}"] = upper_arm_integrated(step_dir, derived, side).val().Volume()
-        for n in ("ankle_dbl_block", "humerus"):
+            vols[f"hip_block_integrated_{side}"] = hip_block_integrated(step_dir, derived, side).val().Volume()
+        vols["head_integrated"] = head_integrated(step_dir, derived).val().Volume()
+        for n in ("ankle_dbl_block", "hip_dbl_block_right", "head"):
             vols[n + " (original)"] = cq.importers.importStep(os.path.join(step_dir, n + ".step")).val().Volume()
-        vols["neck_post"] = neck_post().val().Volume()
-        vols["xl330_dummy (shell)"] = xl330_dummy("xl330_dummy_hip_yaw").val().Volume()
-        print("wrote the 80 mm foot, the integrated ankle blocks and upper arms into parts_derived/")
-        print("volumes [cm3]:", {k: round(v / 1000, 2) for k, v in vols.items()})
+        print("wrote the 80 mm foot, the integrated ankle blocks and the head into parts_derived/")
+    print("volumes [cm3]:", {k: round(v / 1000, 2) for k, v in vols.items()})
     print(f"thigh bar {L1:.1f} mm, shank bar {L2:.1f} mm, pivots: thigh {P1H}->{P1K}, shank {P2K}->{P2A}")
     print("wrote", sorted(os.listdir(OUT)))
