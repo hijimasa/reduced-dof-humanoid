@@ -6,18 +6,21 @@ Reduced-DOF humanoid for ROBO-ONE Light, derived from Rhoban's
 [Microban](https://github.com/Rhoban/microban) (unofficial, not affiliated with
 Rhoban or the author of Microban).
 
-**Status: experimental.** The repository holds three MuJoCo models of Microban
-generated from the same script: a 16-servo step (passive parallel-link ankle
-pitch, fixed head), the **12-servo standard build** (additionally no shoulder
-roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers in the
-hip-yaw positions) and the **14-servo upgrade** (the two hip-yaw servos put back
-in place of the spacers, so it can turn on the spot instead of scuffing its
-soles), plus the scripts that generate and verify them. Every removed servo is
-replaced by a printed block of the same envelope, so the original brackets bolt
-on unchanged and servos can be added back later.
+**Status: experimental.** One generator script produces three MuJoCo models of
+Microban. Every removed servo is replaced by a printed block of the same
+envelope, so the original brackets bolt on unchanged and servos can be put
+back later.
+
+| Model | Layout | Mass in the model |
+| --- | --- | --- |
+| 16-servo (intermediate step) | passive parallel-link ankle pitch, fixed head | 0.795 kg |
+| **12-servo (standard build)** | additionally no shoulder roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers where the hip-yaw servos were | 0.735 kg |
+| **14-servo (upgrade)** | the 12-servo build with the two hip-yaw spacers swapped for real servos, so it turns on the spot instead of scuffing its soles | 0.765 kg |
+
+Microban itself has 19 servos and weighs 0.819 kg in its model.
 
 <p align="center">
-  <img src="docs/images/preview14.png" alt="14-servo parallel-link Microban: side and 3/4 views, standing and crouched" width="640">
+  <img src="docs/images/preview12.png" alt="12-servo parallel-link Microban: side and 3/4 views, standing and crouched" width="640">
 </p>
 
 ## Why
@@ -46,29 +49,23 @@ model including the printed spacers. Upgrade: + 2 hip-yaw servos → 14 servos,
 ## What is in the repository
 
 ```
-model/microban_pl14/
-  microban_pl14.xml      14-servo model (chosen layout), upstream joint names, position actuators
-  microban_pl14_lme.xml  same with LegacyMotionEditor joint names
-  scene.xml              floor + "standing" keyframe (meshes from ../microban_pl/assets)
-model/microban_pl12/
-  microban_pl12.xml      12-servo model (target layout), upstream joint names, position actuators
-  microban_pl12_lme.xml  same with LegacyMotionEditor joint names
-  scene.xml              floor + "standing" keyframe (meshes from ../microban_pl/assets)
-model/microban_pl/
-  microban_pl.xml        parallel-link Microban with fixed head, upstream joint names, position actuators
-  microban_pl_lme.xml    same model with LegacyMotionEditor joint names (r_hipjoint_yp, ...)
-  scene.xml              floor + "standing" keyframe for the MuJoCo viewer
-  assets/                Microban meshes (unmodified, CC BY-NC-SA 4.0)
+model/microban_pl12/     12-servo model (standard): upstream joint names, LME joint names, viewer scene
+model/microban_pl14/     14-servo model (upgrade)
+model/microban_pl/       16-servo model, plus Microban's meshes (unmodified, CC BY-NC-SA 4.0) in assets/
 model/parts/             printable DRAFTS of the added parts (STL, from tools/make_parts.py)
 tools/
   make_microban_pl.py    generates the models above from Microban's robot.xml
-  make_parts.py          CadQuery script for the link bars, knee yoke, axle cap, standoffs, dummy servos
-  step_holes.py          reads hole patterns out of Microban's STEP parts
+  make_parts.py          CadQuery script: link bars, knee yoke, axle cap, standoffs, servo-shaped spacers
   verify_parallel_leg.py loop closure, foot-parallel sweep and standing tests
-  render_preview.py      renders docs/images/preview.png
+  render_preview.py      renders the preview images
+  step_holes.py          reads hole patterns out of Microban's STEP parts
 docs/
-  design_ja.md           DOF reduction study (ROBO-ONE Light rules, Microduck, per-joint decisions)
+  design_ja.md           DOF reduction study: ROBO-ONE Light rules, Microduck, per-joint decisions, results, cost (Japanese)
+  parts_ja.md            design memo for the added parts: pivot layout, packaging constraints, part list, open fit checks (Japanese)
 ```
+
+Each model directory holds `<name>.xml` (Microban's joint names), `<name>_lme.xml`
+(LegacyMotionEditor's names) and `scene.xml` (floor and a standing keyframe).
 
 ### Fixed head
 
@@ -99,18 +96,17 @@ Consequences:
 
 ### Parts that change on the printed robot
 
-The generator also edits the model to reflect the parts the physical redesign
-has to produce (`--keep-ankle-servo` and `--neck-motor` restore the originals):
+The generator edits the model to match the parts the physical conversion needs
+(`--keep-ankle-servo`, `--neck-motor` and `--elbow-flexion-only` are the knobs):
 
 | Part | Change | Effect in the model |
 | --- | --- | --- |
-| Ankle block | The ankle-pitch XL330 and its idler horn are removed. The U-bracket that wrapped the servo becomes a short clevis around the passive hinge (±6 mm about the axis in the collision model). | 47 g → 25 g per ankle. The knee can fold to 132° before the ankle meets the hip bracket, instead of 117°. |
-| Neck | The neck XL330 in the top of the trunk is removed; the head bolts on. | −23 g in the trunk. |
-| Rear links | Two per leg, 62 mm (thigh) and 61 mm (shank) between pivots, 2 mm radius capsules in the model. | Close the parallelogram loops. |
-| Knee block | New part between femur and tibia: carries the knee servo horn, the two rear-link pivots, and stays parallel to the pelvis. | 3 g placeholder mass. |
-
-| Hip yaw (12-servo study only) | The two XL330s in the bottom of the trunk are removed; each hip bracket bolts straight to the trunk. | −46 g. No turning on the spot. |
-| Shoulder roll (14- and 12-servo models) | The XL330 at the top of each humerus is removed; the humerus bolts to the shoulder bracket with the arm at the side. | −46 g. |
+| Ankle block | The ankle-pitch XL330 and its idler horn come out; a printed block of the same envelope with Ø5.9 stub axles into the tibia's existing plate holes goes in (passive hinge). | 47 g → 33 g per ankle. The knee folds to 132° before the ankle meets the hip bracket, instead of 117°. |
+| Neck | The XL330 in the top of the trunk comes out; a spacer goes in and the head bolts on. | −15 g. |
+| Shoulder roll | The XL330 at the top of each humerus comes out; a spacer goes in, arm at the side. | −30 g. |
+| Hip yaw (12-servo) | The two XL330s in the bottom of the trunk come out; spacers go in. The 14-servo upgrade puts the servos back. | −30 g. No turning on the spot. |
+| Rear links | Per leg two thigh bars (62.2 mm between pins) and one shank bar (61.7 mm), 3 × 8 mm, M2 pins. | Close the parallelogram loops. |
+| Knee yoke | New part behind the knee carrying both rear-link pivots, with one outboard arm riding on an axle cap bolted to the knee servo horn. | 6 g. |
 
 Total mass with the printed spacers (8 g each): 0.833 kg (upstream model) → 0.795 kg (16-servo) → 0.765 kg (14-servo) → 0.735 kg (12-servo).
 
@@ -167,11 +163,19 @@ unverified, is in [docs/parts_ja.md](docs/parts_ja.md).
 | Deepest symmetric squat before self-collision | 132° relative knee flexion (117° with the original ankle block) |
 
 With LegacyMotionEditor's motion tools (keyframe walk re-solved through the
-leg IK, get-ups found by physics beam search and re-timed per model) both builds
-pass every action in 8 of 8 perturbed trials (servo zero offsets, initial tilt):
-walk forward/back, sidestep, turns (scuff on 12, hip yaw on 14), jabs, and the
-get-ups from prone and from supine (roll over + the same rise). Details in
-`docs/design_ja.md`.
+leg IK, get-ups found by physics beam search and re-timed per model), under
+servo zero-offset and initial-tilt disturbances, 8 trials each:
+
+| Action | 12-servo | 14-servo |
+| --- | --- | --- |
+| Walk forward / back, sidestep | 8/8 (about 36 mm/s) | 8/8 |
+| Turn | 8/8 (scuffing, about 33° per cycle) | 8/8 (hip yaw, 72° / 141°) |
+| Jab left / right | 8/8 | 8/8 |
+| Get up from prone | 8/8 | 8/8 |
+| Get up from supine (roll over + the same rise) | 8/8 | 8/8 |
+
+The walk is a statically stable keyframe gait; Microban's own learned walk
+(commands up to 0.7 m/s) is a dynamic one and out of scope here.
 
 With the original Microban model, commanding the same two hip/knee values
 without adjusting the ankle tips the robot over; here the linkage keeps the
@@ -184,44 +188,47 @@ get-up's success rate from 15/16 to at best 5/16 in the searches tried.
 
 ## Usage
 
-Requirements: Python 3.10+, `mujoco` (≥ 3.1), `numpy`; `Pillow` for rendering.
+Requirements: Python 3.10+, `mujoco` (≥ 3.1), `numpy`; `Pillow` for rendering;
+`cadquery` for the parts.
 
 ```bash
 # view
-python -m mujoco.viewer --mjcf model/microban_pl14/scene.xml      # 14-servo (chosen)
-python -m mujoco.viewer --mjcf model/microban_pl12/scene.xml      # 12-servo study
-python -m mujoco.viewer --mjcf model/microban_pl/scene.xml        # 16-servo
+python -m mujoco.viewer --mjcf model/microban_pl12/scene.xml      # 12-servo standard
+python -m mujoco.viewer --mjcf model/microban_pl14/scene.xml      # 14-servo upgrade
 # regenerate from a Microban checkout
 python tools/make_microban_pl.py path/to/microban/src/model/mjcf/robot.xml \
-    model/microban_pl/microban_pl.xml --scene model/microban_pl/scene.xml
+    model/microban_pl12/microban_pl12.xml --dof 12 --meshdir ../microban_pl/assets --parts ../../parts \
+    --scene model/microban_pl12/scene.xml
 python tools/make_microban_pl.py path/to/microban/src/model/mjcf/robot.xml \
-    model/microban_pl/microban_pl_lme.xml --naming lme
-python tools/make_microban_pl.py path/to/microban/src/model/mjcf/robot.xml \
-    model/microban_pl14/microban_pl14.xml --dof 14 --meshdir ../microban_pl/assets --scene model/microban_pl14/scene.xml
+    model/microban_pl12/microban_pl12_lme.xml --dof 12 --naming lme --meshdir ../microban_pl/assets --parts ../../parts
 # verify
-python tools/verify_parallel_leg.py model/microban_pl/microban_pl.xml
-# preview image
-MUJOCO_GL=egl python tools/render_preview.py model/microban_pl/scene.xml docs/images/preview.png
+python tools/verify_parallel_leg.py model/microban_pl12/microban_pl12.xml
+# part drafts and preview image
+python tools/make_parts.py model/parts
+MUJOCO_GL=egl python tools/render_preview.py model/microban_pl12/scene.xml docs/images/preview12.png
 ```
 
-`make_microban_pl.py --back <m> --tilt <m>` changes the rear-pivot geometry (the
-joint ranges follow); `--clevis <m>` sets the slimmed ankle bracket's half-height;
-`--keep-ankle-servo`, `--neck-motor` and `--keep-motor` restore the upstream servo
-geometry, the neck servo and Microban's torque actuators respectively.
+Generator options: `--dof 16|14|12`; `--naming lme`; `--back`/`--tilt` (thigh
+linkage) and `--shank-back`/`--shank-tilt` (shank linkage) set the rear-pivot
+geometry and the joint ranges follow; `--link-x` the lateral position of the bars;
+`--clevis` the slimmed ankle bracket; `--parts <dir relative to meshdir>` draws
+the STL drafts instead of boxes; `--keep-ankle-servo`, `--neck-motor`,
+`--keep-motor` (Microban's torque actuators, for RL), `--elbow-flexion-only`,
+`--forearm-ext` restore or vary the rest.
 
-For [LegacyMotionEditor](https://github.com/hijimasa/LegacyMotionEditor) point
-`model_path` at `microban_pl_lme.xml`; the editor detects the four closed loops
-and hides the eight passive joints from the sliders.
+For [LegacyMotionEditor](https://github.com/hijimasa/LegacyMotionEditor) use the
+`*_lme.xml` files: the editor detects the four closed loops and hides the eight
+passive joints from its sliders, and the passive joints carry names that are not
+in LME's Meridim slot table, so nothing it publishes can collide with a servo.
 
 ## Roadmap
 
-1. CAD for the rear links, the knee block and the ankle clevis described above,
-   so the ankle-pitch servo can actually be removed from a printed Microban.
-2. Verify walking, scuff-turning and getting up on the 12-servo model in
-   simulation with LegacyMotionEditor's motion tools (in progress), then re-check
-   walking, side-stepping and getting up in simulation.
-3. Foot-sole and leg-length check against the ROBO-ONE Light tables
-   (sole ≤ 55 % of leg length, width ≤ 35 %).
+1. Fit-check the drafted parts against the original parts in Onshape and print
+   them; the open points are listed in `docs/parts_ja.md`.
+2. Check the foot sole against the ROBO-ONE Light tables (sole ≤ 55 % of leg
+   length, width ≤ 35 %) once the leg length is final.
+3. For a dynamic gait, retarget Microban's training pipeline
+   (`mjlab_microban`) to this model.
 
 ## License
 
@@ -244,20 +251,3 @@ If you use Microban-derived content, please also cite Microban:
     year = {2026}
 }
 ```
-
----
-
-## 日本語の概要
-
-Rhoban の Microban を元に、ROBO-ONE Light に出られる範囲で軸数をできるだけ減らした
-ヒューマノイドを検討する実験用リポジトリです（非公式。Rhoban および原作者とは無関係）。
-
-現在の内容は、ashigaru 方式のパラレルリンク脚で足首ピッチを受動化した Microban の
-MuJoCo モデルと、その生成・検証スクリプトです。頭はモータ無しで胴体に固定します（19 軸 → 16 軸）。膝サーボの指令角は
-大腿基準ではなく骨盤基準になります。股ピッチは −96°〜+68°、膝は −68°〜+96° に制限しています。
-
-今後は股ヨー・肩ロールを外して 12 軸にすることと、足首サーボを実際に外せるように
-3D モデル（後方リンクと膝ブロック）を設計することを予定しています。
-軸ごとの削減判断と ROBO-ONE Light 規則との対応は [docs/design_ja.md](docs/design_ja.md) にまとめています。
-
-メッシュは Microban の CAD 由来で CC BY-NC-SA 4.0 のため、モデル全体として非営利利用に限られます。
