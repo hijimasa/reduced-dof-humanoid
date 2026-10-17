@@ -15,7 +15,7 @@ These are DRAFTS for fit-checking against the originals in Onshape, not release 
 the screw holes that mate with Microban's brackets are placed from the STEP files'
 hole patterns, but nothing here has been printed.
 
-usage: <venv with cadquery>/bin/python tools/make_parts.py model/parts
+usage: <venv with cadquery>/bin/python tools/make_parts.py model/parts [path/to/microban/cad/step/foot.step]
 """
 import math, os, sys
 import cadquery as cq
@@ -120,6 +120,22 @@ def ankle_hinge_dummy(name="xl330_dummy_ankle_hinge"):
     cq.exporters.export(body, f"{OUT}/{name}.stl"); return body
 
 
+def foot_sole80(step_path, out_dir, sole=80.0):
+    """Microban's foot with the toe end of the sole plate cut back so the ground-contact
+    plate is `sole` mm long (ROBO-ONE Light: <= 55 % of the leg length; 90 mm on this
+    146 mm leg is too long). The ankle bracket sits over the rear of the plate, so only
+    the toe is cut. A derivative of Microban's CAD: CC BY-NC-SA 4.0, see
+    model/parts_derived/LICENSE."""
+    f = cq.importers.importStep(step_path)
+    bb = f.val().BoundingBox()                       # plate y -41.5 .. 48.5, y = forward
+    keep_to = bb.ymin + sole
+    short = f.cut(cq.Workplane("XY").box(200, 200, 200).translate((0, keep_to + 100, 0)))
+    os.makedirs(out_dir, exist_ok=True)
+    cq.exporters.export(short, f"{out_dir}/foot_sole{int(sole)}.stl")
+    cq.exporters.export(short, f"{out_dir}/foot_sole{int(sole)}.step")
+    return short
+
+
 if __name__ == "__main__":
     L1, L2 = dist(P1H, P1K), dist(P2K, P2A)
     assert abs(L1 - dist(HIP, KNEE)) < 1e-6 and abs(L2 - dist(KNEE, ANKLE)) < 1e-6, "parallelogram: bar = front link"
@@ -133,5 +149,9 @@ if __name__ == "__main__":
     xl330_dummy("xl330_dummy_neck")            # x1
     xl330_dummy("xl330_dummy_hip_yaw")         # x2, the 12-servo kit's standard; swap for real XL330s to get 14
     ankle_hinge_dummy()                        # x2
+    # optional: the shortened foot, from a Microban checkout (second argument = path to cad/step/foot.step)
+    if len(sys.argv) > 2 and os.path.exists(sys.argv[2]):
+        foot_sole80(sys.argv[2], os.path.join(os.path.dirname(OUT.rstrip("/")) or ".", "parts_derived"))
+        print("wrote the 80 mm foot into parts_derived/")
     print(f"thigh bar {L1:.1f} mm, shank bar {L2:.1f} mm, pivots: thigh {P1H}->{P1K}, shank {P2K}->{P2A}")
     print("wrote", sorted(os.listdir(OUT)))

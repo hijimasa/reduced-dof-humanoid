@@ -151,6 +151,11 @@ def main():
                     help="limit the elbow to forward flexion (-125..+10 deg, negative = flexion). The default "
                          "keeps Microban's own symmetric +-125 deg: the forearm clears the upper arm either "
                          "way, and the prone get-up that was found robust pushes with the elbow bent backward")
+    ap.add_argument("--sole-length", type=float, default=0.080,
+                    help="length [m] of the sole's ground-contact plate (ROBO-ONE Light: <= 55%% of the leg "
+                         "length; Microban's 90 mm sole on this 146 mm leg needs <= 80.4 mm, so the default is "
+                         "80 mm; 0 keeps Microban's 90 mm). Only the collision plate changes; the foot mesh "
+                         "is left as is, the printed foot has to be shortened to match.")
     ap.add_argument("--parts", default="",
                     help="directory of the printed-part STLs (tools/make_parts.py), as a path RELATIVE TO MESHDIR; "
                          "when given, the links, knee yoke, axle caps and spacer blocks are drawn with those meshes "
@@ -390,6 +395,30 @@ def main():
         for j in root.iter("joint"):
             if j.get("name") in (name("right_elbow"), name("left_elbow")):
                 j.set("range", fmt((-2.18166, 0.17453)))   # flexion only, +10 deg of hyperextension
+
+    if a.sole_length > 0:
+        # The foot's ground contact is two overlapping plates (45 x 80 and 35 x 90 mm) plus
+        # four thin corner pads; the length runs along the foot body's local +z = forward.
+        # The ankle bracket sits over the rear part of the plate, so the printed part is
+        # shortened at the TOE only (model/parts_derived/foot_sole80): keep the heel end,
+        # pull the toe end back.
+        for fb in ("foot", "foot_2"):
+            plates = [g for g in bodies[fb].findall("geom")
+                      if g.get("class") == "collision" and g.get("type") == "box" and vec(g.get("size"))[1] > 0.02]
+            toe_old = max(vec(g.get("pos"))[2] + vec(g.get("size"))[1] for g in plates)
+            heel = min(vec(g.get("pos"))[2] - vec(g.get("size"))[1] for g in plates)
+            toe_new = heel + a.sole_length
+            if toe_new >= toe_old:
+                continue
+            for g in bodies[fb].findall("geom"):
+                if g.get("class") != "collision" or g.get("type") != "box": continue
+                sz = vec(g.get("size")); ps = vec(g.get("pos"))
+                if sz[1] > 0.02:                                   # plates: keep the heel end, cut the toe
+                    front = min(ps[2] + sz[1], toe_new); back = ps[2] - sz[1]
+                    sz[1] = (front - back) / 2; ps[2] = (front + back) / 2
+                    g.set("size", fmt(sz)); g.set("pos", fmt(ps))
+                elif ps[2] > 0.042:                                # toe pads follow the new toe
+                    ps[2] -= toe_old - toe_new; g.set("pos", fmt(ps))
 
     # actuators: drop ankle pitch (and neck), motor -> position unless asked otherwise
     act = root.find("actuator")

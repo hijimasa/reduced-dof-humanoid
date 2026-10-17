@@ -1,0 +1,13 @@
+Derived Microban hardware part
+Copyright (c) 2026 Marc Duclusaud (original foot), modifications 2026 Masaaki Hijikata
+
+foot_sole80.stl / foot_sole80.step are Microban's cad/step/foot.step
+(https://github.com/Rhoban/microban, commit d0a128d180ecfce69eaaf31b295a0fce31280bfd)
+with 10 mm cut off the toe end of the sole plate, so that the ground-contact
+plate is 80 mm long (ROBO-ONE Light: at most 55 % of the leg length). Nothing
+else is changed. The cut is made by tools/make_parts.py from the original STEP.
+
+Like the original, these files are licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+
+    SPDX-License-Identifier: CC-BY-NC-SA-4.0

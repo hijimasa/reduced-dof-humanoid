@@ -221,6 +221,18 @@ For [LegacyMotionEditor](https://github.com/hijimasa/LegacyMotionEditor) use the
 passive joints from its sliders, and the passive joints carry names that are not
 in LME's Meridim slot table, so nothing it publishes can collide with a servo.
 
+## ROBO-ONE Light rule check
+
+Measured on the model (leg length = hip-pitch axis to sole with the legs
+straight, as the rules define it):
+
+| Rule (1 kg class) | Limit here | Microban as is | This repository |
+| --- | --- | --- | --- |
+| Sole length ≤ 55 % of leg length (leg 146 mm) | 80.4 mm | 90 mm | 80 mm contact plate (`--sole-length`, default); the printed foot must be shortened to match |
+| Sole width ≤ 35 % of leg length | 51.2 mm | 45 mm | 45 mm |
+| Soles must not overlap seen from above | — | 27 mm apart | 27 mm apart |
+| No squat walking: knee not closed to 90° or less | > 90° | — | walk re-tuned with a taller stance (see `docs/design_ja.md`) |
+
 ## Roadmap
 
 1. Fit-check the drafted parts against the original parts in Onshape and print

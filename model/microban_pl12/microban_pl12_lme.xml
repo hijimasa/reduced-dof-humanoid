@@ -131,12 +131,12 @@ Hip range -109..55 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
                   <body name="foot" pos="-0.0385 0 -0.0145" quat="0 -0.707107 0 -0.707107">
                     <joint axis="0 0 1" name="r_ankle_xr" type="hinge" range="-0.610865238197748 0.6108652381982826" class="xl330" />
                     <inertial pos="-0 -0.0168869 0.0347422" mass="0.016823" fullinertia="1.15605e-05 1.2167e-05 2.53496e-06 0 -0 5.67932e-07" />
-                    <geom name="right_foot_collision_1" class="collision" pos="-0 -0.02175 0.042" quat="0 0 0.707107 0.707107" type="box" size="0.0225 0.04 0.00125" />
-                    <geom name="right_foot_collision_2" class="collision" pos="-0 -0.02175 0.042" quat="0 0 0.707107 0.707107" type="box" size="0.0175 0.045 0.00125" />
+                    <geom name="right_foot_collision_1" class="collision" pos="-0 -0.02175 0.0395" quat="0 0 0.707107 0.707107" type="box" size="0.0225 0.0375 0.00125" />
+                    <geom name="right_foot_collision_2" class="collision" pos="-0 -0.02175 0.037" quat="0 0 0.707107 0.707107" type="box" size="0.0175 0.04 0.00125" />
                     <geom name="right_foot_collision_3" class="collision" pos="-0.0175 -0.02175 0.002" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
                     <geom name="right_foot_collision_4" class="collision" pos="0.0175 -0.02175 0.002" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
-                    <geom name="right_foot_collision_5" class="collision" pos="-0.0175 -0.02175 0.082" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
-                    <geom name="right_foot_collision_6" class="collision" pos="0.0175 -0.02175 0.082" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
+                    <geom name="right_foot_collision_5" class="collision" pos="-0.0175 -0.02175 0.072" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
+                    <geom name="right_foot_collision_6" class="collision" pos="0.0175 -0.02175 0.072" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
                     <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 0.707107 0.707107" mesh="foot__configuration_right" material="foot__configuration_right_material" />
                     <site group="3" name="right_foot" pos="-0 -0.023 0.042" quat="0.5 -0.5 -0.5 -0.5" />
                   </body>
@@ -223,12 +223,12 @@ Hip range -109..55 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
                   <body name="foot_2" pos="0.0385 0 -0.0145" quat="0.707107 -0 -0.707107 0">
                     <joint axis="0 0 1" name="l_ankle_xr" type="hinge" range="-0.6108652381980109 0.6108652381980197" class="xl330" />
                     <inertial pos="-0 -0.0168869 0.0347422" mass="0.016823" fullinertia="1.15605e-05 1.2167e-05 2.53496e-06 0 -0 5.67932e-07" />
-                    <geom name="left_foot_collision_1" class="collision" pos="-0 -0.02175 0.042" quat="0 0 0.707107 0.707107" type="box" size="0.0225 0.04 0.00125" />
-                    <geom name="left_foot_collision_2" class="collision" pos="-0 -0.02175 0.042" quat="0 0 0.707107 0.707107" type="box" size="0.0175 0.045 0.00125" />
+                    <geom name="left_foot_collision_1" class="collision" pos="-0 -0.02175 0.0395" quat="0 0 0.707107 0.707107" type="box" size="0.0225 0.0375 0.00125" />
+                    <geom name="left_foot_collision_2" class="collision" pos="-0 -0.02175 0.037" quat="0 0 0.707107 0.707107" type="box" size="0.0175 0.04 0.00125" />
                     <geom name="left_foot_collision_3" class="collision" pos="-0.0175 -0.02175 0.002" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
                     <geom name="left_foot_collision_4" class="collision" pos="0.0175 -0.02175 0.002" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
-                    <geom name="left_foot_collision_5" class="collision" pos="-0.0175 -0.02175 0.082" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
-                    <geom name="left_foot_collision_6" class="collision" pos="0.0175 -0.02175 0.082" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
+                    <geom name="left_foot_collision_5" class="collision" pos="-0.0175 -0.02175 0.072" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
+                    <geom name="left_foot_collision_6" class="collision" pos="0.0175 -0.02175 0.072" quat="0.270598 -0.270598 -0.653281 -0.653281" type="box" size="0.00353553 0.00353553 0.00125" />
                     <geom type="mesh" class="visual" pos="-0 -0.0095 0.0385" quat="0 0 0.707107 0.707107" mesh="foot__configuration_right" material="foot__configuration_right_material" />
                     <site group="3" name="left_foot" pos="-0 -0.023 0.042" quat="0.5 -0.5 -0.5 -0.5" />
                   </body>
