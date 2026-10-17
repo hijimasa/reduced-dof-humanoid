@@ -99,8 +99,8 @@ Consequences:
   30 mm above the knee and ankle axes, which lifts the ankle pivot clear of the
   ankle-roll servo and the foot (singular at 135° / 45°). Joint ranges follow
   with an 8° margin: hip −100°…+62°, knee −37°…+127° (pelvis-relative).
-- The added parts are drawn in green (mechanism) and amber (printed servo-shaped
-  spacers). The green parts also collide (convex hulls), so interference between
+- Every part that is new or changed for this robot is drawn in green (printed
+  servo-shaped spacers in amber), including the shortened foot. The green parts also collide (convex hulls), so interference between
   the mechanism and the rest of the robot shows up in simulation;
   `tools/check_clearance.py` sweeps the ranges and reports none inside them.
 
@@ -117,6 +117,7 @@ The generator edits the model to match the parts the physical conversion needs
 | Forearm | Microban's forearm is lengthened by 40 mm with a Ø10 rod grown out of the hand (`parts_derived/radius_long`): the arm is then 183 mm from the shoulder axis, closer to KXR / Robovie-nano proportions and more reach for the get-ups. ROBO-ONE Light allows 26 cm from the shoulder and wants the hands 50 mm above the floor while walking: they hang 86 mm up with straight arms in the walking crouch, 114 mm with the elbows bent as the gaits use them. `--forearm-ext 0` keeps the original. | +4 g per arm. |
 | Shoulder roll | The XL330 at the top of each humerus comes out. Shoulder bracket and upper arm become one stout printed part (`parts/shoulder_arm_simple_{right,left}`) that keeps only Microban's interfaces: the shoulder-pitch horn's PCD 12 plate, and the elbow servo held exactly as Microban's humerus plate holds it (an XL330 has no holes in its end face: four screws along the horn axis into the top corner holes of its horn-side and idler-side faces, through two short tabs at x −45.4 / −20.0), with the arm turned 30° about the former roll axis. A 24 × 18 body (3 mm walls, filleted edges) joins plate and 16 × 16 post; the four horn screws are reached through Ø5 stepped access holes along it. A hanging arm sits right over the knee's link stack; abducted, the forearm can be bent forward (60° in the gaits) like a walking human without touching it. `--arm-abduct` sets the angle. | −30 g. |
 | Hip yaw (12-servo) | The two XL330s in the bottom of the trunk come out; spacers go in. The 14-servo upgrade puts the servos back. | −30 g. No turning on the spot. |
+| Foot | The sole plate is cut back 10 mm at the toe to an 80 mm contact length (ROBO-ONE Light: at most 55 % of the leg length), `parts_derived/foot_sole80`. | Collision plates shortened to match. |
 | Link bars | Per leg one thigh bar and one shank bar, both behind the leg (62.2 / 61.7 mm between pins), 3 × 8 mm, M2 pins, outboard of the leg in separate planes. | Close the parallelogram loops. |
 | Knee yoke | A triangular plate outboard of the knee carrying both bar pivots, riding on a printed axle cap bolted to the knee servo horn. | 6 g. |
 

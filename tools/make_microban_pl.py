@@ -234,8 +234,8 @@ def main():
     PART_MESHES = ("thigh_bar", "shank_bar", "knee_yoke_right", "knee_yoke_left", "knee_axle_cap",
                    "xl330_dummy_shoulder_roll_right", "xl330_dummy_shoulder_roll_left", "xl330_dummy_neck", "xl330_dummy_hip_yaw", "xl330_dummy_ankle_hinge")
     PART_MESHES += ("shoulder_arm_simple_right", "shoulder_arm_simple_left")
-    DERIVED_MESHES = ("ankle_block_integrated_right", "ankle_block_integrated_left", "hip_block_integrated_right", "hip_block_integrated_left", "head_integrated", "radius_long")
-    NO_COLLISION = DERIVED_MESHES + ("shoulder_arm_simple_right", "shoulder_arm_simple_left")   # radius_long collides through the capsule added below   # a convex hull of these would be meaningless
+    DERIVED_MESHES = ("ankle_block_integrated_right", "ankle_block_integrated_left", "hip_block_integrated_right", "hip_block_integrated_left", "head_integrated", "radius_long", "foot_sole80")
+    NO_COLLISION = DERIVED_MESHES + ("shoulder_arm_simple_right", "shoulder_arm_simple_left")   # radius_long and foot_sole80 collide through the capsule / cut plates   # a convex hull of these would be meaningless
     if a.parts:
         for nm in PART_MESHES:
             ET.SubElement(asset, "mesh", {"name": f"part_{nm}", "file": f"{a.parts}/{nm}.stl", "scale": "0.001 0.001 0.001"})
@@ -548,6 +548,12 @@ def main():
                     g.set("size", fmt(sz)); g.set("pos", fmt(ps))
                 elif ps[2] > 0.042:                                # toe pads follow the new toe
                     ps[2] -= toe_old - toe_new; g.set("pos", fmt(ps))
+            if a.parts and not a.dummies and abs(a.sole_length - 0.080) < 1e-6:
+                # draw the shortened printed foot (parts_derived/foot_sole80, same frame as the upstream
+                # mesh) in place of Microban's foot, so the changed part shows green like the others
+                for g in list(bodies[fb].findall("geom")):
+                    if g.get("mesh", "").startswith("foot"):
+                        bodies[fb].remove(g); part(bodies[fb], "foot_sole80", vec(g.get("pos")), vec(g.get("quat", "1 0 0 0")))
 
     # actuators: drop ankle pitch (and neck), motor -> position unless asked otherwise
     act = root.find("actuator")
