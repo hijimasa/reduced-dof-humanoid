@@ -53,6 +53,8 @@ tools/
   render_preview.py      プレビュー画像の生成
   render_parts_check.py  追加部品の配置図（元部品を半透明に）の生成
   step_holes.py          Microban の STEP から穴パターンを読む
+motion/                  検証に使ったモーションツールとロボットプロファイル（LegacyMotionEditor の tools/ からパスを
+                         直して複製。motion/README.md 参照）と、生成した LME プロジェクト（motion/projects/）
 docs/
   design_ja.md           軸数削減の検討メモ（規則との対応、各段階の検証結果、費用）
   parts_ja.md            追加部品の設計メモ（ピボット配置、配置制約、部品一覧、未確認事項）
@@ -126,8 +128,13 @@ CAD 交差チェック（`tools/make_parts.py` が報告）で確認していま
 うつ伏せで床に触れる部品（バー、ヨーク、ブラケット）を変えるたびに通らなくなり、最終形状ではまだ通る経路が
 見つかっていません。探索は 16 シード中 15 が膝立ちの局所解で止まるので、複数シードと再タイミングが要ります。
 歩行は肘を前に 60° 曲げ、腕は肩の一体部品で 30° 外転した姿勢で行います。モーション関係のツール
-（脚 IK によるキーフレーム生成、外乱付きの検証、歩容と起き上がりのチューナ、起き上がりのビーム探索）は
-このリポジトリではなく LegacyMotionEditor 側にあり、プロファイル `microban_12` / `microban_14` を使っています。
+（脚 IK によるキーフレーム生成、外乱付きの検証、歩容と起き上がりのチューナ、起き上がりのビーム探索）と
+ロボットプロファイルは `motion/` に置いてあり（LegacyMotionEditor から複製）、このリポジトリだけで表を再現できます:
+
+```bash
+LME_ROBOT=microban_12 python3 motion/build_project.py        # -> motion/projects/LME_microban_12_save.xml
+LME_ROBOT=microban_12 python3 motion/sim_check.py --trials 8  # 上の表
+```
 
 歩行は静的歩行で約 32 mm/s です。Microban 本家の RL 歩行（前進上限 0.7 m/s）のような動的歩行とは
 方式が違います。肘は本家と同じ ±125° で、起き上がりは肘を後ろ側に曲げて押す経路を使っています

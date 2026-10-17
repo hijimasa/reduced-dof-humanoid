@@ -6,3 +6,5 @@ __pycache__/
 *_psclon*.xml
 *_p[0-9].xml
 log/
+motion/log/
+motion/projects/_*.xml

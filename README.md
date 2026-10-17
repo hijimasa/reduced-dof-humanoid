@@ -65,6 +65,9 @@ tools/
   render_preview.py      renders the preview images
   render_parts_check.py  renders the added parts on a transparent robot (docs/images/parts_check.png)
   step_holes.py          reads hole patterns out of Microban's STEP parts
+motion/                  the motion tools and robot profiles used for the verification below (copied from
+                         LegacyMotionEditor's tools/ with paths adjusted; see motion/README.md), and the
+                         generated LME projects in motion/projects/
 docs/
   design_ja.md           DOF reduction study: ROBO-ONE Light rules, Microduck, per-joint decisions, results, cost (Japanese)
   parts_ja.md            design memo for the added parts: pivot layout, packaging constraints, part list, open fit checks (Japanese)
@@ -224,8 +227,13 @@ fifteen of sixteen seeds end in a kneeling local optimum, so expect several
 seeds and a re-timing pass. The gaits walk with the elbows bent 60° forward
 and the arms abducted 30° by the printed shoulder parts. The motion tools
 (keyframe IK, perturbed simulation checks, gait and get-up tuners, the beam
-search) are part of LegacyMotionEditor, not of this repository; the profiles
-used here are `microban_12` and `microban_14` there.
+search) and the robot profiles are in `motion/`, copied from LegacyMotionEditor
+so that the tables can be reproduced from this repository alone:
+
+```bash
+LME_ROBOT=microban_12 python3 motion/build_project.py        # -> motion/projects/LME_microban_12_save.xml
+LME_ROBOT=microban_12 python3 motion/sim_check.py --trials 8  # the table above
+```
 
 The walk is a statically stable keyframe gait; Microban's own learned walk
 (commands up to 0.7 m/s) is a dynamic one and out of scope here.
