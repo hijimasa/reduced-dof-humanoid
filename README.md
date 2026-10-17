@@ -17,8 +17,8 @@ assembled.
 | Model | Layout | Mass in the model |
 | --- | --- | --- |
 | 16-servo (intermediate step) | passive parallel-link ankle pitch, fixed head | 0.809 kg |
-| **12-servo (standard build)** | additionally no shoulder roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers where the hip-yaw servos were | 0.726 kg |
-| **14-servo (upgrade)** | the 12-servo build with the two hip-yaw spacers swapped for real servos, so it turns on the spot instead of scuffing its soles | 0.756 kg |
+| **12-servo (standard build)** | additionally no shoulder roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers where the hip-yaw servos were | 0.734 kg |
+| **14-servo (upgrade)** | the 12-servo build with the two hip-yaw spacers swapped for real servos, so it turns on the spot instead of scuffing its soles | 0.764 kg |
 
 Microban itself has 19 servos and weighs 0.819 kg in its model.
 
@@ -45,9 +45,9 @@ practical. The study behind this repository is in
 | Shoulder roll | remove (done here) | Rules require one actuated axis per arm; shoulder pitch + elbow is enough for punching and getting up. |
 | Hip roll, hip pitch, knee, ankle roll | keep | Needed for lateral stepping, 10 mm foot lift and flat-footed weight transfer with position-controlled servos. |
 
-Standard build: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.726 kg in the
+Standard build: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.734 kg in the
 model including the printed spacers. Upgrade: + 2 hip-yaw servos → 14 servos,
-0.756 kg. Microban: 19 servos, 0.819 kg.
+0.764 kg. Microban: 19 servos, 0.819 kg.
 
 ## What is in the repository
 
@@ -118,13 +118,13 @@ The generator edits the model to match the parts the physical conversion needs
 | Hip bracket | Reprinted with the thigh bar's upper pivot grown out of its rear skirt (`parts_derived/hip_block_integrated_{right,left}`). | +3.6 g per side. |
 | Neck | The XL330 in the top of the trunk comes out (Microban mounts it upside down: horn in the trunk, head on the servo body). The head is reprinted with the neck grown out of it (`parts_derived/head_integrated`): the old horn seat on its underside is filled by a pad, a plain Ø18 stalk on the former servo axis runs down into a base that fits the servo pocket, and four M2 screws from inside the trunk hold it on the horn's PCD 12. The head stays where it was. | −17 g. |
 | Forearm | Microban's forearm is lengthened by 40 mm with a Ø10 rod grown out of the hand (`parts_derived/radius_long`): the arm is then 183 mm from the shoulder axis, closer to KXR / Robovie-nano proportions and more reach for the get-ups. ROBO-ONE Light allows 26 cm from the shoulder and wants the hands 50 mm above the floor while walking: they hang 86 mm up with straight arms in the walking crouch, 114 mm with the elbows bent as the gaits use them. `--forearm-ext 0` keeps the original. | +4 g per arm. |
-| Shoulder roll | The XL330 at the top of each humerus comes out. Shoulder bracket and upper arm become one stout printed part (`parts/shoulder_arm_simple_{right,left}`) that keeps only Microban's interfaces: the shoulder-pitch horn's PCD 12 plate, and the elbow servo held exactly as Microban's humerus plate holds it (an XL330 has no holes in its end face: four screws along the horn axis into the top corner holes of its horn-side and idler-side faces, through two short tabs at x −45.4 / −20.0), with the arm turned 30° about the former roll axis. A 24 × 18 body (3 mm walls, filleted edges) joins plate and 16 × 16 post; the four horn screws are reached through Ø5 stepped access holes along it. A hanging arm sits right over the knee's link stack; abducted, the forearm can be bent forward (60° in the gaits) like a walking human without touching it. `--arm-abduct` sets the angle. | −30 g. |
+| Shoulder roll | The XL330 at the top of each humerus comes out. Shoulder bracket and upper arm become one stout printed part (`parts/shoulder_arm_simple_{right,left}`) that keeps only Microban's interfaces: the shoulder-pitch horn's PCD 12 plate, and the elbow servo held exactly as Microban's humerus plate holds it (an XL330 has no holes in its end face: four screws along the horn axis into the top corner holes of its horn-side and idler-side faces, through two short tabs at x −45.4 / −20.0), with the arm turned 30° about the former roll axis. A 24 × 18 body (3 mm walls, filleted edges) joins plate and 16 × 16 post; the four horn screws are reached through Ø5 stepped access holes along it. A hanging arm sits right over the knee's link stack; abducted, the forearm can be bent forward (60° in the gaits) like a walking human without touching it. `--arm-abduct` sets the angle. | −23 g per arm. |
 | Hip yaw (12-servo) | The two XL330s in the bottom of the trunk come out; spacers go in. The 14-servo upgrade puts the servos back. | −30 g. No turning on the spot. |
 | Foot | The sole plate is cut back 10 mm at the toe to an 80 mm contact length (ROBO-ONE Light: at most 55 % of the leg length), `parts_derived/foot_sole80`. | Collision plates shortened to match. |
 | Link bars | Per leg one thigh bar and one shank bar, both behind the leg (62.2 / 61.7 mm between pins), 3 × 8 mm, M2 pins, outboard of the leg in separate planes. | Close the parallelogram loops. |
 | Knee yoke | A triangular plate outboard of the knee carrying both bar pivots, riding on a printed axle cap bolted to the knee servo horn. | 6 g. |
 
-Total mass: 0.833 kg (upstream model) → 0.809 kg (16-servo) → 0.756 kg (14-servo) → 0.726 kg (12-servo). Printed parts are counted at 1.0 g/cm³ (PLA, three walls, about 40 % infill): integrated ankle block 17.3 cm³ (cap alone 9.2), hip bracket 13.3 cm³ (9.7), shoulder + upper arm 13.5 cm³, the neck grown out of the head 6.4 cm³, forearm extension 4 g, XL330-shaped hip-yaw spacer 7.7 cm³ (2 mm shell). `--dummies` builds the earlier variant with servo-shaped spacer blocks at the ankle, shoulder and neck instead; the hip-yaw position always keeps the spacer so the 14-servo upgrade stays a drop-in.
+Total mass: 0.833 kg (upstream model) → 0.809 kg (16-servo) → 0.764 kg (14-servo) → 0.734 kg (12-servo). Printed parts are counted at 1.0 g/cm³ (PLA, three walls, about 40 % infill): integrated ankle block 17.3 cm³ (cap alone 9.2), hip bracket 13.3 cm³ (9.7), shoulder + upper arm 13.5 cm³, the neck grown out of the head 6.4 cm³, forearm extension 4 g, XL330-shaped hip-yaw spacer 7.7 cm³ (2 mm shell). `--dummies` builds the earlier variant with servo-shaped spacer blocks at the ankle, shoulder and neck instead; the hip-yaw position always keeps the spacer so the 14-servo upgrade stays a drop-in.
 
 <p align="center">
   <img src="docs/images/integrated_parts.png" alt="Hip bracket lug, integrated ankle block, shoulder + arm and head with neck on a transparent robot" width="900">

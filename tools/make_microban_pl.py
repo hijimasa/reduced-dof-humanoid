@@ -76,7 +76,7 @@ DUMMY_MASS = 0.008   # kg, a printed XL330-sized block (20 x 34 x 26 mm, 2 mm sh
 # effective 1.0 g/cm3 (PLA, 3 walls, ~40 % infill). The originals they absorb are taken out at the same density.
 PLA_G_PER_CM3 = 1.0
 ANKLE_CAP_CM3, ANKLE_INTEGRATED_CM3 = 9.2, 17.3        # ankle_dbl_block -> ankle_block_integrated_{side}
-HUMERUS_CM3, SHOULDER_CM3, SHOULDER_ARM_CM3 = 4.3, 8.8, 9.5    # humerus plate + shoulder bracket -> shoulder_arm_simple_{side}
+HUMERUS_CM3, SHOULDER_CM3, SHOULDER_ARM_CM3 = 4.3, 8.8, 13.5   # humerus plate + shoulder bracket -> shoulder_arm_simple_{side} (CAD volume from make_parts.py)
 HIP_EAR_CM3 = 3.6                                               # the pivot support grown out of hip_block_integrated_{side}
 NECK_POST_CM3 = 6.4                                             # the neck grown out of head_integrated (head itself keeps the upstream mass)
 

@@ -115,7 +115,7 @@
     <Joint name="l_shoulder_yp" angle="10.0" />
     <Joint name="l_elbow_yp" angle="-60.0" />
     <Joint name="l_hipjoint_zy" angle="0.0" />
-    <Joint name="l_hipjoint_xr" angle="-0.0" />
+    <Joint name="l_hipjoint_xr" angle="0.0" />
     <Joint name="l_hipjoint_yp" angle="-24.889" />
     <Joint name="l_knee_yp" angle="38.051" />
     <Joint name="l_ankle_xr" angle="0.0" />
@@ -192,10 +192,10 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="-0.0" />
-            <Angle joint="l_hipjoint_xr" value="0.0" />
+            <Angle joint="l_hipjoint_xr" value="-0.0" />
             <Angle joint="l_hipjoint_yp" value="-8.815" />
             <Angle joint="l_knee_yp" value="19.362" />
-            <Angle joint="l_ankle_xr" value="-0.0" />
+            <Angle joint="l_ankle_xr" value="0.0" />
             <Angle joint="r_shoulder_yp" value="10.0" />
             <Angle joint="r_elbow_yp" value="-60.0" />
             <Angle joint="r_hipjoint_zy" value="-0.0" />
@@ -229,7 +229,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -294,7 +294,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -513,7 +513,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -846,7 +846,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -926,7 +926,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -1259,7 +1259,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -1339,7 +1339,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -1672,7 +1672,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -1752,7 +1752,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -2085,7 +2085,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -2165,7 +2165,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -2498,7 +2498,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -2578,7 +2578,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -2911,7 +2911,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -2991,7 +2991,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -3324,7 +3324,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -3404,7 +3404,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -3737,7 +3737,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -4520,7 +4520,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -5231,7 +5231,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -5459,7 +5459,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />
@@ -5674,7 +5674,7 @@
             <Angle joint="l_shoulder_yp" value="10.0" />
             <Angle joint="l_elbow_yp" value="-60.0" />
             <Angle joint="l_hipjoint_zy" value="0.0" />
-            <Angle joint="l_hipjoint_xr" value="-0.0" />
+            <Angle joint="l_hipjoint_xr" value="0.0" />
             <Angle joint="l_hipjoint_yp" value="-24.889" />
             <Angle joint="l_knee_yp" value="38.051" />
             <Angle joint="l_ankle_xr" value="0.0" />

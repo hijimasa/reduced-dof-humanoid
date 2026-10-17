@@ -181,10 +181,10 @@
             <Angle joint="l_ankle_xr" value="0.0" />
             <Angle joint="r_shoulder_yp" value="10.0" />
             <Angle joint="r_elbow_yp" value="-60.0" />
-            <Angle joint="r_hipjoint_xr" value="0.0" />
+            <Angle joint="r_hipjoint_xr" value="-0.0" />
             <Angle joint="r_hipjoint_yp" value="-8.815" />
             <Angle joint="r_knee_yp" value="19.362" />
-            <Angle joint="r_ankle_xr" value="-0.0" />
+            <Angle joint="r_ankle_xr" value="0.0" />
           </Angles>
           <Easings>
             <Easing joint="l_shoulder_yp" value="3: easeInOutSine" />
@@ -2015,7 +2015,7 @@
             <Angle joint="l_ankle_xr" value="0.0" />
             <Angle joint="r_shoulder_yp" value="10.0" />
             <Angle joint="r_elbow_yp" value="-60.0" />
-            <Angle joint="r_hipjoint_xr" value="-0.0" />
+            <Angle joint="r_hipjoint_xr" value="0.0" />
             <Angle joint="r_hipjoint_yp" value="-47.21" />
             <Angle joint="r_knee_yp" value="9.793" />
             <Angle joint="r_ankle_xr" value="0.0" />
@@ -2353,7 +2353,7 @@
             <Angle joint="l_ankle_xr" value="0.0" />
             <Angle joint="r_shoulder_yp" value="10.0" />
             <Angle joint="r_elbow_yp" value="-60.0" />
-            <Angle joint="r_hipjoint_xr" value="-0.0" />
+            <Angle joint="r_hipjoint_xr" value="0.0" />
             <Angle joint="r_hipjoint_yp" value="-47.21" />
             <Angle joint="r_knee_yp" value="9.793" />
             <Angle joint="r_ankle_xr" value="0.0" />

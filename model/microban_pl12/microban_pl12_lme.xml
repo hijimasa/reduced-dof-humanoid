@@ -68,7 +68,7 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
       </body>
       <body name="shoulder" pos="0 -0.0505 0.081" quat="0.707107 -0.707107 -0 0">
         <joint axis="0 0 1" name="r_shoulder_yp" type="hinge" range="-3.141592653589793 3.141592653589793" class="xl330" />
-        <inertial pos="4.19e-10 2.814e-09 -0.00850029" mass="0.005385" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 0 0 -0" />
+        <inertial pos="4.19e-10 2.814e-09 -0.00850029" mass="0.009385" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 0 0 -0" />
         <body name="humerus__configuration_right" pos="0.0145 0 -0.0195" quat="0.183013 0.683013 0.183013 0.683013">
           <inertial pos="-0.000309872 -0.0252784 -0.0143918" mass="0.018687" fullinertia="7.92977e-06 1.77124e-06 7.88292e-06 -1.35921e-07 -1.02115e-09 -3.50472e-08" />
           <geom type="mesh" class="visual" pos="-0.008 -0.0515 -0.0145" quat="0 0.707107 0 -0.707107" mesh="xl330_without_horn" material="xl330_without_horn_material" />
@@ -162,7 +162,7 @@ Hip range -100..62 deg, knee -37..127 deg (pelvis-relative). See NOTICE.md for a
       </body>
       <body name="shoulder_2" pos="-0 0.0505 0.081" quat="0 0 -0.707107 -0.707107">
         <joint axis="0 0 1" name="l_shoulder_yp" type="hinge" range="-3.141592653589793 3.141592653589793" class="xl330" />
-        <inertial pos="-4.19e-10 2.814e-09 0.00850029" mass="0.005385" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 -0 0 0" />
+        <inertial pos="-4.19e-10 2.814e-09 0.00850029" mass="0.009385" fullinertia="1.06003e-06 1.78233e-06 1.86739e-06 -0 0 0" />
         <body name="humerus__configuration_left" pos="-0.0145 0 0.0195" quat="-0.183013 -0.683013 0.183013 0.683013">
           <inertial pos="-0.000313281 0.0252784 -0.0143884" mass="0.018687" fullinertia="7.92977e-06 1.77119e-06 7.88288e-06 1.35234e-07 -2.58649e-10 3.43062e-08" />
           <geom type="mesh" class="visual" pos="-0.008 0.0515 -0.0145" quat="0.707107 0 -0.707107 -0" mesh="xl330_without_horn" material="xl330_without_horn_material" />
