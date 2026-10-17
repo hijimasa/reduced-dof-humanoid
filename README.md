@@ -160,10 +160,11 @@ unverified, is in [docs/parts_ja.md](docs/parts_ja.md).
 | Deepest symmetric squat before self-collision | 132° relative knee flexion (117° with the original ankle block) |
 
 With LegacyMotionEditor's motion tools (keyframe walk re-solved through the
-4-joint leg IK, scuff turns, get-ups found by physics beam search) the 12-servo
-model passes, under servo-offset and tilt disturbances: walk forward/back and
-sidestep 8/8, scuff turns 8/8, jabs 8/8, get-up from prone 15/16 and from supine
-(roll over + the same rise) 16/16. Details in `docs/design_ja.md`.
+leg IK, get-ups found by physics beam search and re-timed per model) both builds
+pass every action in 8 of 8 perturbed trials (servo zero offsets, initial tilt):
+walk forward/back, sidestep, turns (scuff on 12, hip yaw on 14), jabs, and the
+get-ups from prone and from supine (roll over + the same rise). Details in
+`docs/design_ja.md`.
 
 With the original Microban model, commanding the same two hip/knee values
 without adjusting the ankle tips the robot over; here the linkage keeps the
