@@ -100,6 +100,23 @@ def xl330_dummy(name, horn=True):
         body = body.union(disc).union(cq.Workplane("XY").circle(3.6).extrude(-1.5).translate((0, 0, -22.5)))
     cq.exporters.export(body, f"{OUT}/{name}.stl"); return body
 
+def ankle_hinge_dummy(name="xl330_dummy_ankle_hinge"):
+    """Goes where the ankle-pitch servo was, inside the unchanged ankle_dbl_block: the XL330
+    envelope with the bracket's back-face holes, and in place of horn and idler two Ø5.9
+    stub axles that ride in the tibia plates' existing Ø6 holes (plates are 4.5 mm off the
+    servo faces, 4 mm thick). Each stub is retained from outside by an M2 screw and washer
+    (M2 tap drill in the stub). The shank bar's pivot is NOT on this part: it is an M2
+    hole added to the ankle bracket's side wall at (y -25.0, z 34.5)."""
+    body = cq.Workplane("XY").box(20, 34, 26, centered=(True, False, False)).translate((0, -24.5, -19.5))
+    body = body.faces("<Y").workplane().pushPoints([(-8, -8.0), (8, -8.0), (-8, 17.5), (8, 17.5)]).hole(2.2, 8)
+    for z_face, direction in ((-19.5, -1), (6.5, 1)):
+        spacer = cq.Workplane("XY").circle(6.0).extrude(4.5 * direction).translate((0, 0, z_face))       # keeps the block centred between the plates
+        stub = cq.Workplane("XY").circle(2.95).extrude(5.5 * direction).translate((0, 0, z_face + 4.5 * direction))  # through the 4 mm plate + 1.5
+        body = body.union(spacer).union(stub)
+    body = body.cut(cq.Workplane("XY").circle(0.8).extrude(60, both=True))   # M2 tap drill along the axis, both stubs
+    cq.exporters.export(body, f"{OUT}/{name}.stl"); return body
+
+
 if __name__ == "__main__":
     L1, L2 = dist(P1H, P1K), dist(P2K, P2A)
     assert abs(L1 - dist(HIP, KNEE)) < 1e-6 and abs(L2 - dist(KNEE, ANKLE)) < 1e-6, "parallelogram: bar = front link"
@@ -111,5 +128,7 @@ if __name__ == "__main__":
     standoff(SHANK_BAR_X[0] - 13.5, "standoff_shank_ankle")  # 4 mm: ankle bracket wall (13.5) -> shank bar
     xl330_dummy("xl330_dummy_shoulder_roll")   # x2
     xl330_dummy("xl330_dummy_neck")            # x1
+    xl330_dummy("xl330_dummy_hip_yaw")         # x2, the 12-servo kit's standard; swap for real XL330s to get 14
+    ankle_hinge_dummy()                        # x2
     print(f"thigh bar {L1:.1f} mm, shank bar {L2:.1f} mm, pivots: thigh {P1H}->{P1K}, shank {P2K}->{P2A}")
     print("wrote", sorted(os.listdir(OUT)))

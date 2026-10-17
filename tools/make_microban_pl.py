@@ -66,6 +66,20 @@ def q2m(q):
 def vec(s): return np.array([float(t) for t in s.split()])
 def fmt(a): return " ".join(f"{float(t):.6g}" for t in np.atleast_1d(a))
 
+DUMMY_MASS = 0.008   # kg, a printed XL330-sized block (20 x 34 x 26 mm shell)
+
+
+def dummy_block(body, pos, quat):
+    """Visual + mass of a printed XL330-shaped spacer in a servo's old place: same envelope,
+    so the original brackets bolt on unchanged and a real servo can go back in later."""
+    ET.SubElement(body, "geom", {"class": "visual", "type": "box", "size": "0.010 0.017 0.013",
+                                 "pos": fmt(vec(pos) + q2m(vec(quat)) @ np.array([0, -0.0075, -0.0065])),
+                                 "quat": quat, "rgba": "0.85 0.6 0.25 1"})
+    ine = body.find("inertial")
+    m0 = float(ine.get("mass")); m1 = m0 + DUMMY_MASS
+    ine.set("mass", f"{m1:.6f}")
+
+
 def slim_ankle(body, h):
     """Take the ankle-pitch servo out of the ankle block.
 
@@ -77,15 +91,17 @@ def slim_ankle(body, h):
     """
     for g in list(body.findall("geom")):
         at = g.attrib
-        if at.get("mesh") in ("xl330", "dc15_a01_horn_idle2_dummy", "bts2_m2_6x8", "dc15_a01_idle_cap_dummy"):
+        if at.get("mesh") == "xl330":
+            body.remove(g); dummy_block(body, at.get("pos"), at.get("quat", "1 0 0 0"))
+        elif at.get("mesh") in ("dc15_a01_horn_idle2_dummy", "bts2_m2_6x8", "dc15_a01_idle_cap_dummy"):
             body.remove(g)
         elif at.get("class") == "collision":
             sx, sy, sz = (float(v) for v in at["size"].split())
             px, py, pz = (float(v) for v in at["pos"].split())
             at["size"] = fmt((sx, h, sz)); at["pos"] = fmt((px, np.sign(py) * h, pz))
     ine = body.find("inertial")
-    scale = SLIM_ANKLE_MASS / float(ine.get("mass"))
-    ine.set("mass", f"{SLIM_ANKLE_MASS}")
+    scale = SLIM_ANKLE_MASS / float(ine.get("mass"))   # dummy_block already added its 8 g above
+    ine.set("mass", f"{SLIM_ANKLE_MASS + DUMMY_MASS}")
     ine.set("fullinertia", " ".join(f"{float(v) * scale:.4e}" for v in ine.get("fullinertia").split()))
 
 
@@ -241,7 +257,7 @@ def main():
         trunk = bodies["trunk"]
         for g in list(trunk.findall("geom")):
             if g.get("mesh", "").startswith("xl330") and abs(vec(g.get("pos"))[2] - 0.1195) < 1e-3:
-                trunk.remove(g)
+                trunk.remove(g); dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"))
         ine = trunk.find("inertial")
         m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS
         ine.set("mass", f"{m1:.6f}")
@@ -266,7 +282,7 @@ def main():
         for g in list(trunk.findall("geom")):
             pz = vec(g.get("pos", "0 0 0"))
             if g.get("mesh", "").startswith("xl330") and abs(abs(pz[1]) - 0.036) < 1e-3 and abs(pz[2] - 0.0065) < 1e-3:
-                trunk.remove(g); n_removed += 1
+                trunk.remove(g); n_removed += 1; dummy_block(trunk, g.get("pos"), g.get("quat", "1 0 0 0"))
         assert n_removed == 2, f"expected the two hip-yaw servos in the trunk, found {n_removed}"
         ine = trunk.find("inertial")
         m0 = float(ine.get("mass")); m1 = m0 - 2 * XL330_MASS
@@ -279,7 +295,7 @@ def main():
             hum = bodies[hb]; n_removed = 0
             for g in list(hum.findall("geom")):
                 if g.get("mesh") == "xl330" and abs(vec(g.get("pos"))[2] + 0.0065) < 1e-3:
-                    hum.remove(g); n_removed += 1
+                    hum.remove(g); n_removed += 1; dummy_block(hum, g.get("pos"), g.get("quat", "1 0 0 0"))
             assert n_removed == 1, f"{hb}: shoulder-roll servo not found"
             ine = hum.find("inertial")
             m0 = float(ine.get("mass")); m1 = m0 - XL330_MASS

@@ -6,11 +6,13 @@ Rhoban or the author of Microban).
 
 **Status: experimental.** The repository holds three MuJoCo models of Microban
 generated from the same script: a 16-servo step (passive parallel-link ankle
-pitch, fixed head), the **14-servo layout chosen for the robot** (additionally
-no shoulder roll: legs 5 × 2 with hip yaw, arms 2 × 2) and a 12-servo study
-(no hip yaw either), plus the scripts that generate and verify them. The
-12-servo variant can only turn by scuffing its soles, which depends on the
-floor; keeping the two hip-yaw servos was judged worth 46 g.
+pitch, fixed head), the **12-servo standard build** (additionally no shoulder
+roll and no hip yaw: legs 4 × 2, arms 2 × 2, printed XL330-shaped spacers in the
+hip-yaw positions) and the **14-servo upgrade** (the two hip-yaw servos put back
+in place of the spacers, so it can turn on the spot instead of scuffing its
+soles), plus the scripts that generate and verify them. Every removed servo is
+replaced by a printed block of the same envelope, so the original brackets bolt
+on unchanged and servos can be added back later.
 
 <p align="center">
   <img src="docs/images/preview14.png" alt="14-servo parallel-link Microban: side and 3/4 views, standing and crouched" width="640">
@@ -31,12 +33,13 @@ practical. The study behind this repository is in
 | --- | --- | --- |
 | Ankle pitch | passive (done here) | Two parallelograms per leg keep the foot parallel to the pelvis, as on the `ashigaru` robot. |
 | Neck | remove (done here) | Rules only require a separate head, not an actuated one. A fixed head keeps the humanoid silhouette at zero servo cost. |
-| Hip yaw | **keep** (removed only in the 12-servo study) | Without it the feet are always parallel and turning needs the soles to slip, which depends on the floor. |
+| Hip yaw | optional: spacer in the 12-servo build, servo in the 14-servo upgrade | Without it the feet are always parallel and turning needs the soles to slip, which depends on the floor (Robovie-nano manages the same way). |
 | Shoulder roll | remove (done here) | Rules require one actuated axis per arm; shoulder pitch + elbow is enough for punching and getting up. |
 | Hip roll, hip pitch, knee, ankle roll | keep | Needed for lateral stepping, 10 mm foot lift and flat-footed weight transfer with position-controlled servos. |
 
-Chosen layout: legs 5 × 2, arms 2 × 2, fixed head → 14 servos, 0.719 kg in the
-model (Microban: 19 servos, 0.819 kg; the 12-servo study: 0.673 kg).
+Standard build: legs 4 × 2, arms 2 × 2, fixed head → 12 servos, 0.735 kg in the
+model including the printed spacers. Upgrade: + 2 hip-yaw servos → 14 servos,
+0.765 kg. Microban: 19 servos, 0.819 kg.
 
 ## What is in the repository
 
@@ -106,7 +109,24 @@ has to produce (`--keep-ankle-servo` and `--neck-motor` restore the originals):
 | Hip yaw (12-servo study only) | The two XL330s in the bottom of the trunk are removed; each hip bracket bolts straight to the trunk. | −46 g. No turning on the spot. |
 | Shoulder roll (14- and 12-servo models) | The XL330 at the top of each humerus is removed; the humerus bolts to the shoulder bracket with the arm at the side. | −46 g. |
 
-Total mass: 0.833 kg (upstream model) → 0.765 kg (16-servo) → 0.719 kg (14-servo) → 0.673 kg (12-servo).
+Total mass with the printed spacers (8 g each): 0.833 kg (upstream model) → 0.735 kg (12-servo) → 0.765 kg (14-servo).
+
+### Cost
+
+From Microban's own bill of materials (servos $23.90 each, everything else
+about $113: Raspberry Pi Zero 2W, Robot HAT, batteries, BMS, charger, switch,
+SD card, screws, shims, filament). The conversion adds about $5 of M2 screws,
+washers and filament for the new parts.
+
+| Build | Servos | Servo cost | Total | vs Microban ($567) |
+| --- | --- | --- | --- | --- |
+| Microban | 19 | $454 | $567 | — |
+| 12-servo standard | 12 | $287 | ≈ $405 | −$162 (−29 %) |
+| 14-servo upgrade | 14 | $335 | ≈ $453 | −$114 (−20 %) |
+
+The U2D2 configuration tools ($56) are the same for all three and are not
+included. Prices are the BOM's at the time of writing; ROBOTIS' Japanese
+distributors price the XL330 somewhat higher.
 
 ### The printed parts (drafts)
 
